@@ -1,1 +1,104 @@
 /* You can add global styles to this file, and also import other style files */
+@import "src/assets/styles/color_variables";
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+$enable-responsive-font-sizes: true;
+
+
+.primary-text {
+  color: $primary-black;
+}
+
+.secondary-text {
+  color: $dark-color;
+}
+
+.container {
+  transition: 0.5s ease;
+  opacity: 1;
+  display: block;
+  backface-visibility: hidden;
+}
+
+.floating {
+  margin-bottom: 30px;
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+}
+
+.floating:hover,
+.floating:focus-within {
+  background-color: #fff;
+}
+
+.floating__input {
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.floating__input::placeholder {
+  color: rgba(0, 0, 0, 0);
+}
+
+.floating__label {
+  display: block;
+  position: relative;
+  max-height: 0;
+  pointer-events: none;
+}
+
+.floating__label::before {
+  color: #707585;
+  content: attr(data-content);
+  display: inline-block;
+  filter: blur(0);
+  backface-visibility: hidden;
+  transform-origin: left top;
+  transition: transform 0.2s ease;
+  left: 1rem;
+  position: relative;
+}
+
+.floating__label::after {
+  bottom: 1rem;
+  content: "";
+  height: 0.1rem;
+  position: absolute;
+  transition: transform 180ms cubic-bezier(0.4, 0, 0.2, 1), opacity 180ms cubic-bezier(0.4, 0, 0.2, 1),
+  background-color 0.3s ease;
+  opacity: 0;
+  left: 0;
+  top: 100%;
+  margin-top: -0.1rem;
+  transform: scale3d(0, 1, 1);
+  width: 100%;
+}
+
+.floating__input:focus + .floating__label::after {
+  transform: scale3d(1, 1, 1);
+  opacity: 1;
+}
+
+.floating__input:placeholder-shown + .floating__label::before {
+  transform: translate3d(0, -2.5rem, 0) scale3d(1, 1, 1);
+}
+
+.floating__label::before,
+.floating__input:focus + .floating__label::before {
+  padding: 0 10px;
+  background-color: $white;
+  transform: translate3d(0, -4.4rem, 0) scale3d(0.82, 0.82, 1);
+}
+
+.floating__input:focus + .floating__label::before {
+  color: $primary-color;
+}
+
+.floating__input:focus-within + .floating__label::before {
+  color: $primary-color;
+}
+
+.floating__input:active + .floating__label::before {
+  color: $primary-color;
+}

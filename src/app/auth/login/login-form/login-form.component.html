@@ -1,0 +1,12 @@
+<ng-container>
+  <div class="p-fluid">
+    <div class="p-field floating">
+      <label for="email" class="p-sr-only floating__label">Email</label>
+      <input id="email" type="email" class="floating__input" pInputText placeholder="Email">
+    </div>
+    <div class="p-field floating">
+      <label for="password" class="p-sr-only floating__label">Password</label>
+      <p-password id="password" class="floating__input" [(ngModel)]="password" [toggleMask]="true"></p-password>
+    </div>
+  </div>
+</ng-container>
