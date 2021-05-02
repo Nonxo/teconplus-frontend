@@ -10,6 +10,9 @@ import { FormsModule } from "@angular/forms";
 import { InputTextModule } from "primeng/inputtext";
 import { PasswordModule } from "primeng/password";
 import { HeaderComponent } from "./auth/header/header.component";
+import { SelectButtonModule } from "primeng/selectbutton";
+import { RippleModule } from "primeng/ripple";
+import { ButtonModule } from "primeng/button";
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import { HeaderComponent } from "./auth/header/header.component";
     FormsModule,
     InputTextModule,
     PasswordModule,
+    SelectButtonModule,
+    ButtonModule,
+    RippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

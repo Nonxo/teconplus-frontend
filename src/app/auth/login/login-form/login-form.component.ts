@@ -8,6 +8,8 @@ import { Component, OnInit } from "@angular/core";
 export class LoginFormComponent implements OnInit {
   stateOptions: any[];
   password: string;
+  value1: string = "off";
+  inputValue: string;
 
   constructor() {
     this.stateOptions = [

@@ -3,9 +3,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 $enable-responsive-font-sizes: true;
 
+body {
+  margin: 0;
+  font-family: "Mulish", sans-serif;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.text-default {
+  color: $primary-black;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
 
 .primary-text {
-  color: $primary-black;
+  color: $primary-color;
 }
 
 .secondary-text {
@@ -33,7 +48,7 @@ $enable-responsive-font-sizes: true;
 
 .floating__input {
   padding: 0.9rem 1rem;
-  font-size: 1rem;
+  font-size: 14px;
   transition: border-color 0.2s ease;
 }
 

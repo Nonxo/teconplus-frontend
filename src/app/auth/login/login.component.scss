@@ -1,11 +1,17 @@
 .bg-login {
-  background-image: url('../../../assets/img/side@2x.png');
-  height: 100vh;
+  background-image: url('../../../assets/img/side.png');
+  height: 98vh;
   background-repeat: no-repeat;
   background-size: cover;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .form-div__container {
   max-height: 100vh;
-  overflow-y: auto;
+  overflow-y: hidden;
+}
+
+p {
+  font-size: 12px;
 }
