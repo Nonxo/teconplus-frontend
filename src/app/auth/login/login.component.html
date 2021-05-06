@@ -1,14 +1,24 @@
-<div class="p-grid">
-  <div class="p-col-7 p-pr-0">
-    <div class="bg-login p-mb-0 p-mt-2 p-mx-2"></div>
+<div class="p-d-flex">
+  <div class="p-col-7 p-p-0">
+    <div class="bg-login p-m-2" *ngIf="isSignIn"></div>
+    <div class="bg-forgot_password p-mb-0 p-mt-2 p-mx-2" *ngIf="isForgotPassword"></div>
+    <app-header></app-header>
   </div>
-  <div class="p-col form-div__container p-d-flex p-flex-column p-px-5 p-py-3 p-jc-center p-ai-center">
-    <div class="container p-xl-8 py-5">
-      <div class="p-mx-auto">
-        <h1 class="p-mb-1 text-default">Welcome Back</h1>
-        <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Sign in with your email or phone number to continue</p>
-        <app-login-form></app-login-form>
+  <div class="p-col form-div__container p-d-flex p-flex-column p-jc-between">
+    <div class="p-my-auto">
+      <div class="p-mx-auto" style="width: 350px">
+        <ng-container *ngIf="isSignIn">
+          <h1 class="p-mb-1 text-default">Welcome Back</h1>
+          <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Sign in with your email or phone number to continue</p>
+        </ng-container>
+        <ng-container *ngIf="isForgotPassword">
+          <h1 class="p-mb-1 text-default">Forgot Password?</h1>
+          <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Enter the email address or Phone number associated with your account</p>
+        </ng-container>
+        <app-login-form *ngIf="isSignIn"></app-login-form>
+        <app-forgot-password *ngIf="isForgotPassword"></app-forgot-password>
       </div>
     </div>
+    <app-footer></app-footer>
   </div>
 </div>

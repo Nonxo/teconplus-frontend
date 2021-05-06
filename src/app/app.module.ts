@@ -13,6 +13,9 @@ import { HeaderComponent } from "./auth/header/header.component";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { RippleModule } from "primeng/ripple";
 import { ButtonModule } from "primeng/button";
+import { FooterComponent } from "./auth/footer/footer.component";
+import { DropdownModule } from "primeng/dropdown";
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,8 @@ import { ButtonModule } from "primeng/button";
     LoginComponent,
     LoginFormComponent,
     HeaderComponent,
+    FooterComponent,
+    ForgotPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +36,7 @@ import { ButtonModule } from "primeng/button";
     SelectButtonModule,
     ButtonModule,
     RippleModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

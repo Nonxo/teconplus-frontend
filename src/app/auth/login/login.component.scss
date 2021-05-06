@@ -3,12 +3,22 @@
   height: 98vh;
   background-repeat: no-repeat;
   background-size: cover;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.bg-forgot_password {
+  background-image: url('../../../assets/img/side1.png');
+  height: 98vh;
+  background-repeat: no-repeat;
+  background-size: cover;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
 .form-div__container {
-  max-height: 100vh;
+  height: 100vh;
   overflow-y: hidden;
 }
 
