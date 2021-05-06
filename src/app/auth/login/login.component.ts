@@ -12,4 +12,9 @@ export class LoginComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  changeAuthState(event): void {
+    this.isForgotPassword = event;
+    this.isSignIn = false;
+  }
 }

@@ -15,7 +15,7 @@
           <h1 class="p-mb-1 text-default">Forgot Password?</h1>
           <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Enter the email address or Phone number associated with your account</p>
         </ng-container>
-        <app-login-form *ngIf="isSignIn"></app-login-form>
+        <app-login-form *ngIf="isSignIn" (forgotPassword)="changeAuthState($event)"></app-login-form>
         <app-forgot-password *ngIf="isForgotPassword"></app-forgot-password>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "app-login-form",
@@ -10,6 +10,7 @@ export class LoginFormComponent implements OnInit {
   password: string;
   value1: string = "off";
   inputValue: string;
+  @Output() forgotPassword = new EventEmitter<boolean>();
 
   constructor() {
     this.stateOptions = [
@@ -19,4 +20,8 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  resetPassword(): void {
+    this.forgotPassword.emit(true);
+  }
 }
