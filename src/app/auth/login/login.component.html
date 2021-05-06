@@ -5,6 +5,7 @@
     <app-header></app-header>
   </div>
   <div class="p-col form-div__container p-d-flex p-flex-column p-jc-between">
+    <p *ngIf="isForgotPassword" class="text-default p-text-left p-d-inline p-pl-4 p-pt-4 cursor" (click)="back()"><i class="pi pi-chevron-left" style="font-size: .7rem"></i> Go back</p>
     <div class="p-my-auto">
       <div class="p-mx-auto" style="width: 350px">
         <ng-container *ngIf="isSignIn">
