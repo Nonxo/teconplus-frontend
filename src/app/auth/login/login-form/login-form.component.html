@@ -1,21 +1,23 @@
 <ng-container>
-  <p-selectButton [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value"></p-selectButton>
+  <div class="p-fluid">
+    <p-selectButton class="p-button-lg" [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value"></p-selectButton>
+  </div>
 
   <div class="p-fluid p-mt-5">
     <div class="p-field p-mb-5" *ngIf="value1 === 'off'">
         <span class="p-float-label">
-            <input type="text" id="email_address" pInputText [(ngModel)]="inputValue">
+            <input class="p-inputtext-lg" type="text" id="email_address" pInputText [(ngModel)]="inputValue">
             <label for="email_address">Email Address</label>
         </span>
     </div>
 
     <div class="p-field p-grid p-mt-0 p-mb-2" *ngIf="value1 ==='on'">
       <div class="p-field p-md-4">
-        <p-dropdown placeholder="Country Code" optionLabel="name" [showClear]="true"></p-dropdown>
+        <p-dropdown class="" placeholder="Country Code" optionLabel="name" [showClear]="true"></p-dropdown>
       </div>
       <div class="p-field p-md-8">
         <span class="p-float-label">
-            <input type="number" id="phone_number" pInputText [(ngModel)]="inputValue">
+            <input class="p-inputtext-lg" type="number" id="phone_number" pInputText [(ngModel)]="inputValue">
             <label for="phone_number">Phone Number</label>
         </span>
       </div>
@@ -24,7 +26,7 @@
     <div class="p-field">
       <span class="p-float-label p-input-icon-right">
         <i class="pi pi-eye"></i>
-        <input type="password" id="password" pInputText [(ngModel)]="password">
+        <input class="p-inputtext-lg" type="password" id="password" pInputText [(ngModel)]="password">
         <label for="password">Password</label>
       </span>
       <p class="secondary-text p-mt-2 p-text-left cursor" (click)="resetPassword()">Forgot Password?</p>
@@ -32,7 +34,7 @@
 
 
     <div class="p-field p-mt-5 p-mb-3">
-      <p-button label="Sign In" class="sign-in" icon="pi pi-spin pi-spinner" iconPos="right"></p-button>
+      <button pButton label="Sign In" class="p-button-lg" icon="pi pi-spin pi-spinner" iconPos="right"></button>
     </div>
     <p class="text-default p-text-left p-d-inline">Trouble signing in?
       <span class="primary-text p-ml-1 cursor">Contact support</span>
