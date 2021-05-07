@@ -15,7 +15,11 @@ import { RippleModule } from "primeng/ripple";
 import { ButtonModule } from "primeng/button";
 import { FooterComponent } from "./auth/footer/footer.component";
 import { DropdownModule } from "primeng/dropdown";
-import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
+import { AuthenticationService } from "./services/authentication.service";
+import { HttpClientModule } from "@angular/common/http";
+import { MessageService } from "primeng/api";
+import { ToastModule } from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -37,8 +41,10 @@ import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.
     ButtonModule,
     RippleModule,
     DropdownModule,
+    HttpClientModule,
+    ToastModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

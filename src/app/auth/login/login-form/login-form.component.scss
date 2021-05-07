@@ -10,6 +10,14 @@ label {
   font-size: 14px;
 }
 
+:host ::ng-deep .p-selectbutton {
+  height: 45px;
+}
+
+:host ::ng-deep .p-dropdown {
+  height: 45px;
+}
+
 :host ::ng-deep .p-float-label {
   color: #CCA43C;
 }

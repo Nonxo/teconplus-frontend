@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <ng-container>
   <div class="p-fluid">
     <p-selectButton class="p-button-lg" [options]="stateOptions" [(ngModel)]="value1" optionLabel="label" optionValue="value"></p-selectButton>
@@ -6,18 +7,18 @@
   <div class="p-fluid p-mt-5">
     <div class="p-field p-mb-5" *ngIf="value1 === 'off'">
         <span class="p-float-label">
-            <input class="p-inputtext-lg" type="text" id="email_address" pInputText [(ngModel)]="inputValue">
+            <input class="p-inputtext-lg" type="text" id="email_address" pInputText [(ngModel)]="user.email">
             <label for="email_address">Email Address</label>
         </span>
     </div>
 
     <div class="p-field p-grid p-mt-0 p-mb-2" *ngIf="value1 ==='on'">
       <div class="p-field p-md-4">
-        <p-dropdown class="" placeholder="Country Code" optionLabel="name" [showClear]="true"></p-dropdown>
+        <p-dropdown placeholder="Country Code" optionValue="callingCode" [options]="countryCode" optionLabel="country" [(ngModel)]="user.countryCode" [showClear]="true"></p-dropdown>
       </div>
       <div class="p-field p-md-8">
         <span class="p-float-label">
-            <input class="p-inputtext-lg" type="number" id="phone_number" pInputText [(ngModel)]="inputValue">
+            <input class="p-inputtext-lg" type="number" id="phone_number" pInputText [(ngModel)]="user.phoneNumber">
             <label for="phone_number">Phone Number</label>
         </span>
       </div>
@@ -25,8 +26,9 @@
 
     <div class="p-field">
       <span class="p-float-label p-input-icon-right">
-        <i class="pi pi-eye"></i>
-        <input class="p-inputtext-lg" type="password" id="password" pInputText [(ngModel)]="password">
+        <i class="pi pi-eye" *ngIf="!showPassword" (click)="showPassword = !showPassword"></i>
+        <i class="pi pi-eye-slash" *ngIf="showPassword" (click)="showPassword = !showPassword"></i>
+        <input class="p-inputtext-lg" [type]="showPassword ? 'text': 'password'" id="password" pInputText [(ngModel)]="user.password">
         <label for="password">Password</label>
       </span>
       <p class="secondary-text p-mt-2 p-text-left cursor" (click)="resetPassword()">Forgot Password?</p>
@@ -34,7 +36,7 @@
 
 
     <div class="p-field p-mt-5 p-mb-3">
-      <button pButton label="Sign In" class="p-button-lg" icon="pi pi-spin pi-spinner" iconPos="right"></button>
+      <button pButton label="Sign In" class="p-button-lg" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" (click)="loginUser()" [disabled]="isLoading"></button>
     </div>
     <p class="text-default p-text-left p-d-inline">Trouble signing in?
       <span class="primary-text p-ml-1 cursor">Contact support</span>
