@@ -46,6 +46,14 @@ export class LoginFormComponent implements OnInit {
   }
 
   loginUser(): void {
+    if (this.value1 === "off") {
+      this.user.countryCode = null;
+      this.user.phoneNumber = null;
+    } else {
+      this.user.email = null;
+      this.user.countryCode = this.user.countryCode.substring(1);
+      console.log(this.user.countryCode);
+    }
     this.isLoading = true;
     this.authSvc
       .login(this.user)
@@ -55,7 +63,7 @@ export class LoginFormComponent implements OnInit {
             this.isLoading = false;
             this.messageService.add({
               severity: "error",
-              summary: "User Authentication",
+              summary: "User Login Failed",
               detail: err,
             });
             return throwError(err);

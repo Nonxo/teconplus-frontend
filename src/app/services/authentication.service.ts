@@ -17,4 +17,10 @@ export class AuthenticationService {
       .post<any>(environment.apiBaseUrl + `/users/login`, credentials)
       .pipe(catchError(handleError));
   }
+
+  forgotPassword(credentials: Auth): Observable<any> {
+    return this.http
+      .post(environment.apiBaseUrl + `/users/forgot-password`, credentials)
+      .pipe(catchError(handleError));
+  }
 }

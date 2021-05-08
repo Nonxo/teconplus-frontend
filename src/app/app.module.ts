@@ -20,6 +20,7 @@ import { AuthenticationService } from "./services/authentication.service";
 import { HttpClientModule } from "@angular/common/http";
 import { MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";
+import { InfoPageComponent } from './auth/forgot-password/info-page/info-page.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ToastModule } from "primeng/toast";
     HeaderComponent,
     FooterComponent,
     ForgotPasswordComponent,
+    InfoPageComponent,
   ],
   imports: [
     BrowserModule,
