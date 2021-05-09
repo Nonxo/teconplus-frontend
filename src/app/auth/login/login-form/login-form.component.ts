@@ -52,7 +52,6 @@ export class LoginFormComponent implements OnInit {
     } else {
       this.user.email = null;
       this.user.countryCode = this.user.countryCode.substring(1);
-      console.log(this.user.countryCode);
     }
     this.isLoading = true;
     this.authSvc
