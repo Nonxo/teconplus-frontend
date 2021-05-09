@@ -10,7 +10,7 @@
     <div class="p-fluid p-mt-5">
       <div class="p-field p-mb-5" *ngIf="value1 === 'off'">
         <span class="p-float-label">
-          <input class="p-inputtext-lg ng-invalid" #email="ngModel" type="text" name="email" id="email_address" pInputText [(ngModel)]="user.email" required>
+          <input class="p-inputtext-lg" #email="ngModel" type="text" name="email" id="email_address" pInputText [(ngModel)]="user.email" required>
           <label for="email_address">Email Address</label>
         </span>
         <small id="email_address-help" class="p-error" *ngIf="email.invalid && (email.dirty || email.touched)">Email Address is not available.</small>
