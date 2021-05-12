@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Auth } from "../../models/auth";
 import { AuthenticationService } from "../../services/authentication.service";
 import { catchError } from "rxjs/operators";
@@ -13,6 +13,7 @@ import { MessageService, PrimeNGConfig } from "primeng/api";
 export class ResetPasswordComponent implements OnInit {
   isResetSuccessful: boolean;
   isLoading: boolean;
+  @Output() backToSignIn = new EventEmitter<boolean>();
 
   auth: Auth;
 
@@ -49,5 +50,9 @@ export class ResetPasswordComponent implements OnInit {
         this.isResetSuccessful = true;
         console.log(res);
       });
+  }
+
+  navigate() {
+    this.backToSignIn.emit(true);
   }
 }

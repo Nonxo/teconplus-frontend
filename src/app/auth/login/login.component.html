@@ -20,9 +20,9 @@
           <h1 class="p-mb-1 text-default">Reset Password</h1>
           <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Set your new password</p>
         </ng-container>
-        <app-login-form *ngIf="isSignIn" (forgotPassword)="changeAuthState($event)"></app-login-form>
+        <app-login-form *ngIf="isSignIn" (forgotPassword)="changeAuthStateToForgotPassword($event)"></app-login-form>
         <app-forgot-password *ngIf="isForgotPassword"></app-forgot-password>
-        <app-reset-password *ngIf="isResetPassword"></app-reset-password>
+        <app-reset-password *ngIf="isResetPassword" (backToSignIn)="changeAuthStateToSignIn($event)"></app-reset-password>
       </div>
     </div>
     <app-footer></app-footer>

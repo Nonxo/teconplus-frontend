@@ -27,9 +27,14 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  changeAuthState(event): void {
+  changeAuthStateToForgotPassword(event): void {
     this.isForgotPassword = event;
     this.isSignIn = false;
+  }
+
+  changeAuthStateToSignIn(event) {
+    this.isResetPassword = false;
+    this.isSignIn = event;
   }
 
   back(): void {
