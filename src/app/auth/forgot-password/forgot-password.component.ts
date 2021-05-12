@@ -17,7 +17,6 @@ export class ForgotPasswordComponent implements OnInit {
   value1: string = "off";
   user: Auth;
   countryCode = CountryCode;
-  isPasswordReset: boolean;
   isLoading: boolean;
 
   constructor(

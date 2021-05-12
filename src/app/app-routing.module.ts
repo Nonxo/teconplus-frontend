@@ -11,6 +11,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./portal/portal.module").then((m) => m.PortalModule),
   },
+  { path: "reset", component: LoginComponent },
 ];
 
 @NgModule({

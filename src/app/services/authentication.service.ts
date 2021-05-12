@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Auth } from "../models/auth";
 import { environment } from "../../environments/environment";
@@ -22,5 +22,19 @@ export class AuthenticationService {
     return this.http
       .post(environment.apiBaseUrl + `/users/forgot-password`, credentials)
       .pipe(catchError(handleError));
+  }
+
+  resetPassword(credentials: Auth): Observable<any> {
+    debugger;
+    const reqHeader = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem("reset-token")}`,
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    });
+    return this.http.put(
+      environment.apiBaseUrl + `/users/reset-password`,
+      credentials,
+      { headers: reqHeader }
+    );
   }
 }

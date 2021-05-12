@@ -21,6 +21,7 @@ import { MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";
 import { InfoPageComponent } from "./auth/forgot-password/info-page/info-page.component";
 import { DividerModule } from "primeng/divider";
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DividerModule } from "primeng/divider";
     FooterComponent,
     ForgotPasswordComponent,
     InfoPageComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

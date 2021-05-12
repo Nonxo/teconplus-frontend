@@ -1,7 +1,7 @@
 <div class="p-d-flex">
   <div class="p-col-7 p-p-0">
     <div class="bg-login p-m-2" *ngIf="isSignIn"></div>
-    <div class="bg-forgot_password p-mb-0 p-mt-2 p-mx-2" *ngIf="isForgotPassword"></div>
+    <div class="bg-forgot_password p-mb-0 p-mt-2 p-mx-2" *ngIf="isForgotPassword || isResetPassword"></div>
     <app-header></app-header>
   </div>
   <div class="p-col form-div__container p-d-flex p-flex-column p-jc-between">
@@ -16,8 +16,13 @@
           <h1 class="p-mb-1 text-default">Forgot Password?</h1>
           <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Enter the email address or Phone number associated with your account</p>
         </ng-container>
+        <ng-container *ngIf="isResetPassword">
+          <h1 class="p-mb-1 text-default">Reset Password</h1>
+          <p class="p-text-secondary p-small p-mt-0 p-mx-1 p-mb-4 secondary-text">Set your new password</p>
+        </ng-container>
         <app-login-form *ngIf="isSignIn" (forgotPassword)="changeAuthState($event)"></app-login-form>
         <app-forgot-password *ngIf="isForgotPassword"></app-forgot-password>
+        <app-reset-password *ngIf="isResetPassword"></app-reset-password>
       </div>
     </div>
     <app-footer></app-footer>
