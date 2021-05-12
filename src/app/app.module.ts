@@ -16,11 +16,11 @@ import { ButtonModule } from "primeng/button";
 import { FooterComponent } from "./auth/footer/footer.component";
 import { DropdownModule } from "primeng/dropdown";
 import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
-import { AuthenticationService } from "./services/authentication.service";
 import { HttpClientModule } from "@angular/common/http";
 import { MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";
-import { InfoPageComponent } from './auth/forgot-password/info-page/info-page.component';
+import { InfoPageComponent } from "./auth/forgot-password/info-page/info-page.component";
+import { DividerModule } from "primeng/divider";
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import { InfoPageComponent } from './auth/forgot-password/info-page/info-page.co
     DropdownModule,
     HttpClientModule,
     ToastModule,
+    DividerModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

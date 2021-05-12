@@ -11,11 +11,11 @@ label {
 }
 
 :host ::ng-deep .p-selectbutton {
-  height: 45px;
+  height: 39px;
 }
 
 :host ::ng-deep .p-dropdown {
-  height: 45px;
+  height: 39px;
 }
 
 :host ::ng-deep .p-float-label {
@@ -54,7 +54,7 @@ label {
   background: #CCA43C;
   border: 1px solid transparent;
   color: #ffffff;
-  height: 45px;
+  height: 39px;
 }
 
 :host ::ng-deep .p-button:hover {
@@ -75,4 +75,9 @@ label {
 
 small {
   font-size: 11px;
+}
+
+:host ::ng-deep .p-inputtext.p-inputtext-lg {
+  font-size: 0.9rem;
+  font-weight: normal;
 }
