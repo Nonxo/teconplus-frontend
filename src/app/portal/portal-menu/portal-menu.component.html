@@ -1,0 +1,8 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="end">
+  </ng-template>
+  <ng-template pTemplate="end">
+    <i class="pi pi-bell p-mr-4 p-text-secondary" pBadge style="font-size: 1.0rem" severity="danger" (click)="menu.toggle($event)"></i>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+  </ng-template>
+</p-menubar>
