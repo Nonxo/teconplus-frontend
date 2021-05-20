@@ -9,9 +9,35 @@ import { ButtonModule } from "primeng/button";
 import { SharedModule } from "primeng/api";
 import { BadgeModule } from "primeng/badge";
 import { MenuModule } from "primeng/menu";
+import { SplitterModule } from "primeng/splitter";
+import { ToolbarModule } from "primeng/toolbar";
+import { DividerModule } from "primeng/divider";
+import { UserManagementComponent } from "./user-management/user-management.component";
+import { DataViewModule } from "primeng/dataview";
+import { DropdownModule } from "primeng/dropdown";
+import { TableModule } from "primeng/table";
+import { ToastModule } from "primeng/toast";
+import { TagModule } from "primeng/tag";
+import { AvatarModule } from "primeng/avatar";
+import { InputTextModule } from "primeng/inputtext";
+import { FormsModule } from "@angular/forms";
+import { SplitButtonModule } from "primeng/splitbutton";
+import { OverlayPanelModule } from "primeng/overlaypanel";
+import { DialogModule } from "primeng/dialog";
+import { RippleModule } from "primeng/ripple";
+import { ContextMenuModule } from "primeng/contextmenu";
+import { InputSwitchModule } from "primeng/inputswitch";
+import { SelectButtonModule } from "primeng/selectbutton";
+import { CheckboxModule } from "primeng/checkbox";
+import { CalendarModule } from "primeng/calendar";
 
 @NgModule({
-  declarations: [PortalComponent, PortalNavComponent, PortalMenuComponent],
+  declarations: [
+    PortalComponent,
+    PortalNavComponent,
+    PortalMenuComponent,
+    UserManagementComponent,
+  ],
   imports: [
     CommonModule,
     PortalRoutingModule,
@@ -20,6 +46,27 @@ import { MenuModule } from "primeng/menu";
     ButtonModule,
     SharedModule,
     BadgeModule,
+    SplitterModule,
+    ToolbarModule,
+    DividerModule,
+    DataViewModule,
+    DropdownModule,
+    TableModule,
+    ToastModule,
+    TagModule,
+    AvatarModule,
+    InputTextModule,
+    FormsModule,
+    SplitButtonModule,
+    OverlayPanelModule,
+    DialogModule,
+    RippleModule,
+    ContextMenuModule,
+    InputSwitchModule,
+    SelectButtonModule,
+    CheckboxModule,
+    CalendarModule,
   ],
+  providers: [],
 })
 export class PortalModule {}

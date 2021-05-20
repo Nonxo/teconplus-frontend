@@ -16,12 +16,13 @@ import { ButtonModule } from "primeng/button";
 import { FooterComponent } from "./auth/footer/footer.component";
 import { DropdownModule } from "primeng/dropdown";
 import { ForgotPasswordComponent } from "./auth/forgot-password/forgot-password.component";
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { MessageService } from "primeng/api";
 import { ToastModule } from "primeng/toast";
 import { InfoPageComponent } from "./auth/forgot-password/info-page/info-page.component";
 import { DividerModule } from "primeng/divider";
-import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { ResetPasswordComponent } from "./auth/reset-password/reset-password.component";
+import { ApiInterceptor } from "./services/api-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,14 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
     ToastModule,
     DividerModule,
   ],
-  providers: [MessageService],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

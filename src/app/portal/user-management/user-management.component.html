@@ -1,0 +1,307 @@
+<p-toast></p-toast>
+<ng-container *ngIf="users">
+  <app-portal-nav></app-portal-nav>
+  <app-portal-menu></app-portal-menu>
+</ng-container>
+
+<div class="container" *ngIf="users">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h5>User Management</h5>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-right p-mr-2">
+      <i class="pi pi-search"></i>
+      <input type="text" class="p-inputtext-sm" pInputText placeholder="Search user management" [(ngModel)]="value3" />
+    </span>
+      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by user type" optionLabel="name" [showClear]="true"></p-dropdown>
+      <p-splitButton class="p-mr-3" label="Download user list" [model]="filterOptions"></p-splitButton>
+      <p style="font-size: 0.7rem">Showing 1-20 of 48  <i class="pi pi-chevron-left p-mx-3" style="font-size: 0.7rem"></i> <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i></p>
+    </div>
+  </p-toolbar>
+  <div class="body">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end p-my-3 p-mx-3">
+      <p-button label="Bulk upload Users" class="p-mr-2" icon="pi pi-users" iconPos="left"></p-button>
+      <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value">
+        <ng-template let-item>
+          <i [class]="item.icon"></i>
+        </ng-template>
+      </p-selectButton>
+    </div>
+
+   <!---- LiSTITEM ------->
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
+    <p-table [value]="users" [resizableColumns]="true" *ngIf="layout === 'list'" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedUser" [contextMenu]="cm" dataKey="code">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn>#</th>
+          <th pResizableColumn></th>
+          <th pResizableColumn>Full Name</th>
+          <th pResizableColumn>Email</th>
+          <th pResizableColumn>Phone Number</th>
+          <th pResizableColumn>Role</th>
+          <th pResizableColumn>Fallback Role</th>
+          <th pResizableColumn>Duration</th>
+          <th pResizableColumn>Date created</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
+        <tr [pContextMenuRow]="user">
+          <td>{{user.id}}</td>
+          <td>
+            <p-avatar
+              icon="pi pi-user"
+              styleClass=""
+              size="small"
+              shape="circle"
+            ></p-avatar>
+          </td>
+          <td>{{user.fullName}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.phoneNumber}}</td>
+          <td>
+            <p-tag value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+          </td>
+          <td>
+            <p-tag class="tag" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+          </td>
+          <td>
+            {{user.duration ? user.duration : '-'}}
+          </td>
+          <td>
+            {{user.createdOn | date: 'h:mm a, MMM d, y'}}
+          </td>
+<!--          <td>-->
+<!--            <i *ngIf="user.role.name !== 'SU'" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></i>-->
+<!--            <p-menu #menu [model]="items" [popup]="true"></p-menu>-->
+<!--          </td>-->
+        </tr>
+
+        <p-dialog header="User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+                  [draggable]="false" [resizable]="false">
+          <span class="time-description"><strong>Date created</strong>  {{user.createdOn | date }}</span>
+          <div class="p-d-flex p-flex-column">
+            <div class="p-as-center p-mb-5">
+              <p-avatar
+                icon="pi pi-user"
+                styleClass=""
+                size="xlarge"
+                shape="circle"
+              ></p-avatar>
+            </div>
+            <label class="info-label">USER INFORMATION</label>
+            <div class="content p-mt-2">
+              <div class="p-field p-grid">
+                <div class="p-field p-md-12">
+                  <label for="firstName1">Full Name</label>
+                  <p *ngIf="!editMode">{{user.fullName}}</p>
+                  <input *ngIf="editMode" id="firstName1" name="fullname" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.firstName" />
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6">
+                  <label for="phone1">Phone Number</label>
+                  <p *ngIf="!editMode">{{user.phoneNumber}}</p>
+                  <input *ngIf="editMode" id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="user.phoneNumber" />
+                </div>
+                <div class="p-field p-md-6">
+                  <label for="email1">Email Address</label>
+                  <p *ngIf="!editMode">{{user.email}}</p>
+                  <input *ngIf="editMode" id="email1" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="user.email" />
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6">
+                  <label for="role1">Role</label>
+                  <p-tag class="tag" *ngIf="!editMode" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+                  <input *ngIf="editMode" id="role1" name="role" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.role.name" />
+                </div>
+                <div class="p-field p-md-6">
+                  <label for="frole1">Fall Back Role</label>
+                  <p-tag class="tag" *ngIf="!editMode" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+                  <input *ngIf="editMode" id="frole1" name="tempRole" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="user.tempRole" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ng-template pTemplate="footer">
+            <p-button class="" label="Deactivate" styleClass="p-button-text p-button-lg"></p-button>
+            <p-button styleClass="p-button-lg" (click)="editMode ? update(user, rowIndex) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></p-button>
+          </ng-template>
+        </p-dialog>
+      </ng-template>
+
+    </p-table>
+
+    <!------- GRIDITEM -------->
+    <div class="p-d-flex p-flex-column p-flex-md-row" *ngIf="layout === 'grid'">
+      <ng-container>
+        <div class="p-col-12 p-md-3">
+          <div class="user-grid-item default__card p-ml-3 p-ml-2 create__card" (click)="showCreateDialog()">
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
+              <div class="p-mt-6">
+                <p-avatar image="assets/img/Group4419.svg" size="xlarge"></p-avatar>
+              </div>
+              <p class="p-mb-4">Create User</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="users">
+        <div class="p-col-12 p-md-3" *ngFor="let user of users; let i = index">
+          <div class="user-grid-item default__card p-ml-3 p-ml-2">
+            <i class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event)"></i>
+            <p-menu #menu [model]="items" [popup]="true"></p-menu>
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
+              <div class="p-my-auto">
+                <p-avatar
+                  icon="pi pi-user"
+                  styleClass=""
+                  size="xlarge"
+                  shape="circle"
+                ></p-avatar>
+              </div>
+              <p class="p-mb-0"><strong>{{user.fullName}}</strong></p>
+              <p class="text-email p-mb-3">{{user.email}}</p>
+              <p-tag value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+            </div>
+          </div>
+
+          <p-dialog header="User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+                    [draggable]="false" [resizable]="false">
+            <span class="time-description"><strong>Date created</strong>  {{user.createdOn | date }}</span>
+            <div class="p-d-flex p-flex-column">
+              <div class="p-as-center p-mb-5">
+                <p-avatar
+                  icon="pi pi-user"
+                  styleClass=""
+                  size="xlarge"
+                  shape="circle"
+                ></p-avatar>
+              </div>
+              <label class="info-label">USER INFORMATION</label>
+              <div class="content p-mt-2">
+                <div class="p-field p-grid">
+                  <div class="p-field p-md-12">
+                    <label for="firstName">Full Name</label>
+                    <p *ngIf="!editMode">{{user.fullName}}</p>
+                    <input *ngIf="editMode" id="firstName" name="fullname" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.firstName" />
+                  </div>
+                </div>
+                <div class="p-field p-grid">
+                  <div class="p-field p-md-6">
+                    <label for="phone">Phone Number</label>
+                    <p *ngIf="!editMode">{{user.phoneNumber}}</p>
+                    <input *ngIf="editMode" id="phone" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="user.phoneNumber" />
+                  </div>
+                  <div class="p-field p-md-6">
+                    <label for="email">Email Address</label>
+                    <p *ngIf="!editMode">{{user.email}}</p>
+                    <input *ngIf="editMode" id="email" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="user.email" />
+                  </div>
+                </div>
+                <div class="p-field p-grid">
+                  <div class="p-field p-md-6">
+                    <label for="role">Role</label>
+                    <p-tag class="tag" *ngIf="!editMode" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+                    <input *ngIf="editMode" id="role" name="role" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.role.name" />
+                  </div>
+                  <div class="p-field p-md-6">
+                    <label for="frole">Fall Back Role</label>
+                    <p-tag class="tag" *ngIf="!editMode" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+                    <input *ngIf="editMode" name="frole" id="frole" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="user.tempRole" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ng-template pTemplate="footer">
+              <p-button class="" label="Deactivate" styleClass="p-button-text p-button-lg"></p-button>
+              <p-button styleClass="p-button-lg" (click)="editMode ? update(user, i) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></p-button>
+            </ng-template>
+          </p-dialog>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</div>
+
+
+<p-dialog header="Create User" [(visible)]="displayCreateModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="true">
+  <div class="p-d-flex p-flex-column">
+    <label class="info-label">USER INFORMATION</label>
+    <div class="content p-mt-2">
+      <form (ngSubmit)="create(createUserForm)" #createUserForm="ngForm">
+        <div class="p-fluid">
+          <div class="p-field p-mb-5">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" placeholder="Tecon Plus" name="fullname" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.fullName" />
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-6 p-mb-5">
+              <label for="email_address">Email Address</label>
+              <input #email="ngModel" type="text" placeholder="info@teconplus.com" name="email" id="email_address" pInputText [(ngModel)]="createUserModel.email"
+                     pattern="(?![_.-])((?![_.-][_.-])[a-z\d_.-]){0,63}[a-z\d]@(?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.(((?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.)|)(([a-z]{2,14}\.)|)[a-z]{2,14}" required>
+              <small id="email_address-help" class="p-error" *ngIf="email.invalid && (email.dirty || email.touched)">Email Address is not valid.</small>
+            </div>
+            <div class="p-field p-md-6 p-mb-3">
+              <label for="newPhone">Phone Number</label>
+              <input id="newPhone" type="tel" placeholder="080 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" />
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-6">
+              <label for="role">Select Role</label>
+              <p-dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="selectedRole.name" optionLabel="name" [showClear]="true" required></p-dropdown>
+            </div>
+            <div class="p-field p-md-6">
+              <label for="designation">Select Designation</label>
+              <p-dropdown id="designation" [autoDisplayFirst]="false" name="tempRoles"  optionLabel="tempRoles" [showClear]="true" required></p-dropdown>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-8">
+              <p class="p-mt-1">Make this role time bound</p>
+            </div>
+            <div class="p-field p-md-4">
+              <p-inputSwitch name="switch" (onChange)="switch($event)" styleClass="p-inputtext-sm"></p-inputSwitch>
+            </div>
+          </div>
+
+          <ng-container *ngIf="timeBound">
+            <p class="p-mb-3">Set a duration this role should last</p>
+
+            <div class="p-field p-grid">
+              <div class="p-field p-md-7">
+                <label for="range">Duration</label>
+                <p-calendar id="range" [(ngModel)]="rangeDates" name="range" selectionMode="range" [readonlyInput]="true" [showIcon]="true" inputId="range"></p-calendar>
+              </div>
+            </div>
+
+
+            <div class="p-field p-grid">
+              <div class="p-field p-md-6">
+                <label for="fallback_role">Fallback Role</label>
+                <p-dropdown id="fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="createUserModel.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="p-field-checkbox">
+      <p-checkbox name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
+      <label for="binary">Create Another</label>
+    </div>
+    <p-button styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+  </ng-template>
+</p-dialog>
+
+

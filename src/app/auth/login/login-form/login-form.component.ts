@@ -6,6 +6,7 @@ import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
 import { MessageService, PrimeNGConfig } from "primeng/api";
 import { ToastService } from "../../../services/toast.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login-form",
@@ -28,7 +29,8 @@ export class LoginFormComponent implements OnInit {
     private authSvc: AuthenticationService,
     private toastSvc: ToastService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private router: Router
   ) {
     this.stateOptions = [
       { label: "Email Address", value: "off" },
@@ -72,6 +74,8 @@ export class LoginFormComponent implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
         console.log(res);
+        localStorage.setItem("token", res.data[1]);
+        this.router.navigate(["/portal/users"]);
       });
   }
 }
