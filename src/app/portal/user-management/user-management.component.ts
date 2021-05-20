@@ -33,7 +33,9 @@ export class UserManagementComponent implements OnInit {
   roles: Role[] = [];
   selectedRole: Role;
   period: any[] = [];
+  deactivateModal: boolean;
   rangeDates: any;
+  selectedUserIndex: number;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -70,18 +72,28 @@ export class UserManagementComponent implements OnInit {
         label: "View details",
         icon: "pi pi-info-circle",
         command: () => {
-          this.showModalDialog();
+          this.displayModal = true;
         },
       },
       {
         label: "Edit users details",
         icon: "pi pi-pencil",
-        command: () => {},
+        command: () => {
+          this.displayModal = true;
+          this.editMode = true;
+        },
       },
       {
         label: "Reset Password",
         icon: "pi pi-refresh",
         routerLink: "/fileupload",
+      },
+      {
+        label: "Deactivate",
+        icon: "pi pi-exclamation-circle",
+        command: () => {
+          this.deactivateModal = true;
+        },
       },
     ];
 
@@ -203,12 +215,48 @@ export class UserManagementComponent implements OnInit {
       });
   }
 
-  showModalDialog() {
-    this.displayModal = true;
+  deactivate(id: string) {
+    this.isLoading = true;
+    this.userSvc
+      .deactivate(id)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageSvc.add({
+              severity: "error",
+              summary: "User Update Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.deactivateModal = false;
+        this.isLoading = false;
+        this.messageSvc.add({
+          severity: "success",
+          summary: "User Updated",
+          detail: res.message,
+        });
+        this.users = this.users.filter((user) => user.id !== id);
+        this.displayModal = false;
+      });
   }
 
   showCreateDialog() {
     this.displayCreateModal = true;
+  }
+
+  showDeactivateDialog() {
+    this.deactivateModal = true;
+    this.displayModal = false;
+  }
+
+  getSelectedUser(user: User, index) {
+    this.selectedUser = user;
+    this.selectedUserIndex = index;
   }
 
   switch(event) {

@@ -34,7 +34,7 @@ export class UserService {
 
   deactivate(userId: string) {
     return this.http
-      .put(environment.apiBaseUrl + `/users/${userId}`, null)
+      .put(environment.apiBaseUrl + `/users/deactivate/${userId}`, null)
       .pipe(catchError(handleError));
   }
 

@@ -46,7 +46,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
-        <tr [pContextMenuRow]="user">
+        <tr [pContextMenuRow]="user" (click)="getSelectedUser(user, rowIndex)">
           <td>{{user.id}}</td>
           <td>
             <p-avatar
@@ -71,71 +71,14 @@
           <td>
             {{user.createdOn | date: 'h:mm a, MMM d, y'}}
           </td>
-<!--          <td>-->
-<!--            <i *ngIf="user.role.name !== 'SU'" class="pi pi-ellipsis-h" (click)="menu.toggle($event)"></i>-->
-<!--            <p-menu #menu [model]="items" [popup]="true"></p-menu>-->
-<!--          </td>-->
-        </tr>
 
-        <p-dialog header="User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
-                  [draggable]="false" [resizable]="false">
-          <span class="time-description"><strong>Date created</strong>  {{user.createdOn | date }}</span>
-          <div class="p-d-flex p-flex-column">
-            <div class="p-as-center p-mb-5">
-              <p-avatar
-                icon="pi pi-user"
-                styleClass=""
-                size="xlarge"
-                shape="circle"
-              ></p-avatar>
-            </div>
-            <label class="info-label">USER INFORMATION</label>
-            <div class="content p-mt-2">
-              <div class="p-field p-grid">
-                <div class="p-field p-md-12">
-                  <label for="firstName1">Full Name</label>
-                  <p *ngIf="!editMode">{{user.fullName}}</p>
-                  <input *ngIf="editMode" id="firstName1" name="fullname" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.firstName" />
-                </div>
-              </div>
-              <div class="p-field p-grid">
-                <div class="p-field p-md-6">
-                  <label for="phone1">Phone Number</label>
-                  <p *ngIf="!editMode">{{user.phoneNumber}}</p>
-                  <input *ngIf="editMode" id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="user.phoneNumber" />
-                </div>
-                <div class="p-field p-md-6">
-                  <label for="email1">Email Address</label>
-                  <p *ngIf="!editMode">{{user.email}}</p>
-                  <input *ngIf="editMode" id="email1" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="user.email" />
-                </div>
-              </div>
-              <div class="p-field p-grid">
-                <div class="p-field p-md-6">
-                  <label for="role1">Role</label>
-                  <p-tag class="tag" *ngIf="!editMode" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
-                  <input *ngIf="editMode" id="role1" name="role" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.role.name" />
-                </div>
-                <div class="p-field p-md-6">
-                  <label for="frole1">Fall Back Role</label>
-                  <p-tag class="tag" *ngIf="!editMode" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
-                  <input *ngIf="editMode" id="frole1" name="tempRole" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="user.tempRole" />
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <ng-template pTemplate="footer">
-            <p-button class="" label="Deactivate" styleClass="p-button-text p-button-lg"></p-button>
-            <p-button styleClass="p-button-lg" (click)="editMode ? update(user, rowIndex) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></p-button>
-          </ng-template>
-        </p-dialog>
       </ng-template>
 
     </p-table>
 
     <!------- GRIDITEM -------->
-    <div class="p-d-flex p-flex-column p-flex-md-row" *ngIf="layout === 'grid'">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap" *ngIf="layout === 'grid'">
       <ng-container>
         <div class="p-col-12 p-md-3">
           <div class="user-grid-item default__card p-ml-3 p-ml-2 create__card" (click)="showCreateDialog()">
@@ -151,7 +94,7 @@
       <ng-container *ngIf="users">
         <div class="p-col-12 p-md-3" *ngFor="let user of users; let i = index">
           <div class="user-grid-item default__card p-ml-3 p-ml-2">
-            <i class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event)"></i>
+            <i class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event); getSelectedUser(user, i)"></i>
             <p-menu #menu [model]="items" [popup]="true"></p-menu>
             <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
               <div class="p-my-auto">
@@ -167,60 +110,6 @@
               <p-tag value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
             </div>
           </div>
-
-          <p-dialog header="User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
-                    [draggable]="false" [resizable]="false">
-            <span class="time-description"><strong>Date created</strong>  {{user.createdOn | date }}</span>
-            <div class="p-d-flex p-flex-column">
-              <div class="p-as-center p-mb-5">
-                <p-avatar
-                  icon="pi pi-user"
-                  styleClass=""
-                  size="xlarge"
-                  shape="circle"
-                ></p-avatar>
-              </div>
-              <label class="info-label">USER INFORMATION</label>
-              <div class="content p-mt-2">
-                <div class="p-field p-grid">
-                  <div class="p-field p-md-12">
-                    <label for="firstName">Full Name</label>
-                    <p *ngIf="!editMode">{{user.fullName}}</p>
-                    <input *ngIf="editMode" id="firstName" name="fullname" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.firstName" />
-                  </div>
-                </div>
-                <div class="p-field p-grid">
-                  <div class="p-field p-md-6">
-                    <label for="phone">Phone Number</label>
-                    <p *ngIf="!editMode">{{user.phoneNumber}}</p>
-                    <input *ngIf="editMode" id="phone" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="user.phoneNumber" />
-                  </div>
-                  <div class="p-field p-md-6">
-                    <label for="email">Email Address</label>
-                    <p *ngIf="!editMode">{{user.email}}</p>
-                    <input *ngIf="editMode" id="email" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="user.email" />
-                  </div>
-                </div>
-                <div class="p-field p-grid">
-                  <div class="p-field p-md-6">
-                    <label for="role">Role</label>
-                    <p-tag class="tag" *ngIf="!editMode" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
-                    <input *ngIf="editMode" id="role" name="role" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="user.role.name" />
-                  </div>
-                  <div class="p-field p-md-6">
-                    <label for="frole">Fall Back Role</label>
-                    <p-tag class="tag" *ngIf="!editMode" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
-                    <input *ngIf="editMode" name="frole" id="frole" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="user.tempRole" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <ng-template pTemplate="footer">
-              <p-button class="" label="Deactivate" styleClass="p-button-text p-button-lg"></p-button>
-              <p-button styleClass="p-button-lg" (click)="editMode ? update(user, i) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></p-button>
-            </ng-template>
-          </p-dialog>
         </div>
       </ng-container>
     </div>
@@ -229,6 +118,7 @@
 </div>
 
 
+<!--------- Create a User Modal---------->
 <p-dialog header="Create User" [(visible)]="displayCreateModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000"
           [draggable]="false" [resizable]="true">
   <div class="p-d-flex p-flex-column">
@@ -254,7 +144,7 @@
           </div>
           <div class="p-field p-grid">
             <div class="p-field p-md-6">
-              <label for="role">Select Role</label>
+              <label for="select_role">Select Role</label>
               <p-dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="selectedRole.name" optionLabel="name" [showClear]="true" required></p-dropdown>
             </div>
             <div class="p-field p-md-6">
@@ -294,13 +184,90 @@
       </form>
     </div>
   </div>
-
   <ng-template pTemplate="footer">
     <div class="p-field-checkbox">
-      <p-checkbox name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
+      <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>
-    <p-button styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+    <p-button (click)="create(createUserForm)" styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+<!------- Deactivate User Modal--------->
+<p-dialog header="Deactivate User?" [(visible)]="deactivateModal" [style]="{width: '30vw'}" [baseZIndex]="10000">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-as-center">
+      <p-avatar
+        icon="pi pi-user"
+        styleClass=""
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
+    </div>
+  </div>
+  <p class="p-as-center" style="color: #605D71">Your are about to deactivate <strong>{{selectedUser.fullName}}</strong> as a user on this company. Are you sure you want to continue?</p>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="deactivate(selectedUser.id)" label="Deactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
+    <button pButton pRipple type="button" (click)="deactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
+  </ng-template>
+</p-dialog>
+
+
+<!----------- View and Edit User modal -------------->
+<p-dialog header="User Details" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <span class="time-description"><strong>Date created</strong>  {{selectedUser.createdOn | date }}</span>
+  <div class="p-d-flex p-flex-column">
+    <div class="p-as-center p-mb-5">
+      <p-avatar
+        icon="pi pi-user"
+        styleClass=""
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
+    </div>
+    <label class="info-label">USER INFORMATION</label>
+    <div class="content p-mt-2">
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <div class="p-field p-md-12">
+            <label for="firstName1">Full Name</label>
+            <p *ngIf="!editMode">{{selectedUser.fullName}}</p>
+            <input *ngIf="editMode" id="firstName1" name="fullname" type="text" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.fullName" />
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-6">
+            <label for="phone1">Phone Number</label>
+            <p *ngIf="!editMode">{{selectedUser.phoneNumber}}</p>
+            <input *ngIf="editMode" id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" />
+          </div>
+          <div class="p-field p-md-6">
+            <label for="email1">Email Address</label>
+            <p *ngIf="!editMode">{{selectedUser.email}}</p>
+            <input *ngIf="editMode" id="email1" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="selectedUser.email" />
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-6">
+            <label for="role1">Role</label>
+            <p-tag class="tag" *ngIf="!editMode" value="{{selectedUser.role.name ? selectedUser.role.name : 'Others'}}"></p-tag>
+            <input *ngIf="editMode" id="role1" name="role" type="username" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.role.name" />
+          </div>
+          <div class="p-field p-md-6">
+            <label for="frole1">Fall Back Role</label>
+            <p-tag class="tag" *ngIf="!editMode" value="{{selectedUser.defaultRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+            <input *ngIf="editMode" id="frole1" name="tempRole" type="username" aria-describedby="username1-help" pInputText [(ngModel)]="selectedUser.defaultRole" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button class="" label="Deactivate" styleClass="p-button-danger p-button-lg" (click)="showDeactivateDialog()"></p-button>
+    <p-button styleClass="p-button-lg" (click)="editMode ? update(selectedUser, selectedUserIndex) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></p-button>
   </ng-template>
 </p-dialog>
 
