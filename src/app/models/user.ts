@@ -12,10 +12,11 @@ export class User {
   phoneNumber: string;
   role: Role;
   defaultRole: string;
-  tempRole: Date;
+  tempRole: boolean;
   username: string;
 
   constructor() {
+    this.tempRole = false;
     this.role = new Role();
   }
 }

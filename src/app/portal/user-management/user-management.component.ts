@@ -107,13 +107,11 @@ export class UserManagementComponent implements OnInit {
   }
 
   fetchUsers() {
-    this.isLoading = true;
     this.userSvc
       .getAllUsers(this.pageNumber, this.pageSize)
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
-            this.isLoading = false;
             this.messageSvc.add({
               severity: "error",
               summary: "Fetch Users Failed",
@@ -124,7 +122,6 @@ export class UserManagementComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        this.isLoading = false;
         const { data, message } = res;
         this.users = data.content;
         console.log(this.users);
@@ -262,5 +259,10 @@ export class UserManagementComponent implements OnInit {
   switch(event) {
     const { originalEvent, checked } = event;
     this.timeBound = checked;
+    if (!checked) {
+      this.selectedUser.defaultRole = "";
+      this.createUserModel.defaultRole = "";
+      this.rangeDates = "";
+    }
   }
 }

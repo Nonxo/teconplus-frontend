@@ -53,6 +53,18 @@
   background: #000000;
 }
 
+:host ::ng-deep .p-menu .p-menuitem-link .p-menuitem-text {
+  color: #747479;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-link .p-menuitem-icon {
+  color: #747479;
+}
+
+:host ::ng-deep .p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background-color: rgba(60,64,67,.04);
+}
+
 :host ::ng-deep .p-button {
   background: #FBF8EF;
   border: 1px solid #CCA43C;
