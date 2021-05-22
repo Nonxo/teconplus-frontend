@@ -6,6 +6,7 @@ import { ObservableInput } from "rxjs/internal/types";
 import { throwError } from "rxjs";
 import { Role, User } from "../../models/user";
 import { NgForm } from "@angular/forms";
+import { RoleService } from "../portal-services/role.service";
 
 @Component({
   selector: "app-user-management",
@@ -40,7 +41,8 @@ export class UserManagementComponent implements OnInit {
   constructor(
     private primengConfig: PrimeNGConfig,
     private userSvc: UserService,
-    private messageSvc: MessageService
+    private messageSvc: MessageService,
+    private roleService: RoleService
   ) {
     this.fetchRoles();
   }
@@ -129,7 +131,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   fetchRoles() {
-    this.userSvc
+    this.roleService
       .getAllRoles()
       .pipe(
         catchError(

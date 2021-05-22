@@ -37,10 +37,4 @@ export class UserService {
       .put(environment.apiBaseUrl + `/users/deactivate/${userId}`, null)
       .pipe(catchError(handleError));
   }
-
-  getAllRoles() {
-    return this.http
-      .get(environment.apiBaseUrl + `/roles`)
-      .pipe(catchError(handleError));
-  }
 }

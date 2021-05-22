@@ -30,6 +30,9 @@ import { InputSwitchModule } from "primeng/inputswitch";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { CheckboxModule } from "primeng/checkbox";
 import { CalendarModule } from "primeng/calendar";
+import { RoleManagementComponent } from "./role-management/role-management.component";
+import { InputTextareaModule } from "primeng/inputtextarea";
+import { MultiSelectModule } from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { CalendarModule } from "primeng/calendar";
     PortalNavComponent,
     PortalMenuComponent,
     UserManagementComponent,
+    RoleManagementComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +70,8 @@ import { CalendarModule } from "primeng/calendar";
     SelectButtonModule,
     CheckboxModule,
     CalendarModule,
+    InputTextareaModule,
+    MultiSelectModule,
   ],
   providers: [],
 })

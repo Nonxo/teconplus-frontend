@@ -1,0 +1,92 @@
+<p-toast></p-toast>
+<ng-container>
+  <app-portal-nav></app-portal-nav>
+  <app-portal-menu></app-portal-menu>
+</ng-container>
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h5>Roles</h5>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-right p-mr-2">
+      <i class="pi pi-search"></i>
+      <input type="text" class="p-inputtext-sm" pInputText placeholder="Search user management" [(ngModel)]="value3" />
+    </span>
+      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by user type" optionLabel="name" [showClear]="true"></p-dropdown>
+      <p-splitButton class="p-mr-3" label="Download user list" [model]="filterOptions"></p-splitButton>
+      <p style="font-size: 0.7rem">Showing 1-20 of 48  <i class="pi pi-chevron-left p-mx-3" style="font-size: 0.7rem"></i> <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i></p>
+    </div>
+  </p-toolbar>
+  <div class="body p-d-flex p-flex-column">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end p-my-3 p-mx-3">
+      <button pButton pRipple label="Add new role" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="displayCreateModal = true"></button>
+    </div>
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
+    <p-table [value]="roles" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedRole" [contextMenu]="cm" dataKey="code">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pResizableColumn>#</th>
+          <th pResizableColumn>Role Name</th>
+          <th pResizableColumn>Role Description</th>
+          <th pResizableColumn>Designation</th>
+          <th pResizableColumn>Created By</th>
+          <th pResizableColumn>Date Created</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-role let-rowIndex="rowIndex">
+        <tr [pContextMenuRow]="role">
+          <td>{{role.id ? role.id : "-"}}</td>
+          <td>{{role.name ? role.name : "-"}}</td>
+          <td>{{role.description ? role.description : "-"}}</td>
+          <td>{{role.designation ? role.designation : "-"}}</td>
+          <td>{{role.createdBy ? role.createdBy : "-"}}</td>
+          <td>{{role.createdOn ? (role.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+<p-dialog header="{{editMode ? 'Edit Role': 'Add New Role'}}" [(visible)]="displayCreateModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="p-d-flex p-flex-column p-mt-5">
+    <form (ngSubmit)="create(createRoleForm)" #createRoleForm="ngForm">
+      <div class="p-fluid">
+        <div class="p-field p-mb-5">
+          <span class="p-float-label">
+            <input class="p-inputtext-lg" type="text" name="roleName" id="role_name" pInputText [(ngModel)]="createRoleModel.name" required>
+            <label for="role_name">Role Name</label>
+          </span>
+        </div>
+        <div class="p-field p-mt-2">
+          <span class="p-float-label">
+            <textarea rows="5" cols="30" pInputTextarea ></textarea>
+             <label for="role_name">Role Description</label>
+          </span>
+        </div>
+        <div class="p-field">
+          <span class="p-float-label">
+            <p-multiSelect id="privilege" name="privilege" [options]="privileges" [(ngModel)]="selectedPrivileges" defaultLabel="Select Privileges" optionLabel="description" display="chip"></p-multiSelect>
+            <label for="privilege"></label>
+          </span>
+        </div>
+        <div class="p-field">
+          <span class="p-float-label">
+            <p-multiSelect id="designation" name="designation" [options]="privileges" [(ngModel)]="selectedPrivileges" defaultLabel="Select designation" optionLabel="description" display="chip"></p-multiSelect>
+            <label for="designation"></label>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="p-field-checkbox">
+      <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
+      <label for="binary">Create Another</label>
+    </div>
+    <p-button styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createRoleForm.invalid"></p-button>
+  </ng-template>
+
+</p-dialog>

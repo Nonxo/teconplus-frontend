@@ -24,5 +24,18 @@ export class User {
 export class Role {
   id: string;
   name: string;
+  designation: string;
+  defaultRole: string;
+  createdOn: Date;
+  createdBy: string;
   privileges: any[];
+}
+
+export class Privilege {
+  id: string;
+  name: string;
+  designation: string;
+  createdOn: Date;
+  createdBy: string;
+  privilegeEnum: string;
 }

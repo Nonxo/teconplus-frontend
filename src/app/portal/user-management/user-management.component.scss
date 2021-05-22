@@ -9,7 +9,7 @@
 
   .body {
     background: #F5F4F0;
-    height: 87.5vh
+    height: 87.5vh;
   }
 
   p {
@@ -260,5 +260,12 @@ label {
 
 small {
   font-size: 11px;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  font-weight: normal;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #A3ABB7;
 }
 
