@@ -239,7 +239,10 @@
           <div class="p-field p-md-6">
             <label for="phone1">Phone Number</label>
             <p *ngIf="!editMode">{{selectedUser.phoneNumber}}</p>
-            <input *ngIf="editMode" id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" />
+            <div class="p-inputgroup" *ngIf="editMode">
+              <span class="p-inputgroup-addon">+123</span>
+              <input id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" />
+            </div>
           </div>
           <div class="p-field p-md-6">
             <label for="email1">Email Address</label>
