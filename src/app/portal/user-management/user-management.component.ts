@@ -150,6 +150,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   create(form: NgForm) {
+    this.isLoading = true
     this.userSvc
       .create(this.createUserModel)
       .pipe(

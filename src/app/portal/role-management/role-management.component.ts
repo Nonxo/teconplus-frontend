@@ -3,7 +3,7 @@ import { Privilege, Role } from "../../models/user";
 import { catchError } from "rxjs/operators";
 import { ObservableInput } from "rxjs/internal/types";
 import { throwError } from "rxjs";
-import { MenuItem } from "primeng/api";
+import {MenuItem, MessageService} from "primeng/api";
 import { RoleService } from "../portal-services/role.service";
 import { NgForm } from "@angular/forms";
 
@@ -26,7 +26,7 @@ export class RoleManagementComponent implements OnInit {
   createAnother: boolean;
   isLoading: boolean;
   selectedPrivileges;
-  constructor(private roleSvc: RoleService) {}
+  constructor(private roleSvc: RoleService, private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.fetchRoles();
@@ -85,5 +85,32 @@ export class RoleManagementComponent implements OnInit {
       });
   }
 
-  create(form: NgForm) {}
+  createRole(form: NgForm) {
+    this.isLoading = true
+    this.roleSvc.create(this.createRoleModel).pipe(catchError((err: any): ObservableInput<any> => {
+      this.isLoading = false;
+      this.messageService.add({
+        severity: "error",
+        summary: "Role Create Failed",
+        detail: err,
+      });
+      return throwError(err)
+    })).subscribe((res) => {
+      this.isLoading = false
+      this.messageService.add({
+        severity: "success",
+        summary: "Role Created",
+        detail: res.message
+      })
+      this.roles.push(this.createRoleModel)
+    })
+  }
+
+  isMultipleCreate(form) {
+    if (this.createAnother) {
+      form.resetForm();
+    } else {
+      this.displayCreateModal = false;
+    }
+  }
 }

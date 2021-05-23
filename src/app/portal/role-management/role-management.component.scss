@@ -131,3 +131,13 @@ label {
   color: #A3ABB7;
 }
 
+:host ::ng-deep .p-fluid {
+
+  .p-multiselect {
+    font-size: 12px;
+  }
+  .p-multiselect-item {
+    font-size: 12px;
+  }
+}
+

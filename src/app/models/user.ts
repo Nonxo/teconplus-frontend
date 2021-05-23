@@ -28,7 +28,7 @@ export class Role {
   defaultRole: string;
   createdOn: Date;
   createdBy: string;
-  privileges: any[];
+  privileges: string[];
 }
 
 export class Privilege {
