@@ -25,7 +25,6 @@ export class AuthenticationService {
   }
 
   resetPassword(credentials: Auth): Observable<any> {
-    debugger;
     const reqHeader = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem("reset-token")}`,
       "Content-Type": "application/json",

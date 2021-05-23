@@ -140,8 +140,12 @@
             </div>
             <div class="p-field p-md-6 p-mb-3">
               <label for="newPhone">Phone Number</label>
-              <input id="newPhone" type="tel" placeholder="080 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" />
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon">+123</span>
+                <input id="newPhone" type="tel" placeholder="080 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" />
+              </div>
             </div>
+
           </div>
           <div class="p-field p-grid">
             <div class="p-field p-md-6">
