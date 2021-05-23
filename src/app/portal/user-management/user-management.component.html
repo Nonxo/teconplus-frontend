@@ -46,7 +46,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
-        <tr [pContextMenuRow]="user" (click)="getSelectedUser(user, rowIndex)">
+        <tr [pContextMenuRow]="user" (contextmenu)="getSelectedUser(user, rowIndex)">
           <td>{{user.id}}</td>
           <td>
             <p-avatar
@@ -81,7 +81,7 @@
     <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap" *ngIf="layout === 'grid'">
       <ng-container>
         <div class="p-col-12 p-md-3">
-          <div class="user-grid-item default__card p-ml-3 p-ml-2 create__card" (click)="showCreateDialog()">
+          <div class="user-grid-item default__card p-ml-2 p-mr-2 create__card" (click)="showCreateDialog()">
             <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
               <div class="p-mt-6">
                 <p-avatar image="assets/img/Group4419.svg" size="xlarge"></p-avatar>
@@ -93,7 +93,7 @@
       </ng-container>
       <ng-container *ngIf="users">
         <div class="p-col-12 p-md-3" *ngFor="let user of users; let i = index">
-          <div class="user-grid-item default__card p-ml-3 p-ml-2">
+          <div class="user-grid-item default__card p-ml-2 p-mr-2">
             <i class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event); getSelectedUser(user, i)"></i>
             <p-menu #menu [model]="items" [popup]="true"></p-menu>
             <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
@@ -150,7 +150,7 @@
           <div class="p-field p-grid">
             <div class="p-field p-md-6">
               <label for="select_role">Select Role</label>
-              <p-dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="selectedRole.name" optionLabel="name" [showClear]="true" required></p-dropdown>
+              <p-dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="createUserModel.role" optionLabel="name" [showClear]="true" required></p-dropdown>
             </div>
             <div class="p-field p-md-6">
               <label for="designation">Select Designation</label>
@@ -257,7 +257,7 @@
         <div class="p-field p-grid" *ngIf="!editMode">
           <div class="p-field p-md-6">
             <label>Role</label>
-            <p-tag class="tag" value="{{selectedUser.role.name ? selectedUser.role.name : 'Others'}}"></p-tag>
+            <p-tag class="tag" value="{{selectedUser.role ? selectedUser.role.name : 'Others'}}"></p-tag>
           </div>
           <div class="p-field p-md-6">
             <label>Fallback Role</label>
@@ -291,11 +291,9 @@
 
           </ng-container>
         </ng-container>
-
       </div>
     </div>
   </div>
-
 
   <ng-template pTemplate="footer">
     <p-button *ngIf="!editMode" class="" label="Deactivate" styleClass="p-button-danger p-button-lg" (click)="showDeactivateDialog()"></p-button>

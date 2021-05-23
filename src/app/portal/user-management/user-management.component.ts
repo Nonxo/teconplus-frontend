@@ -75,6 +75,7 @@ export class UserManagementComponent implements OnInit {
         icon: "pi pi-info-circle",
         command: () => {
           this.displayModal = true;
+          this.editMode = false;
         },
       },
       {
@@ -150,7 +151,9 @@ export class UserManagementComponent implements OnInit {
   }
 
   create(form: NgForm) {
-    this.isLoading = true
+    let currentUser = localStorage.getItem("current-user");
+    this.createUserModel.createdById = JSON.parse(currentUser).createdById;
+    this.isLoading = true;
     this.userSvc
       .create(this.createUserModel)
       .pipe(
@@ -174,7 +177,7 @@ export class UserManagementComponent implements OnInit {
           summary: "User Created",
           detail: res.message,
         });
-        this.users.push(this.createUserModel);
+        this.users.push(res.data);
       });
   }
 
@@ -246,6 +249,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   showCreateDialog() {
+    this.createUserModel = new User();
     this.displayCreateModal = true;
   }
 

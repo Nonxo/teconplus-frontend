@@ -20,7 +20,7 @@
   </p-toolbar>
   <div class="body p-d-flex p-flex-column">
     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end p-my-3 p-mx-3">
-      <button pButton pRipple label="Add new role" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="displayCreateModal = true"></button>
+      <button pButton pRipple label="Add new role" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="showModal()"></button>
     </div>
     <p-contextMenu #cm [model]="items"></p-contextMenu>
     <p-table [value]="roles" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedRole" [contextMenu]="cm" dataKey="code">
@@ -35,7 +35,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-role let-rowIndex="rowIndex">
-        <tr [pContextMenuRow]="role">
+        <tr [pContextMenuRow]="role" (contextmenu)="getSelectedRole(role, rowIndex)">
           <td>{{role.id ? role.id : "-"}}</td>
           <td>{{role.name ? role.name : "-"}}</td>
           <td>{{role.description ? role.description : "-"}}</td>
@@ -48,32 +48,32 @@
   </div>
 </div>
 
-
-<p-dialog header="{{editMode ? 'Edit Role': 'Add New Role'}}" [(visible)]="displayCreateModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<!--------- Create & Edit Role -------------->
+<p-dialog header="{{editMode ? 'Add New Role': 'Edit Role'}}" [(visible)]="displayCreateModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
   <div class="p-d-flex p-flex-column p-mt-5" style="height: 60vh">
-    <form (ngSubmit)="createRole(createRoleForm)" #createRoleForm="ngForm">
+    <form (ngSubmit)="editMode ? updateRole() : createRole(roleForm)" #roleForm="ngForm">
       <div class="p-fluid">
         <div class="p-field p-mb-5">
           <span class="p-float-label">
-            <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="createRoleModel.name" required>
+            <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="roleModel.name" required>
             <label for="role_name">Role Name</label>
           </span>
         </div>
         <div class="p-field p-mb-5">
           <span class="p-float-label">
-            <p-multiSelect styleClass="p-inputtext-lg" id="privilege" name="privilege" [options]="privileges" [(ngModel)]="createRoleModel.privileges" defaultLabel="Select Privileges" optionLabel="description" display="chip" optionValue="id" required></p-multiSelect>
+            <p-multiSelect styleClass="p-inputtext-lg" id="privilege" name="privilege" [options]="privileges" [(ngModel)]="roleModel.privileges" defaultLabel="Select Privileges" optionLabel="description" display="chip" optionValue="id" required></p-multiSelect>
             <label for="privilege"></label>
           </span>
         </div>
         <div class="p-field p-mb-5">
           <span class="p-float-label">
-            <p-multiSelect styleClass="p-inputtext-lg" id="designation" name="designation" [options]="privileges" [(ngModel)]="selectedPrivileges" defaultLabel="Select designation" optionLabel="description" display="chip" optionValue="id"></p-multiSelect>
+            <p-multiSelect styleClass="p-inputtext-lg" id="designation" name="designation" [options]="privileges" [(ngModel)]="roleModel.privileges" defaultLabel="Select designation" optionLabel="description" display="chip" optionValue="id"></p-multiSelect>
             <label for="designation"></label>
           </span>
         </div>
         <div class="p-field p-mt-5">
           <span class="p-float-label">
-            <textarea rows="5" cols="30" pInputTextarea ></textarea>
+            <textarea name="description" rows="5" cols="30" pInputTextarea></textarea>
              <label for="role_name">Role Description</label>
           </span>
         </div>
@@ -82,11 +82,55 @@
   </div>
 
   <ng-template pTemplate="footer">
-    <div class="p-field-checkbox">
+    <div class="p-field-checkbox" *ngIf="!editMode">
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>
-    <p-button styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createRoleForm.invalid"></p-button>
+    <button pButton class="p-button-lg" label="{{editMode ? 'Save Changes' : 'Create Role'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || roleForm.invalid"></button>
   </ng-template>
 
+</p-dialog>
+
+<!------------ View Role Details ------------->
+<p-dialog header="View Role Details" [(visible)]="displayDetailsModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '40vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="p-d-flex p-flex-column p-mt-5">
+    <label class="info-label">ROLE INFORMATION</label>
+    <div class="content p-mt-2">
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Role Name</label>
+            <p>{{selectedRole.name}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Role Description</label>
+            <p>{{selectedRole.description}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Designation</label>
+            <p>{{selectedRole.designation}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Role Privilege(s)</label>
+            <p *ngFor="let privilege of selectedRole.privileges">{{privilege.description}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Created By</label>
+            <p>{{selectedRole.createdBy}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Created On</label>
+            <p>{{selectedRole.createdOn | date: 'h:mm a, MMM d, y'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton class="p-button-lg" label="Done" (click)="displayDetailsModal = false"></button>
+  </ng-template>
 </p-dialog>

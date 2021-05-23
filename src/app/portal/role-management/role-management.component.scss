@@ -141,3 +141,21 @@ label {
   }
 }
 
+.info-label {
+  font-size: 12px
+}
+
+.content {
+  border: 1px solid #00053A27;
+  padding: 40px;
+  border-radius: 4px;
+
+  label {
+    color: #94A1A5
+  }
+
+  button {
+    background-color: #CCA43C;
+  }
+}
+

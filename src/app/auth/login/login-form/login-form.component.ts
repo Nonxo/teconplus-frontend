@@ -74,6 +74,7 @@ export class LoginFormComponent implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
         console.log(res);
+        localStorage.setItem("current-user", JSON.stringify(res.data[0]));
         localStorage.setItem("token", res.data[1]);
         this.router.navigate(["/portal/users"]);
       });

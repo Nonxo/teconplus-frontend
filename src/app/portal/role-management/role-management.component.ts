@@ -3,7 +3,7 @@ import { Privilege, Role } from "../../models/user";
 import { catchError } from "rxjs/operators";
 import { ObservableInput } from "rxjs/internal/types";
 import { throwError } from "rxjs";
-import {MenuItem, MessageService} from "primeng/api";
+import { MenuItem, MessageService } from "primeng/api";
 import { RoleService } from "../portal-services/role.service";
 import { NgForm } from "@angular/forms";
 
@@ -19,32 +19,39 @@ export class RoleManagementComponent implements OnInit {
   roles: Role[] = [];
   items: MenuItem[] = [];
   editMode: boolean;
-  createRoleModel: Role;
+  roleModel: Role;
   selectedRole: Role;
   privileges: Privilege[] = [];
   displayCreateModal: boolean;
+  displayDetailsModal: boolean;
   createAnother: boolean;
   isLoading: boolean;
-  selectedPrivileges;
-  constructor(private roleSvc: RoleService, private messageService: MessageService) {}
+  index: number;
+  constructor(
+    private roleSvc: RoleService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.fetchRoles();
     this.fetchPrivileges();
     this.selectedRole = new Role();
-    this.createRoleModel = new Role();
+    this.roleModel = new Role();
 
     this.items = [
       {
         label: "View Role Details",
         icon: "pi pi-info-circle",
-        command: () => {},
+        command: () => {
+          this.displayDetailsModal = true;
+        },
       },
       {
         label: "Edit Role",
         icon: "pi pi-pencil",
         command: () => {
           this.editMode = true;
+          this.displayCreateModal = true;
         },
       },
       {
@@ -86,24 +93,31 @@ export class RoleManagementComponent implements OnInit {
   }
 
   createRole(form: NgForm) {
-    this.isLoading = true
-    this.roleSvc.create(this.createRoleModel).pipe(catchError((err: any): ObservableInput<any> => {
-      this.isLoading = false;
-      this.messageService.add({
-        severity: "error",
-        summary: "Role Create Failed",
-        detail: err,
+    this.isLoading = true;
+    this.roleSvc
+      .create(this.roleModel)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageService.add({
+              severity: "error",
+              summary: "Role Create Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: "success",
+          summary: "Role Created",
+          detail: res.message,
+        });
+        this.roles.push(this.roleModel);
       });
-      return throwError(err)
-    })).subscribe((res) => {
-      this.isLoading = false
-      this.messageService.add({
-        severity: "success",
-        summary: "Role Created",
-        detail: res.message
-      })
-      this.roles.push(this.createRoleModel)
-    })
   }
 
   isMultipleCreate(form) {
@@ -112,5 +126,48 @@ export class RoleManagementComponent implements OnInit {
     } else {
       this.displayCreateModal = false;
     }
+  }
+
+  getSelectedRole(role, index) {
+    this.roleModel = role;
+    this.index = index;
+    this.roleModel.privileges = role.privileges.map(
+      (privilege) => privilege.id
+    );
+  }
+
+  updateRole() {
+    this.isLoading = true;
+    this.roleSvc
+      .update(this.roleModel)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageService.add({
+              severity: "error",
+              summary: "Role Create Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.messageService.add({
+          severity: "success",
+          summary: "Role Updated",
+          detail: res.message,
+        });
+        this.roles[this.index] = this.roleModel;
+        this.displayCreateModal = false;
+      });
+  }
+
+  showModal() {
+    this.editMode = false;
+    this.displayCreateModal = true;
+    this.roleModel = new Role();
   }
 }

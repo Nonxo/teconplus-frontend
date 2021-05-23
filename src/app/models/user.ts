@@ -9,6 +9,7 @@ export class User {
   createdOn: Date;
   otherName: string;
   password: string;
+  createdById: number;
   phoneNumber: string;
   role: Role;
   defaultRole: string;
@@ -16,14 +17,15 @@ export class User {
   username: string;
 
   constructor() {
+    this.countryCode = "123";
     this.tempRole = false;
-    this.role = new Role();
   }
 }
 
 export class Role {
   id: string;
   name: string;
+  description: string;
   designation: string;
   defaultRole: string;
   createdOn: Date;
