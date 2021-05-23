@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+@import "src/assets/styles/color_variables";
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+$enable-responsive-font-sizes: true;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Mulish, sans-serif;
+  overflow-x: hidden;
+}
+
+.text-default {
+  color: $primary-black;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+
+.primary-text {
+  color: $primary-color;
+}
+
+.secondary-text {
+  color: $dark-color;
+}
+
+.text-grey {
+  color: $light-grey
+}
+
+.secondary-color {
+  color: $secondary-color
+}
+
+.container {
+  transition: 0.5s ease;
+  opacity: 1;
+  display: block;
+  backface-visibility: hidden;
+}
+
+

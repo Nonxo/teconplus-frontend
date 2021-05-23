@@ -1,0 +1,17 @@
+<p-toolbar>
+  <p-divider layout="vertical"></p-divider>
+  <div class="p-toolbar-group-right">
+    <i class="pi pi-bell p-text-secondary" pBadge style="font-size: 1.0rem" severity="danger" (click)="menu.toggle($event)"></i>
+    <p-menu #menu [popup]="true" [model]="items"></p-menu>
+    <p-divider layout="vertical"></p-divider>
+    <div class="p-d-flex p-flex-column p-ai-center p-jc-center profile-name p-mx-2">
+      <p class="p-mb-0">Dominic Black</p>
+      <small>UserId: 1234</small>
+    </div>
+    <p-divider layout="vertical"></p-divider>
+    <div class="p-mx-3">
+      <img src="../../../assets/img/profile-24.png" alt="profile">
+    </div>
+  </div>
+</p-toolbar>
+

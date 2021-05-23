@@ -1,0 +1,70 @@
+.menu-container {
+  height: 100vh;
+  overflow-y: scroll;
+  width: 100px;
+  background: #FFFFFF;
+  float: left;
+  border: 1px solid #dee2e6;
+
+  div.logo {
+    padding: 1em 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  div {
+    width: 100%;
+
+
+    ul {
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 1em 0;
+        width: 100%;
+        text-align: center;
+        display: block;
+        color: #7E8084;
+
+        &.active,&:hover {
+          width: 100%;
+          padding: 1em 0;
+          text-align: center;
+          display: block;
+          background: transparent;
+          transition: all .2s ease-in;
+
+          a {
+            color: #CCA43C
+          }
+        }
+      }
+    }
+
+  }
+
+
+
+  a {
+    color: #A3ABB7;
+    text-decoration: none;
+    font-family: Mulish, 'sans-serif'
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  i.icon {
+    font-size: 15px
+  }
+
+  span.icon-label {
+    font-size: 12px
+  }
+
+}

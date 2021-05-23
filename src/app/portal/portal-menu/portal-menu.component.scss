@@ -1,0 +1,26 @@
+:host ::ng-deep .p-toolbar {
+  background: #fff;
+  border-radius: 1px;
+  height: 50px;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+:host ::ng-deep .p-component {
+  font-size: 0.9rem;
+}
+
+p {
+  font-size: 0.8rem;
+  color: #CCA43C;
+  font-weight: 400;
+}
+
+.profile-name {
+  margin-bottom: 1rem;
+
+  small {
+    font-size: 0.7rem;
+    font-weight: lighter;
+  }
+}
