@@ -13,6 +13,7 @@ import { MessageService, PrimeNGConfig } from "primeng/api";
 export class ResetPasswordComponent implements OnInit {
   isResetSuccessful: boolean;
   isLoading: boolean;
+  @Output() isResetDone = new EventEmitter<boolean>();
   @Output() backToSignIn = new EventEmitter<boolean>();
 
   auth: Auth;
@@ -48,6 +49,7 @@ export class ResetPasswordComponent implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
         this.isResetSuccessful = true;
+        this.isResetDone.emit(true);
         console.log(res);
       });
   }

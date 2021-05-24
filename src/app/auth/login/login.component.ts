@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
   isForgotPassword: boolean;
   token: string;
   isResetPassword: boolean;
+  resetForm: boolean;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -20,8 +21,9 @@ export class LoginComponent implements OnInit {
     });
 
     if (this.token) {
-      localStorage.setItem("reset-token", this.token);
+      localStorage.setItem("token", this.token);
       this.isResetPassword = true;
+      this.resetForm = true;
       this.isSignIn = false;
     }
   }
@@ -34,6 +36,10 @@ export class LoginComponent implements OnInit {
   changeAuthStateToSignIn(event) {
     this.isResetPassword = false;
     this.isSignIn = event;
+  }
+
+  resetDone(event): void {
+    this.resetForm = false;
   }
 
   back(): void {
