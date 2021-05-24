@@ -27,6 +27,7 @@ export class RoleManagementComponent implements OnInit {
   createAnother: boolean;
   isLoading: boolean;
   index: number;
+  displayDeleteModal: boolean;
   constructor(
     private roleSvc: RoleService,
     private messageService: MessageService
@@ -52,12 +53,17 @@ export class RoleManagementComponent implements OnInit {
         command: () => {
           this.editMode = true;
           this.displayCreateModal = true;
+          this.roleModel.privileges = this.roleModel.privileges.map(
+            (privilege: any) => privilege.id
+          );
         },
       },
       {
         label: "Delete Role",
         icon: "pi pi-exclamation-circle",
-        command: () => {},
+        command: () => {
+          this.displayDeleteModal = true;
+        },
       },
     ];
   }
@@ -131,9 +137,9 @@ export class RoleManagementComponent implements OnInit {
   getSelectedRole(role, index) {
     this.roleModel = role;
     this.index = index;
-    this.roleModel.privileges = role.privileges.map(
-      (privilege) => privilege.id
-    );
+    // this.roleModel.privileges = role.privileges.map(
+    //   (privilege) => privilege.id
+    // );
   }
 
   updateRole() {
@@ -162,6 +168,35 @@ export class RoleManagementComponent implements OnInit {
         });
         this.roles[this.index] = this.roleModel;
         this.displayCreateModal = false;
+      });
+  }
+
+  deleteRole(id: string) {
+    this.isLoading = true;
+    this.roleSvc
+      .delete(id)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageService.add({
+              severity: "error",
+              summary: "Role Update Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.displayDeleteModal = false;
+        this.isLoading = false;
+        this.messageService.add({
+          severity: "success",
+          summary: "Role Updated",
+          detail: res.message,
+        });
+        this.roles = this.roles.filter((role) => role.id !== id);
       });
   }
 

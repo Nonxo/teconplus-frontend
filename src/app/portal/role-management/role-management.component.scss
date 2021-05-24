@@ -159,3 +159,15 @@ label {
   }
 }
 
+:host ::ng-deep .p-button.p-button-text {
+  background-color: transparent !important;
+  color: #605D71 !important;
+  border-color: transparent !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger {
+  background-color: #FA235D !important;
+  color: #fff !important;
+  border: 1px solid #FA235D !important;
+}
+

@@ -14,6 +14,7 @@ export class User {
   role: Role;
   defaultRole: string;
   tempRole: boolean;
+  tempRoleExpiryDate: string;
   username: string;
 
   constructor() {
@@ -37,6 +38,7 @@ export class Privilege {
   id: string;
   name: string;
   designation: string;
+  description: string;
   createdOn: Date;
   createdBy: string;
   privilegeEnum: string;

@@ -100,31 +100,31 @@
         <div class="p-field p-grid">
           <div class="p-field p-md-4">
             <label>Role Name</label>
-            <p>{{selectedRole.name}}</p>
+            <p>{{roleModel.name}}</p>
           </div>
           <div class="p-field p-md-8">
             <label>Role Description</label>
-            <p>{{selectedRole.description}}</p>
+            <p>{{roleModel.description}}</p>
           </div>
         </div>
         <div class="p-field p-grid">
           <div class="p-field p-md-4">
             <label>Designation</label>
-            <p>{{selectedRole.designation}}</p>
+            <p>{{roleModel.designation}}</p>
           </div>
           <div class="p-field p-md-8">
             <label>Role Privilege(s)</label>
-            <p *ngFor="let privilege of selectedRole.privileges">{{privilege.description}}</p>
+            <p *ngFor="let privilege of roleModel.privileges">{{privilege.description ? privilege.description : "-"}}</p>
           </div>
         </div>
         <div class="p-field p-grid">
           <div class="p-field p-md-4">
             <label>Created By</label>
-            <p>{{selectedRole.createdBy}}</p>
+            <p>{{roleModel.createdBy}}</p>
           </div>
           <div class="p-field p-md-8">
             <label>Created On</label>
-            <p>{{selectedRole.createdOn | date: 'h:mm a, MMM d, y'}}</p>
+            <p>{{roleModel.createdOn | date: 'h:mm a, MMM d, y'}}</p>
           </div>
         </div>
       </div>
@@ -132,5 +132,26 @@
   </div>
   <ng-template pTemplate="footer">
     <button pButton class="p-button-lg" label="Done" (click)="displayDetailsModal = false"></button>
+  </ng-template>
+</p-dialog>
+
+<!--------- Delete Role ----------->
+<p-dialog header="Delete Role" [(visible)]="displayDeleteModal" [style]="{width: '30vw'}" [baseZIndex]="10000">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-fluid">
+      <div class="p-field">
+        <p style="color: #605D71">You are about to delete the role {{selectedRole.name}}. Add a delete reason.</p>
+      </div>
+      <div class="p-field p-mt-5">
+        <span class="p-float-label">
+            <textarea name="description" rows="5" cols="30" pInputTextarea ></textarea>
+             <label for="role_name">Delete Reason</label>
+          </span>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="deleteRole(selectedRole.id)" label="Delete" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
+    <button pButton pRipple type="button" (click)="displayDeleteModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
   </ng-template>
 </p-dialog>

@@ -4,6 +4,7 @@ import { catchError } from "rxjs/operators";
 import { handleError } from "../../services/apiErrorHandler";
 import { HttpClient } from "@angular/common/http";
 import { Role } from "../../models/user";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -11,27 +12,33 @@ import { Role } from "../../models/user";
 export class RoleService {
   constructor(private http: HttpClient) {}
 
-  getAllRoles() {
+  getAllRoles(): Observable<any> {
     return this.http
       .get(environment.apiBaseUrl + `/roles`)
       .pipe(catchError(handleError));
   }
 
-  getAllPrivileges() {
+  getAllPrivileges(): Observable<any> {
     return this.http
       .get(environment.apiBaseUrl + `/privileges`)
       .pipe(catchError(handleError));
   }
 
-  create(role: Role) {
+  create(role: Role): Observable<any> {
     return this.http
       .post(environment.apiBaseUrl + `/roles`, role)
       .pipe(catchError(handleError));
   }
 
-  update(role: Role) {
+  update(role: Role): Observable<any> {
     return this.http
       .put(environment.apiBaseUrl + `roles`, role)
+      .pipe(catchError(handleError));
+  }
+
+  delete(id: string): Observable<any> {
+    return this.http
+      .delete(environment.apiBaseUrl + `/roles/${id}`)
       .pipe(catchError(handleError));
   }
 }

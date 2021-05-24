@@ -172,7 +172,7 @@
             <div class="p-field p-grid">
               <div class="p-field p-md-6">
                 <label for="range">Set Duration</label>
-                <p-calendar id="range" [(ngModel)]="rangeDates" name="range" selectionMode="range" [readonlyInput]="true" [showIcon]="true" inputId="range"></p-calendar>
+                <p-calendar id="range" [(ngModel)]="createUserModel.tempRoleExpiryDate" name="expiryDate" [readonlyInput]="true" [showIcon]="true" inputId="expiryDate"></p-calendar>
               </div>
               <div class="p-field p-md-6">
                 <label for="fallback_role">Select a Fallback Role</label>
@@ -280,8 +280,8 @@
 
             <div class="p-field p-grid">
               <div class="p-field p-md-6">
-                <label for="edit_range">Set Duration</label>
-                <p-calendar id="edit_range" [(ngModel)]="rangeDates" name="range" selectionMode="range" [readonlyInput]="true" [showIcon]="true" inputId="range" required></p-calendar>
+                <label for="expiry_date">Set Duration</label>
+                <p-calendar id="expiry_date" [(ngModel)]="selectedUser.tempRoleExpiryDate" name="expiryDate"  [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
               </div>
               <div class="p-field p-md-6">
                 <label for="edit_fallback_role">Select a Fallback Role</label>
