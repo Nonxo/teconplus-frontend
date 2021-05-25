@@ -117,6 +117,7 @@ export class RoleManagementComponent implements OnInit {
       )
       .subscribe((res) => {
         this.isLoading = false;
+        this.isMultipleCreate(form);
         this.messageService.add({
           severity: "success",
           summary: "Role Created",
@@ -135,7 +136,7 @@ export class RoleManagementComponent implements OnInit {
   }
 
   getSelectedRole(role, index) {
-    this.roleModel = role;
+    this.roleModel = { ...role };
     this.index = index;
     // this.roleModel.privileges = role.privileges.map(
     //   (privilege) => privilege.id
@@ -152,7 +153,7 @@ export class RoleManagementComponent implements OnInit {
             this.isLoading = false;
             this.messageService.add({
               severity: "error",
-              summary: "Role Create Failed",
+              summary: "Role Update Failed",
               detail: err,
             });
             return throwError(err);

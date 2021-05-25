@@ -32,7 +32,7 @@ export class RoleService {
 
   update(role: Role): Observable<any> {
     return this.http
-      .put(environment.apiBaseUrl + `roles`, role)
+      .put(environment.apiBaseUrl + `/roles`, role)
       .pipe(catchError(handleError));
   }
 
