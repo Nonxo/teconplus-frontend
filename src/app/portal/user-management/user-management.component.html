@@ -176,7 +176,7 @@
               </div>
               <div class="p-field p-md-6">
                 <label for="fallback_role">Select a Fallback Role</label>
-                <p-dropdown id="fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="createUserModel.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
+                <p-dropdown id="fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="createUserModel.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
               </div>
             </div>
 
@@ -285,7 +285,7 @@
               </div>
               <div class="p-field p-md-6">
                 <label for="edit_fallback_role">Select a Fallback Role</label>
-                <p-dropdown id="edit_fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="name" [(ngModel)]="selectedUser.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
+                <p-dropdown id="edit_fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="selectedUser.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
               </div>
             </div>
 

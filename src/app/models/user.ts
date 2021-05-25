@@ -11,7 +11,7 @@ export class User {
   password: string;
   createdById: number;
   phoneNumber: string;
-  role: Role;
+  role: any;
   defaultRole: string;
   tempRole: boolean;
   tempRoleExpiryDate: string;

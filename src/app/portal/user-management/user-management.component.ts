@@ -190,6 +190,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   update(user: User, index) {
+    user.role = this.selectedUser.role.id;
     this.isLoading = true;
     this.userSvc
       .update(user)
@@ -213,7 +214,7 @@ export class UserManagementComponent implements OnInit {
           summary: "User Updated",
           detail: res.message,
         });
-        this.users[index] = user;
+        this.users[index] = res.data;
         this.displayModal = false;
       });
   }
