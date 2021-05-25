@@ -10,7 +10,8 @@
     </div>
     <p-divider layout="vertical"></p-divider>
     <div class="p-mx-3">
-      <img src="../../../assets/img/profile-24.png" alt="profile">
+      <p-avatar icon="pi pi-user" styleClass="p-mr-2" size="medium" shape="circle" (click)="myProfile.toggle($event)"></p-avatar>
+      <p-menu #myProfile [popup]="true" [model]="profile"></p-menu>
     </div>
   </div>
 </p-toolbar>

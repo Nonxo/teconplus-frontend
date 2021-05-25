@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuItem } from "primeng/api";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-portal-menu",
@@ -8,8 +9,9 @@ import { MenuItem } from "primeng/api";
 })
 export class PortalMenuComponent implements OnInit {
   items: MenuItem[];
+  profile: MenuItem[];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.items = [
@@ -32,6 +34,25 @@ export class PortalMenuComponent implements OnInit {
           { label: "Delete", icon: "pi pi-fw pi-trash" },
           { label: "Refresh", icon: "pi pi-fw pi-refresh" },
         ],
+      },
+    ];
+
+    this.profile = [
+      {
+        label: "Help",
+        icon: "",
+      },
+      {
+        label: "Profile",
+        icon: "",
+      },
+      {
+        label: "Logout",
+        icon: "",
+        command: () => {
+          localStorage.clear();
+          this.router.navigate(["/"]);
+        },
       },
     ];
   }

@@ -122,7 +122,7 @@ export class RoleManagementComponent implements OnInit {
           summary: "Role Created",
           detail: res.message,
         });
-        this.roles.push(this.roleModel);
+        this.roles.push(res.data);
       });
   }
 
@@ -166,7 +166,7 @@ export class RoleManagementComponent implements OnInit {
           summary: "Role Updated",
           detail: res.message,
         });
-        this.roles[this.index] = this.roleModel;
+        this.roles[this.index] = res.data;
         this.displayCreateModal = false;
       });
   }
