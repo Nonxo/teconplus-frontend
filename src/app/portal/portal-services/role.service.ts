@@ -31,6 +31,8 @@ export class RoleService {
   }
 
   update(role: Role): Observable<any> {
+    delete role.createdBy;
+    delete role.createdOn;
     return this.http
       .put(environment.apiBaseUrl + `/roles`, role)
       .pipe(catchError(handleError));

@@ -17,14 +17,14 @@
       </div>
 
       <div class="p-field p-grid p-mt-0 p-mb-2" *ngIf="value1 ==='on'">
-        <div class="p-field p-md-4">
+        <div class="p-field p-md-6">
           <span class="p-float-label">
             <p-dropdown id="country_code" [autoDisplayFirst]="false" #code="ngModel" name="country-code" optionValue="callingCode" [options]="countryCode" optionLabel="country" [(ngModel)]="user.countryCode" [showClear]="true" required></p-dropdown>
             <label for="country_code">Country Code</label>
           </span>
           <small id="country_code-help" class="p-error" *ngIf="code.invalid && (code.dirty || code.touched)">Country code is not valid.</small>
         </div>
-        <div class="p-field p-md-8">
+        <div class="p-field p-md-6">
         <span class="p-float-label">
           <input name="phone" class="p-inputtext-lg" #phone="ngModel" type="tel" id="phone_number" pInputText [(ngModel)]="user.phoneNumber" required>
           <label for="phone_number">Phone Number</label>

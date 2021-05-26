@@ -8,6 +8,7 @@ export class Auth {
   socialMedia: string;
 
   constructor() {
+    this.countryCode = "+234";
     this.loginMode = "TP_ACCOUNT";
   }
 }

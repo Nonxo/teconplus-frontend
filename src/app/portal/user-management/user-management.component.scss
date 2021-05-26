@@ -5,11 +5,18 @@
   h5 {
     font-size: 20px;
     font-weight: 500;
+
+    span {
+      color: #94A1A5;
+      font-weight: 300;
+      font-size: 12px;
+    }
   }
 
   .body {
     background: #F5F4F0;
-    height: 87.5vh;
+    min-height: 87.5vh;
+    overflow-y: auto;
   }
 
   p {

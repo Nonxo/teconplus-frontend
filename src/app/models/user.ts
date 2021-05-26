@@ -1,5 +1,6 @@
 export class User {
   id: string;
+  locked: boolean;
   countryCode: string;
   email: string;
   fullName: string;

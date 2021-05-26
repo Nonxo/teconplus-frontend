@@ -21,6 +21,7 @@ export class UserService {
   }
 
   update(user: User) {
+    delete user.createdById;
     return this.http
       .put(environment.apiBaseUrl + `/users`, user)
       .pipe(catchError(handleError));
@@ -35,6 +36,12 @@ export class UserService {
   deactivate(userId: string) {
     return this.http
       .put(environment.apiBaseUrl + `/users/deactivate/${userId}`, null)
+      .pipe(catchError(handleError));
+  }
+
+  reactivate(userId: string) {
+    return this.http
+      .put(environment.apiBaseUrl + `users/reactivate/${userId}`, null)
       .pipe(catchError(handleError));
   }
 }

@@ -9,7 +9,8 @@
 
   .body {
     background: #F5F4F0;
-    height: 87.5vh;
+    min-height: 87.5vh;
+    overflow-y: auto;
 
     button {
       background-color: #CCA43C;

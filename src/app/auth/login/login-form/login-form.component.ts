@@ -51,10 +51,13 @@ export class LoginFormComponent implements OnInit {
     if (this.value1 === "off") {
       this.user.countryCode = null;
       this.user.phoneNumber = null;
+      this.user.email = this.user.email.toLowerCase().trim();
+      debugger;
     } else {
       this.user.email = null;
       this.user.countryCode = this.user.countryCode.substring(1);
     }
+    debugger;
     this.isLoading = true;
     this.authSvc
       .login(this.user)

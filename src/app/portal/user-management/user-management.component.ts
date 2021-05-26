@@ -35,7 +35,8 @@ export class UserManagementComponent implements OnInit {
   selectedRole: Role;
   period: any[] = [];
   deactivateModal: boolean;
-  rangeDates: any;
+  reactivateModal: boolean;
+  minDateValue = new Date();
   selectedUserIndex: number;
 
   constructor(
@@ -67,36 +68,6 @@ export class UserManagementComponent implements OnInit {
       {
         label: "Year",
         value: "year",
-      },
-    ];
-    this.items = [
-      {
-        label: "View details",
-        icon: "pi pi-info-circle",
-        command: () => {
-          this.displayModal = true;
-          this.editMode = false;
-        },
-      },
-      {
-        label: "Edit users details",
-        icon: "pi pi-pencil",
-        command: () => {
-          this.displayModal = true;
-          this.editMode = true;
-        },
-      },
-      {
-        label: "Reset Password",
-        icon: "pi pi-refresh",
-        routerLink: "/fileupload",
-      },
-      {
-        label: "Deactivate",
-        icon: "pi pi-exclamation-circle",
-        command: () => {
-          this.deactivateModal = true;
-        },
       },
     ];
 
@@ -244,7 +215,37 @@ export class UserManagementComponent implements OnInit {
           summary: "User Updated",
           detail: res.message,
         });
-        this.users = this.users.filter((user) => user.id !== id);
+        this.users[this.selectedUserIndex] = res.data;
+        this.displayModal = false;
+      });
+  }
+
+  reactivate(id: string) {
+    this.isLoading = true;
+    this.userSvc
+      .reactivate(id)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageSvc.add({
+              severity: "error",
+              summary: "User Update Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.deactivateModal = false;
+        this.isLoading = false;
+        this.messageSvc.add({
+          severity: "success",
+          summary: "User Updated",
+          detail: res.message,
+        });
+        this.users[this.selectedUserIndex] = res.data;
         this.displayModal = false;
       });
   }
@@ -262,6 +263,60 @@ export class UserManagementComponent implements OnInit {
   getSelectedUser(user: User, index) {
     this.selectedUser = user;
     this.selectedUserIndex = index;
+    if (user.locked) {
+      this.items = [
+        {
+          label: "View details",
+          icon: "pi pi-info-circle",
+        },
+        {
+          label: "Edit users details",
+          icon: "pi pi-pencil",
+        },
+        {
+          label: "Reset Password",
+          icon: "pi pi-refresh",
+        },
+        {
+          label: "Activate",
+          icon: "pi pi-exclamation-circle",
+          command: () => {
+            this.reactivateModal = true;
+          },
+        },
+      ];
+    } else {
+      this.items = [
+        {
+          label: "View details",
+          icon: "pi pi-info-circle",
+          command: () => {
+            this.displayModal = true;
+            this.editMode = false;
+          },
+        },
+        {
+          label: "Edit users details",
+          icon: "pi pi-pencil",
+          command: () => {
+            this.displayModal = true;
+            this.editMode = true;
+          },
+        },
+        {
+          label: "Reset Password",
+          icon: "pi pi-refresh",
+          routerLink: "/fileupload",
+        },
+        {
+          label: "Deactivate",
+          icon: "pi pi-exclamation-circle",
+          command: () => {
+            this.deactivateModal = true;
+          },
+        },
+      ];
+    }
   }
 
   switch(event) {
@@ -270,7 +325,7 @@ export class UserManagementComponent implements OnInit {
     if (!checked) {
       this.selectedUser.defaultRole = "";
       this.createUserModel.defaultRole = "";
-      this.rangeDates = "";
+      this.createUserModel.tempRoleExpiryDate = "";
     }
   }
 }

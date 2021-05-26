@@ -7,7 +7,7 @@
 <div class="container" *ngIf="users">
   <p-toolbar>
     <div class="p-toolbar-group-left">
-      <h5>User Management</h5>
+      <h5>User Management <span class="p-ml-2">|   {{users.length}} Total user(s)</span></h5>
     </div>
     <div class="p-toolbar-group-right">
       <span class="p-input-icon-right p-mr-2">
@@ -105,9 +105,9 @@
                   shape="circle"
                 ></p-avatar>
               </div>
-              <p class="p-mb-0"><strong>{{user.fullName}}</strong></p>
-              <p class="text-email p-mb-3">{{user.email}}</p>
-              <p-tag value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+              <p class="p-mb-0" [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}"><strong>{{user.fullName}}</strong></p>
+              <p class="text-email p-mb-3" [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}">{{user.email}}</p>
+              <p-tag [ngClass]="user.locked ? {'color': '#7E7E7E', 'background-color': '#EFEFEF'}:{}" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
           <div class="p-field p-mb-5">
             <label for="fullName">Full Name</label>
             <input id="fullName" #fullName="ngModel" type="text" placeholder="Tecon Plus" name="fullname" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.fullName" required/>
-            <small id="full_name-help" class="p-error" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">Email Address is not valid.</small>
+            <small id="full_name-help" class="p-error" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">Full Name is not valid.</small>
           </div>
           <div class="p-field p-grid">
             <div class="p-field p-md-6 p-mb-5">
@@ -141,8 +141,9 @@
             <div class="p-field p-md-6 p-mb-3">
               <label for="newPhone">Phone Number</label>
               <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">+123</span>
-                <input id="newPhone" type="tel" placeholder="080 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" />
+                <span class="p-inputgroup-addon">+234</span>
+                <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" />
+                <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
               </div>
             </div>
 
@@ -171,8 +172,8 @@
 
             <div class="p-field p-grid">
               <div class="p-field p-md-6">
-                <label for="range">Set Duration</label>
-                <p-calendar id="range" [(ngModel)]="createUserModel.tempRoleExpiryDate" name="expiryDate" [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
+                <label for="range">Role Expiry Date</label>
+                <p-calendar id="range" [(ngModel)]="createUserModel.tempRoleExpiryDate" name="expiryDate" [minDate]="minDateValue" [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
               </div>
               <div class="p-field p-md-6">
                 <label for="fallback_role">Select a Fallback Role</label>
@@ -208,10 +209,30 @@
       ></p-avatar>
     </div>
   </div>
-  <p class="p-as-center" style="color: #605D71">Your are about to deactivate <strong>{{selectedUser.fullName}}</strong> as a user on this company. Are you sure you want to continue?</p>
+  <p class="p-as-center" style="color: #605D71">Your are about to deactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
   <ng-template pTemplate="footer">
     <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="deactivate(selectedUser.id)" label="Deactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
     <button pButton pRipple type="button" (click)="deactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
+  </ng-template>
+</p-dialog>
+
+
+<!------- Activate User Modal--------->
+<p-dialog header="Reactivate User?" [(visible)]="reactivateModal" [style]="{width: '30vw'}" [baseZIndex]="10000">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-as-center">
+      <p-avatar
+        icon="pi pi-user"
+        styleClass=""
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
+    </div>
+  </div>
+  <p class="p-as-center" style="color: #605D71">Your are about to reactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="reactivate(selectedUser.id)" label="Reactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
+    <button pButton pRipple type="button" (click)="reactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
   </ng-template>
 </p-dialog>
 
@@ -280,8 +301,8 @@
 
             <div class="p-field p-grid">
               <div class="p-field p-md-6">
-                <label for="expiry_date">Set Duration</label>
-                <p-calendar id="expiry_date" [(ngModel)]="selectedUser.tempRoleExpiryDate" name="expiryDate"  [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
+                <label for="expiry_date">Role Expiry Date</label>
+                <p-calendar id="expiry_date" [(ngModel)]="selectedUser.tempRoleExpiryDate" name="expiryDate" [minDate]="minDateValue"  [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
               </div>
               <div class="p-field p-md-6">
                 <label for="edit_fallback_role">Select a Fallback Role</label>
