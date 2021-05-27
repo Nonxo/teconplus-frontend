@@ -10,6 +10,7 @@ import { handleError } from "./apiErrorHandler";
   providedIn: "root",
 })
 export class AuthenticationService {
+  credentials: string;
   constructor(private http: HttpClient) {}
 
   login(credentials: Auth): Observable<any> {
@@ -35,5 +36,13 @@ export class AuthenticationService {
       credentials,
       { headers: reqHeader }
     );
+  }
+
+  setCredentials(credentials) {
+    this.credentials = credentials;
+  }
+
+  getCredentials() {
+    return this.credentials;
   }
 }

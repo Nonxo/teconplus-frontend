@@ -63,7 +63,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.isLoading = false;
         console.log(res);
         this.router.navigate([
-          "/info-page",
+          "/info",
           this.user.email
             ? this.user.email
             : this.user.countryCode + this.user.phoneNumber,
