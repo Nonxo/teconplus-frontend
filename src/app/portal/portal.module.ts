@@ -33,6 +33,7 @@ import { CalendarModule } from "primeng/calendar";
 import { RoleManagementComponent } from "./role-management/role-management.component";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { MultiSelectModule } from "primeng/multiselect";
+import { MetaDataComponent } from './meta-data/meta-data.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MultiSelectModule } from "primeng/multiselect";
     PortalMenuComponent,
     UserManagementComponent,
     RoleManagementComponent,
+    MetaDataComponent,
   ],
   imports: [
     CommonModule,

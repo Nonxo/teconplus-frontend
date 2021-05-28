@@ -7,6 +7,7 @@ import { throwError } from "rxjs";
 import { Role, User } from "../../models/user";
 import { NgForm } from "@angular/forms";
 import { RoleService } from "../portal-services/role.service";
+import {host} from "@angular-devkit/build-angular/src/test-utils";
 
 @Component({
   selector: "app-user-management",
@@ -38,6 +39,7 @@ export class UserManagementComponent implements OnInit {
   reactivateModal: boolean;
   minDateValue = new Date();
   selectedUserIndex: number;
+  currentUser;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -49,6 +51,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = JSON.parse(localStorage.getItem("current-user"));
     this.layoutOptions = [
       { icon: "pi pi-list", value: "list" },
       { icon: "pi pi-th-large", value: "grid" },
@@ -328,4 +331,5 @@ export class UserManagementComponent implements OnInit {
       this.createUserModel.tempRoleExpiryDate = "";
     }
   }
+
 }

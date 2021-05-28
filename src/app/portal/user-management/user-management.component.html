@@ -94,7 +94,7 @@
       <ng-container *ngIf="users">
         <div class="p-col-12 p-md-3" *ngFor="let user of users; let i = index">
           <div class="user-grid-item default__card p-ml-2 p-mr-2">
-            <i class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event); getSelectedUser(user, i)"></i>
+            <i *ngIf="currentUser.id !== user.id" class="pi pi-ellipsis-h" style="float: right" (click)="menu.toggle($event); getSelectedUser(user, i)"></i>
             <p-menu #menu [model]="items" [popup]="true"></p-menu>
             <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
               <div class="p-my-auto">
@@ -107,7 +107,9 @@
               </div>
               <p class="p-mb-0" [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}"><strong>{{user.fullName}}</strong></p>
               <p class="text-email p-mb-3" [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}">{{user.email}}</p>
-              <p-tag [ngClass]="user.locked ? {'color': '#7E7E7E', 'background-color': '#EFEFEF'}:{}" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
+              <div class="tag" [ngStyle]="user.locked ? {'color': '#7E7E7E', 'background': '#EFEFEF'}:{}">
+                <span>{{user.role.name ? user.role.name : 'Others'}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -143,8 +145,8 @@
               <div class="p-inputgroup">
                 <span class="p-inputgroup-addon">+234</span>
                 <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" />
-                <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
               </div>
+              <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
             </div>
 
           </div>
