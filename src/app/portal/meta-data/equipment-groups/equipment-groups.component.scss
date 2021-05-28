@@ -79,56 +79,15 @@
   background: #CCA43C;
 }
 
-.user-grid-item {
-  background: #fff;
+.body {
 
-}
-
-.default__card {
-  padding: 2rem;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  margin-bottom: 2rem;
-  border: 1px dashed #CCA43C;
-}
-
-.create__card:hover {
-  cursor: pointer;
-  background: #CCA43C;
-  color: #fff;
-}
-
-
-:host ::ng-deep {
-  .p-datatable-responsive-demo .p-datatable-tbody > tr > td .p-column-title {
-    display: none;
+  button {
+    background: #CCA43C;
+    color: #ffffff;
   }
 }
 
-.text-email {
-  color: #747474;
-  font-size: 12px;
-}
 
-:host ::ng-deep .p-tag {
-  background: #E8E7FC;
-  color: #554DFF;
-  padding-left: 20px;
-  padding-right: 20px
-}
-
-.tag {
-  background: rgb(232, 231, 252);
-  color: rgb(85, 77, 255);
-  padding: 5px 8px;
-  font-size: 12px;
-  font-weight: 700;
-  width: fit-content;
-}
-
-:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-  font-size: 0.8rem;
-}
 
 @media screen and (max-width: 40rem) {
   :host ::ng-deep {
@@ -164,49 +123,6 @@
   }
 }
 
-.confirmation-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.time-description {
-  font-size: 12px;
-  position: absolute;
-  top: 30px;
-  right: 70px;
-}
-
-.info-label {
-  font-size: 12px
-}
-
-.content {
-  border: 1px solid #00053A27;
-  padding: 40px;
-  border-radius: 4px;
-}
-
-.tag {
-  display: flex !important;
-}
-
-
-:host ::ng-deep .p-dialog .p-dialog-footer button {
-  background: #15C5F8;
-  border: 1px solid #15C5F8;
-  color: #fff;
-
-
-  &:focus,&:hover {
-    background: #15C5F8;
-    border: 1px solid #15C5F8;
-    color: #fff;
-    outline: none;
-  }
-}
-
 p {
   font-size: 14px;
 }
@@ -222,10 +138,15 @@ label {
   justify-content: center;
 }
 
-:host ::ng-deep .p-inputtext {
-  font-size: 0.9rem;
-  font-weight: normal;
+:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #CCA43C;
+  background: #CCA43C;
 }
+
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #CCA43C;
+}
+
 
 :host ::ng-deep .p-button.p-button-text {
   background-color: transparent !important;
@@ -238,24 +159,3 @@ label {
   color: #fff !important;
   border: 1px solid #FA235D !important;
 }
-
-:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
-  border-color: #CCA43C;
-  background: #CCA43C;
-}
-
-:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-  background: #CCA43C;
-}
-
-small {
-  font-size: 11px;
-}
-
-:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  font-weight: normal;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #A3ABB7;
-}
-

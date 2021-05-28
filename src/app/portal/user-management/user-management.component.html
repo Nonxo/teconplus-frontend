@@ -267,9 +267,10 @@
             <label for="phone1">Phone Number</label>
             <p *ngIf="!editMode">{{selectedUser.phoneNumber}}</p>
             <div class="p-inputgroup" *ngIf="editMode">
-              <span class="p-inputgroup-addon">+123</span>
-              <input id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" />
+              <span class="p-inputgroup-addon">+234</span>
+              <input id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" pattern="(7|8|9)\d{9}" />
             </div>
+            <small id="phone_number" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
           </div>
           <div class="p-field p-md-6">
             <label for="email1">Email Address</label>
@@ -282,9 +283,9 @@
             <label>Role</label>
             <p-tag class="tag" value="{{selectedUser.role ? selectedUser.role.name : 'Others'}}"></p-tag>
           </div>
-          <div class="p-field p-md-6">
+          <div class="p-field p-md-6" *ngIf="selectedUser.tempRole">
             <label>Fallback Role</label>
-            <p-tag class="tag" value="{{selectedUser.defaultRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+            <p-tag class="tag" value="{{selectedUser.defaultRole.name}}"></p-tag>
           </div>
         </div>
 
@@ -308,7 +309,7 @@
               </div>
               <div class="p-field p-md-6">
                 <label for="edit_fallback_role">Select a Fallback Role</label>
-                <p-dropdown id="edit_fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="selectedUser.defaultRole" optionLabel="name" [showClear]="true" required></p-dropdown>
+                <p-dropdown id="edit_fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="selectedUser.defaultRole.id" optionLabel="name" [showClear]="true" required></p-dropdown>
               </div>
             </div>
 

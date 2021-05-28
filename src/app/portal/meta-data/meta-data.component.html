@@ -4,4 +4,40 @@
   <app-portal-menu></app-portal-menu>
 </ng-container>
 
-<div class="container"></div>
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h5>Metadata <span class="p-ml-2">|  {{metaDataList.length}} Total item(s)</span></h5>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-right p-mr-2">
+        <i class="pi pi-search"></i>
+        <input type="text" class="p-inputtext-sm" pInputText placeholder="Search metadata list"/>
+      </span>
+    </div>
+  </p-toolbar>
+  <div class="body p-d-flex p-flex-column">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end p-my-3 p-mx-3">
+      <p-selectButton [options]="layoutOptions" [(ngModel)]="layout" optionLabel="icon" optionValue="value">
+        <ng-template let-item>
+          <i [class]="item.icon"></i>
+        </ng-template>
+      </p-selectButton>
+    </div>
+
+    <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap" *ngIf="layout === 'grid'">
+      <ng-container>
+        <div class="p-col-12 p-md-3 cursor" *ngFor="let metadata of metaDataList" (click)="navigate(metadata.value)">
+          <div class="grid-item card p-ml-2 p-mr-2">
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
+              <div class="p-my-auto">
+                <p-avatar icon="pi pi-user-edit" size="xlarge" shape="circle"></p-avatar>
+              </div>
+              <p class="p-mb-4">{{metadata.label}}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

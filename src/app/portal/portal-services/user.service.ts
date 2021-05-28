@@ -41,7 +41,7 @@ export class UserService {
 
   reactivate(userId: string) {
     return this.http
-      .put(environment.apiBaseUrl + `users/reactivate/${userId}`, null)
+      .put(environment.apiBaseUrl + `/users/reactivate/${userId}`, null)
       .pipe(catchError(handleError));
   }
 }

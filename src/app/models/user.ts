@@ -13,9 +13,9 @@ export class User {
   createdById: number;
   phoneNumber: string;
   role: any;
-  defaultRole: string;
+  defaultRole: any;
   tempRole: boolean;
-  tempRoleExpiryDate: string;
+  tempRoleExpiryDate: Date;
   username: string;
 
   constructor() {

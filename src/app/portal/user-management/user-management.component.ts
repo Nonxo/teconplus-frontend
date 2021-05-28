@@ -7,7 +7,7 @@ import { throwError } from "rxjs";
 import { Role, User } from "../../models/user";
 import { NgForm } from "@angular/forms";
 import { RoleService } from "../portal-services/role.service";
-import {host} from "@angular-devkit/build-angular/src/test-utils";
+import { host } from "@angular-devkit/build-angular/src/test-utils";
 
 @Component({
   selector: "app-user-management",
@@ -241,7 +241,7 @@ export class UserManagementComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        this.deactivateModal = false;
+        this.reactivateModal = false;
         this.isLoading = false;
         this.messageSvc.add({
           severity: "success",
@@ -265,6 +265,9 @@ export class UserManagementComponent implements OnInit {
 
   getSelectedUser(user: User, index) {
     this.selectedUser = user;
+    this.selectedUser.tempRoleExpiryDate = this.selectedUser.tempRoleExpiryDate
+      ? new Date(this.selectedUser.tempRoleExpiryDate)
+      : null;
     this.selectedUserIndex = index;
     if (user.locked) {
       this.items = [
@@ -328,8 +331,7 @@ export class UserManagementComponent implements OnInit {
     if (!checked) {
       this.selectedUser.defaultRole = "";
       this.createUserModel.defaultRole = "";
-      this.createUserModel.tempRoleExpiryDate = "";
+      this.createUserModel.tempRoleExpiryDate = null;
     }
   }
-
 }

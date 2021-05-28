@@ -34,6 +34,7 @@ import { RoleManagementComponent } from "./role-management/role-management.compo
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { MultiSelectModule } from "primeng/multiselect";
 import { MetaDataComponent } from './meta-data/meta-data.component';
+import { EquipmentGroupsComponent } from './meta-data/equipment-groups/equipment-groups.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MetaDataComponent } from './meta-data/meta-data.component';
     UserManagementComponent,
     RoleManagementComponent,
     MetaDataComponent,
+    EquipmentGroupsComponent,
   ],
   imports: [
     CommonModule,
