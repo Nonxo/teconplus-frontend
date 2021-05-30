@@ -10,21 +10,27 @@ import { handleError } from "../../services/apiErrorHandler";
 export class MetadataService {
   constructor(private http: HttpClient) {}
 
-  getMetaData(groupId) {
+  getMetaData(tag) {
     return this.http
-      .get(environment.apiBaseUrl + `/metadata/${groupId}`)
+      .get(environment.apiBaseUrl + `/metadata/${tag}`)
       .pipe(catchError(handleError));
   }
 
-  create(groupId, data) {
+  create(tag, data) {
     return this.http
-      .post(environment.apiBaseUrl + `/metadata/${groupId}`, data)
+      .post(environment.apiBaseUrl + `/metadata/${tag}`, data)
       .pipe(catchError(handleError));
   }
 
-  update(groupId, data) {
+  update(tag, data) {
     return this.http
-      .put(environment.apiBaseUrl + `/metadata/${groupId}`, data)
+      .put(environment.apiBaseUrl + `/metadata/${tag}`, data)
+      .pipe(catchError(handleError));
+  }
+
+  delete(tagId, tag) {
+    return this.http
+      .delete(environment.apiBaseUrl + `/metadata/${tag}/${tagId}`)
       .pipe(catchError(handleError));
   }
 }

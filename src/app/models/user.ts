@@ -19,7 +19,7 @@ export class User {
   username: string;
 
   constructor() {
-    this.countryCode = "123";
+    this.countryCode = "+234";
     this.tempRole = false;
   }
 }

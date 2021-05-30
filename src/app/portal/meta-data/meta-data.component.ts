@@ -20,26 +20,45 @@ export class MetaDataComponent implements OnInit {
     ];
 
     this.metaDataList = [
-      { label: "Equipment Groups", value: "EQUIPMENT_GROUP" },
-      { label: "Equipment Types", value: "EQUIPMENT_TYPE" },
-      { label: "Project Types", value: "PROJECT_TYPE" },
+      {
+        label: "Equipment Groups",
+        value: "EQUIPMENT_GROUP",
+        icon: "assets/img/equipment_group.svg",
+      },
+      {
+        label: "Equipment Types",
+        value: "EQUIPMENT_TYPE",
+        icon: "assets/img/equipment_types.svg",
+      },
+      {
+        label: "Project Types",
+        value: "PROJECT_TYPE",
+        icon: "assets/img/project_types.svg",
+      },
       {
         label: "Inventory Maintenance Types",
         value: "INVENTORY_MAINTENANCE_TYPE",
+        icon: "",
       },
       {
         label: "Inventory Maintenance Metrics",
         value: "INVENTORY_MAINTENANCE_METRIC",
+        icon: "",
       },
-      { label: "Tecon Locations", value: "TECON_LOCATION" },
-      { label: "Designations", value: "SUBSIDIARY" },
+      {
+        label: "Tecon Locations",
+        value: "TECON_LOCATION",
+        icon: "assets/img/tecon_locations.svg",
+      },
+      {
+        label: "Designations",
+        value: "SUBSIDIARY",
+        icon: "assets/img/designation.svg",
+      },
     ];
   }
 
   navigate(value) {
-    switch (value) {
-      case "EQUIPMENT_GROUP":
-        this.router.navigate(["/portal/metadata/equipment-groups"]);
-    }
+    this.router.navigate(["/portal/metadata", value]);
   }
 }

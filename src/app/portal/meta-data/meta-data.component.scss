@@ -20,10 +20,8 @@
 
 .card {
   padding: 2rem;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
+  border-radius: 1px;
   margin-bottom: 2rem;
-  border: 1px dashed #CCA43C;
 
   &:hover {
     background: #CCA43C;
@@ -70,4 +68,55 @@ label {
 :host ::ng-deep .p-inputtext {
   font-size: 0.9rem;
   font-weight: normal;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  font-weight: normal;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #A3ABB7;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  font-size: 0.8rem;
+}
+
+:host ::ng-deep {
+  .p-datatable-responsive-demo .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  :host ::ng-deep {
+    .p-datatable {
+      &.p-datatable-responsive-demo {
+        .p-datatable-thead > tr > th,
+        .p-datatable-tfoot > tr > td {
+          display: none !important;
+        }
+
+        .p-datatable-tbody > tr > td {
+          text-align: left;
+          display: block;
+          width: 100%;
+          float: left;
+          clear: left;
+          border: 0 none;
+
+          .p-column-title {
+            padding: .4rem;
+            min-width: 30%;
+            display: inline-block;
+            margin: -.4em 1em -.4em -.4rem;
+            font-weight: bold;
+          }
+
+          &:last-child {
+            border-bottom: 1px solid var(--surface-d);
+          }
+        }
+      }
+    }
+  }
 }

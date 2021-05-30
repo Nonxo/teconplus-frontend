@@ -33,8 +33,8 @@ import { CalendarModule } from "primeng/calendar";
 import { RoleManagementComponent } from "./role-management/role-management.component";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { MultiSelectModule } from "primeng/multiselect";
-import { MetaDataComponent } from './meta-data/meta-data.component';
-import { EquipmentGroupsComponent } from './meta-data/equipment-groups/equipment-groups.component';
+import { MetaDataComponent } from "./meta-data/meta-data.component";
+import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.component";
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ import { EquipmentGroupsComponent } from './meta-data/equipment-groups/equipment
     UserManagementComponent,
     RoleManagementComponent,
     MetaDataComponent,
-    EquipmentGroupsComponent,
+    MetadataDetailsComponent,
   ],
   imports: [
     CommonModule,

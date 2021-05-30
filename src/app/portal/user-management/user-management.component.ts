@@ -8,6 +8,7 @@ import { Role, User } from "../../models/user";
 import { NgForm } from "@angular/forms";
 import { RoleService } from "../portal-services/role.service";
 import { host } from "@angular-devkit/build-angular/src/test-utils";
+import { CountryCode } from "../../models/country-code";
 
 @Component({
   selector: "app-user-management",
@@ -35,6 +36,7 @@ export class UserManagementComponent implements OnInit {
   roles: Role[] = [];
   selectedRole: Role;
   period: any[] = [];
+  countryCode = CountryCode;
   deactivateModal: boolean;
   reactivateModal: boolean;
   minDateValue = new Date();
@@ -122,6 +124,11 @@ export class UserManagementComponent implements OnInit {
 
   changeToEditMode() {
     this.editMode = true;
+    this.displayCreateModal = true;
+    this.displayModal = false;
+    this.createUserModel = this.selectedUser;
+    this.createUserModel.role = this.selectedUser.role.id;
+    this.createUserModel.defaultRole = this.selectedUser.defaultRole.id;
   }
 
   create(form: NgForm) {
@@ -163,11 +170,10 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
-  update(user: User, index) {
-    user.role = this.selectedUser.role.id;
+  update(index) {
     this.isLoading = true;
     this.userSvc
-      .update(user)
+      .update(this.createUserModel)
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
@@ -254,6 +260,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   showCreateDialog() {
+    this.editMode = false;
     this.createUserModel = new User();
     this.displayCreateModal = true;
   }
@@ -305,8 +312,7 @@ export class UserManagementComponent implements OnInit {
           label: "Edit users details",
           icon: "pi pi-pencil",
           command: () => {
-            this.displayModal = true;
-            this.editMode = true;
+            this.changeToEditMode();
           },
         },
         {

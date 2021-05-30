@@ -7,7 +7,7 @@
   <p-toolbar>
     <div class="p-toolbar-group-left">
       <i class="pi pi-caret-left p-mr-2 p-p-2 cursor" style="color: #171102; background: #97A3A7;" routerLink="/portal/metadata"></i>
-      <h5>Equipment Groups <span class="p-ml-2">| {{data.length}} Total item(s)</span></h5>
+      <h5>{{tag}} <span class="p-ml-2">| {{data.length}} Total item(s)</span></h5>
     </div>
     <div class="p-toolbar-group-right">
       <span class="p-input-icon-right p-mr-2">
@@ -24,7 +24,7 @@
       <button pButton pRipple label="Add new value" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="showModal()"></button>
     </div>
     <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
-    <p-table [value]="" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedItem" [contextMenu]="contextMenu" dataKey="code" *ngIf="data.length > 0">
+    <p-table [value]="data" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedItem" [contextMenu]="contextMenu" dataKey="code" *ngIf="data.length > 0">
       <ng-template pTemplate="header">
         <tr>
           <th>#</th>
@@ -35,7 +35,7 @@
       <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr [pContextMenuRow]="item" (contextmenu)="getSelectedData(item, rowIndex)">
           <td>{{item.id ? item.id : "-"}}</td>
-          <td>{{item.name ? item.name : "-"}}</td>
+          <td>{{item.value ? item.value : "-"}}</td>
           <td>{{item.createdOn ? (item.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
         </tr>
       </ng-template>
@@ -50,7 +50,7 @@
       <div class="p-fluid">
         <div class="p-field p-mb-5">
           <span class="p-float-label">
-            <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="groupModel.name" required>
+            <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="groupModel.value" required>
             <label for="role_name">Value name</label>
           </span>
         </div>
@@ -73,7 +73,7 @@
   <div class="p-d-flex p-flex-column">
     <div class="p-fluid">
       <div class="p-field">
-        <p style="color: #605D71">You are about to delete the role {{groupModel.name}}. Add a delete reason.</p>
+        <p style="color: #605D71">You are about to delete the role {{groupModel.value}}. Add a delete reason.</p>
       </div>
       <div class="p-field p-mt-5">
         <span class="p-float-label">
@@ -84,7 +84,7 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <button pButton pRipple class="p-button-danger" icon="pi pi-check" label="Delete" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
+    <button pButton pRipple class="p-button-danger" icon="pi pi-check" label="Delete" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading" (click)="delete()"></button>
     <button pButton pRipple type="button" (click)="displayDeleteModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
   </ng-template>
 </p-dialog>

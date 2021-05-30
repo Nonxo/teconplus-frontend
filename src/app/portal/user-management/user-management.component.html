@@ -86,7 +86,7 @@
               <div class="p-mt-6">
                 <p-avatar image="assets/img/Group4419.svg" size="xlarge"></p-avatar>
               </div>
-              <p class="p-mb-4">Create User</p>
+              <p class="p-mb-3">Create User</p>
             </div>
           </div>
         </div>
@@ -128,22 +128,28 @@
     <div class="content p-mt-2">
       <form (ngSubmit)="create(createUserForm)" #createUserForm="ngForm">
         <div class="p-fluid">
-          <div class="p-field p-mb-5">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" #fullName="ngModel" type="text" placeholder="Tecon Plus" name="fullname" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.fullName" required/>
-            <small id="full_name-help" class="p-error" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">Full Name is not valid.</small>
-          </div>
           <div class="p-field p-grid">
+            <div class="p-field p-md-6 p-mb-5">
+              <label for="fullName">Full Name</label>
+              <input id="fullName" #fullName="ngModel" type="text" placeholder="Tecon Plus" name="fullname" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.fullName" required/>
+              <small id="full_name-help" class="p-error" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">Full Name is not valid.</small>
+            </div>
             <div class="p-field p-md-6 p-mb-5">
               <label for="email_address">Email Address</label>
               <input #email="ngModel" type="text" placeholder="info@teconplus.com" name="email" id="email_address" pInputText [(ngModel)]="createUserModel.email"
                      pattern="(?![_.-])((?![_.-][_.-])[a-z\d_.-]){0,63}[a-z\d]@(?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.(((?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.)|)(([a-z]{2,14}\.)|)[a-z]{2,14}" required>
               <small id="email_address-help" class="p-error" *ngIf="email.invalid && (email.dirty || email.touched)">Email Address is not valid.</small>
             </div>
+          </div>
+
+          <div class="p-field p-grid">
+            <div class="p-field p-md-6 p-mb-3">
+              <label for="country_code">Country Code</label>
+              <p-dropdown id="country_code" [autoDisplayFirst]="false" #code="ngModel" name="country-code" optionValue="callingCode" [options]="countryCode" optionLabel="country" [(ngModel)]="createUserModel.countryCode" [showClear]="true" required></p-dropdown>
+            </div>
             <div class="p-field p-md-6 p-mb-3">
               <label for="newPhone">Phone Number</label>
               <div class="p-inputgroup">
-                <span class="p-inputgroup-addon">+234</span>
                 <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" />
               </div>
               <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
@@ -194,7 +200,7 @@
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>
-    <p-button (click)="create(createUserForm)" styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+    <p-button (click)="editMode ? update(selectedUserIndex) : create(createUserForm)" styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
   </ng-template>
 </p-dialog>
 
@@ -257,28 +263,21 @@
       <div class="p-fluid">
         <div class="p-field p-grid">
           <div class="p-field p-md-12">
-            <label for="firstName1">Full Name</label>
-            <p *ngIf="!editMode">{{selectedUser.fullName}}</p>
-            <input *ngIf="editMode" id="firstName1" name="fullname" type="text" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.fullName" />
+            <label>Full Name</label>
+            <p>{{selectedUser.fullName}}</p>
           </div>
         </div>
         <div class="p-field p-grid">
           <div class="p-field p-md-6">
-            <label for="phone1">Phone Number</label>
-            <p *ngIf="!editMode">{{selectedUser.phoneNumber}}</p>
-            <div class="p-inputgroup" *ngIf="editMode">
-              <span class="p-inputgroup-addon">+234</span>
-              <input id="phone1" name="phone" type="tel" aria-describedby="firstname-help" pInputText [(ngModel)]="selectedUser.phoneNumber" pattern="(7|8|9)\d{9}" />
-            </div>
-            <small id="phone_number" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
+            <label>Phone Number</label>
+            <p>{{selectedUser.phoneNumber}}</p>
           </div>
           <div class="p-field p-md-6">
-            <label for="email1">Email Address</label>
-            <p *ngIf="!editMode">{{selectedUser.email}}</p>
-            <input *ngIf="editMode" id="email1" name="email" type="email" aria-describedby="username1-help" pInputText [(ngModel)]="selectedUser.email" />
+            <label>Email Address</label>
+            <p>{{selectedUser.email}}</p>
           </div>
         </div>
-        <div class="p-field p-grid" *ngIf="!editMode">
+        <div class="p-field p-grid">
           <div class="p-field p-md-6">
             <label>Role</label>
             <p-tag class="tag" value="{{selectedUser.role ? selectedUser.role.name : 'Others'}}"></p-tag>
@@ -288,40 +287,13 @@
             <p-tag class="tag" value="{{selectedUser.defaultRole.name}}"></p-tag>
           </div>
         </div>
-
-        <ng-container *ngIf="editMode">
-          <div class="p-field p-grid">
-            <div class="p-field p-md-8">
-              <p class="p-mt-1">Make this role time bound</p>
-            </div>
-            <div class="p-field p-md-4">
-              <p-inputSwitch name="switch" (onChange)="switch($event)" [(ngModel)]="selectedUser.tempRole" styleClass="p-inputtext-sm"></p-inputSwitch>
-            </div>
-          </div>
-
-          <ng-container *ngIf="selectedUser.tempRole">
-            <p class="p-mb-3">Set a duration this role should last</p>
-
-            <div class="p-field p-grid">
-              <div class="p-field p-md-6">
-                <label for="expiry_date">Role Expiry Date</label>
-                <p-calendar id="expiry_date" [(ngModel)]="selectedUser.tempRoleExpiryDate" name="expiryDate" [minDate]="minDateValue"  [readonlyInput]="true" [showIcon]="true" inputId="expiryDate" required></p-calendar>
-              </div>
-              <div class="p-field p-md-6">
-                <label for="edit_fallback_role">Select a Fallback Role</label>
-                <p-dropdown id="edit_fallback_role" [options]="roles" name="fallback_role" [autoDisplayFirst]="false" optionValue="id" [(ngModel)]="selectedUser.defaultRole.id" optionLabel="name" [showClear]="true" required></p-dropdown>
-              </div>
-            </div>
-
-          </ng-container>
-        </ng-container>
       </div>
     </div>
   </div>
 
   <ng-template pTemplate="footer">
-    <p-button *ngIf="!editMode" class="" label="Deactivate" styleClass="p-button-danger p-button-lg" (click)="showDeactivateDialog()"></p-button>
-    <p-button styleClass="p-button-lg" (click)="editMode ? update(selectedUser, selectedUserIndex) : changeToEditMode()" label="{{editMode ? 'Save Changes' : 'Edit Details'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="editMode && isLoading"></p-button>
+    <p-button class="" label="Deactivate" styleClass="p-button-danger p-button-lg" (click)="showDeactivateDialog()"></p-button>
+    <p-button styleClass="p-button-lg" (click)="changeToEditMode()" label="Edit Details" iconPos="right"></p-button>
   </ng-template>
 </p-dialog>
 

@@ -25,15 +25,15 @@
       </p-selectButton>
     </div>
 
-    <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap" *ngIf="layout === 'grid'">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap">
       <ng-container>
         <div class="p-col-12 p-md-3 cursor" *ngFor="let metadata of metaDataList" (click)="navigate(metadata.value)">
-          <div class="grid-item card p-ml-2 p-mr-2">
+          <div class="grid-item card p-ml-2 p-mr-1">
             <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
               <div class="p-my-auto">
-                <p-avatar icon="pi pi-user-edit" size="xlarge" shape="circle"></p-avatar>
+                <p-avatar image="{{metadata.icon}}" size="xlarge" shape="circle"></p-avatar>
               </div>
-              <p class="p-mb-4">{{metadata.label}}</p>
+              <p>{{metadata.label}}</p>
             </div>
           </div>
         </div>

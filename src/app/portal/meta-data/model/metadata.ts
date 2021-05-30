@@ -1,4 +1,5 @@
-export class EquipmentGroup {
+export class Metadata {
+  id: string;
   inputType: string;
   name: string;
   unitOfMeasurement: string;
