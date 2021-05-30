@@ -28,7 +28,7 @@ export class MetadataService {
       .pipe(catchError(handleError));
   }
 
-  delete(tagId, tag) {
+  delete(tag, tagId) {
     return this.http
       .delete(environment.apiBaseUrl + `/metadata/${tag}/${tagId}`)
       .pipe(catchError(handleError));
