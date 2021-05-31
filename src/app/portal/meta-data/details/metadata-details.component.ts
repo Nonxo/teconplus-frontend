@@ -93,6 +93,7 @@ export class MetadataDetailsComponent implements OnInit {
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
+            this.isLoading = false;
             this.messageSvc.add({
               severity: "error",
               summary: "Create Metadata Failed",
@@ -121,6 +122,7 @@ export class MetadataDetailsComponent implements OnInit {
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
+            this.isLoading = false;
             this.messageSvc.add({
               severity: "error",
               summary: "Update Metadata Failed",

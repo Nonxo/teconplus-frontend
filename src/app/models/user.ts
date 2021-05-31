@@ -9,6 +9,7 @@ export class User {
   nin: string;
   createdOn: Date;
   otherName: string;
+  designation: string;
   password: string;
   createdById: number;
   phoneNumber: string;

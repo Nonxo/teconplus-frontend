@@ -9,6 +9,7 @@ import { NgForm } from "@angular/forms";
 import { RoleService } from "../portal-services/role.service";
 import { host } from "@angular-devkit/build-angular/src/test-utils";
 import { CountryCode } from "../../models/country-code";
+import { Designations } from "../../models/designations";
 
 @Component({
   selector: "app-user-management",
@@ -37,6 +38,7 @@ export class UserManagementComponent implements OnInit {
   selectedRole: Role;
   period: any[] = [];
   countryCode = CountryCode;
+  designations = Designations;
   deactivateModal: boolean;
   reactivateModal: boolean;
   minDateValue = new Date();

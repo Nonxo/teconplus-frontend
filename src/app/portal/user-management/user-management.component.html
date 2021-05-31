@@ -63,7 +63,7 @@
             <p-tag [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
           </td>
           <td>
-            <p-tag class="tag" value="{{user.tempRole ? 'Verified' : 'Not Verified'}}"></p-tag>
+            <p-tag class="tag" value="{{user.tempRole ? selectedUser.defaultRole.name : '-'}}"></p-tag>
           </td>
           <td>
             {{user.duration ? user.duration : '-'}}
@@ -150,7 +150,7 @@
             <div class="p-field p-md-6 p-mb-3">
               <label for="newPhone">Phone Number</label>
               <div class="p-inputgroup">
-                <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" />
+                <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" required/>
               </div>
               <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
             </div>
@@ -163,7 +163,7 @@
             </div>
             <div class="p-field p-md-6">
               <label for="designation">Select Designation</label>
-              <p-dropdown id="designation" [autoDisplayFirst]="false" name="tempRoles"  optionLabel="tempRoles" [showClear]="true" required></p-dropdown>
+              <p-dropdown id="designation" [options]="designations" [autoDisplayFirst]="false" name="designation" optionLabel="label" optionValue="value" [(ngModel)]="createUserModel.designation" [showClear]="true" required></p-dropdown>
             </div>
           </div>
           <div class="p-field p-grid">
@@ -200,7 +200,7 @@
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>
-    <p-button (click)="editMode ? update(selectedUserIndex) : create(createUserForm)" styleClass="p-button-lg" label="Create User" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+    <p-button (click)="editMode ? update(selectedUserIndex) : create(createUserForm)" styleClass="p-button-lg" label="{{editMode ? 'Edit User': 'Create User'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
   </ng-template>
 </p-dialog>
 
@@ -217,7 +217,7 @@
       ></p-avatar>
     </div>
   </div>
-  <p class="p-as-center" style="color: #605D71">Your are about to deactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
+  <p class="p-as-center" style="color: #605D71">You are about to deactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
   <ng-template pTemplate="footer">
     <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="deactivate(selectedUser.id)" label="Deactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
     <button pButton pRipple type="button" (click)="deactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
@@ -237,7 +237,7 @@
       ></p-avatar>
     </div>
   </div>
-  <p class="p-as-center" style="color: #605D71">Your are about to reactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
+  <p class="p-as-center" style="color: #605D71">You are about to reactivate <strong>{{selectedUser.fullName}}</strong> as a user in this company. Are you sure you want to continue?</p>
   <ng-template pTemplate="footer">
     <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="reactivate(selectedUser.id)" label="Reactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
     <button pButton pRipple type="button" (click)="reactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>

@@ -40,7 +40,7 @@ export class ResetPasswordComponent implements OnInit {
             this.messageService.add({
               severity: "error",
               summary: "Reset Password Failed",
-              detail: err,
+              detail: err.error.message,
             });
             return throwError(err);
           }
