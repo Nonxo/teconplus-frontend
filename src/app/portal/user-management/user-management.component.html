@@ -136,7 +136,7 @@
             </div>
             <div class="p-field p-md-6 p-mb-5">
               <label for="email_address">Email Address</label>
-              <input #email="ngModel" type="text" placeholder="info@teconplus.com" name="email" id="email_address" pInputText [(ngModel)]="createUserModel.email"
+              <input #email="ngModel" type="text" placeholder="info@teconplus.com" name="email" id="email_address" [disabled]="editMode" pInputText [(ngModel)]="createUserModel.email"
                      pattern="(?![_.-])((?![_.-][_.-])[a-z\d_.-]){0,63}[a-z\d]@(?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.(((?!-)((?!--)[a-z\d-]){0,63}[a-z\d]\.)|)(([a-z]{2,14}\.)|)[a-z]{2,14}" required>
               <small id="email_address-help" class="p-error" *ngIf="email.invalid && (email.dirty || email.touched)">Email Address is not valid.</small>
             </div>
@@ -145,12 +145,12 @@
           <div class="p-field p-grid">
             <div class="p-field p-md-6 p-mb-3">
               <label for="country_code">Country Code</label>
-              <p-dropdown id="country_code" [autoDisplayFirst]="false" #code="ngModel" name="country-code" optionValue="callingCode" [options]="countryCode" optionLabel="country" [(ngModel)]="createUserModel.countryCode" [showClear]="true" required></p-dropdown>
+              <p-dropdown id="country_code" [autoDisplayFirst]="false" #code="ngModel" name="country-code" optionValue="callingCode" [options]="countryCode" optionLabel="country" [disabled]="editMode" [(ngModel)]="createUserModel.countryCode" [showClear]="true" required></p-dropdown>
             </div>
             <div class="p-field p-md-6 p-mb-3">
               <label for="newPhone">Phone Number</label>
               <div class="p-inputgroup">
-                <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" required/>
+                <input id="newPhone" type="tel" #phone="ngModel" placeholder="80 333 555 66" name="phone" aria-describedby="firstname-help" pInputText [(ngModel)]="createUserModel.phoneNumber" pattern="(7|8|9)\d{9}" [disabled]="editMode" required/>
               </div>
               <small id="phone_number-help" class="p-error" *ngIf="phone.invalid && (phone.dirty || phone.touched)">Phone number is not valid.</small>
             </div>
@@ -196,7 +196,7 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <div class="p-field-checkbox">
+    <div class="p-field-checkbox" *ngIf="!editMode">
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>

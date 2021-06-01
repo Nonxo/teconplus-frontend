@@ -195,6 +195,7 @@ export class UserManagementComponent implements OnInit {
       )
       .subscribe((res) => {
         this.isLoading = false;
+        this.displayCreateModal = false;
         this.messageSvc.add({
           severity: "success",
           summary: "User Updated",

@@ -1,34 +1,34 @@
 export const Designations = [
   {
     label: "Supervisor",
-    value: "Supervisor",
+    value: "SUPERVISOR",
   },
   {
     label: "Rig Manager",
-    value: "Rig_Manager",
+    value: "RIG_MANAGER",
   },
   {
     label: "Pump Operator",
-    value: "Pump_Operator",
+    value: "PUMP_OPERATOR",
   },
   {
     label: "Jack Operator",
-    value: "Jack_Operator",
+    value: "JACK_OPERATOR",
   },
   {
     label: "Mechanic",
-    value: "Mechanic",
+    value: "MECHANIC",
   },
   {
     label: "Field Engineer",
-    value: "Field_Engineer",
+    value: "FIELD_OPERATOR",
   },
   {
     label: "Electrician",
-    value: "Electrician",
+    value: "ELECTRICIAN",
   },
   {
     label: "HSE Officer",
-    value: "HSE_Officer",
+    value: "HSE_OFFICER",
   },
 ];
