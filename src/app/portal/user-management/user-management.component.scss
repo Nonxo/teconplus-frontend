@@ -193,6 +193,22 @@
 }
 
 
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  .default__button {
+    background: #CCA43C;
+    border: 1px solid #CCA43C;
+
+    &:focus,&:hover {
+      background: #CCA43C;
+      border: 1px solid #CCA43C;
+    }
+  }
+}
+
+
 :host ::ng-deep .p-dialog .p-dialog-footer button {
   background: #15C5F8;
   border: 1px solid #15C5F8;

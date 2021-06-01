@@ -54,7 +54,6 @@ export class LoginFormComponent implements OnInit {
       this.user.email = this.user.email.toLowerCase().trim();
     } else {
       this.user.email = null;
-      this.user.countryCode = this.user.countryCode.substring(1);
     }
     this.isLoading = true;
     this.authSvc

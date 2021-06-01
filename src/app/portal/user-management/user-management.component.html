@@ -200,7 +200,7 @@
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Create Another</label>
     </div>
-    <p-button (click)="editMode ? update(selectedUserIndex) : create(createUserForm)" styleClass="p-button-lg" label="{{editMode ? 'Edit User': 'Create User'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
+    <p-button (click)="editMode ? update(selectedUserIndex) : create(createUserForm)" styleClass="p-button-lg default__button" label="{{editMode ? 'Edit User': 'Create User'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || createUserForm.invalid"></p-button>
   </ng-template>
 </p-dialog>
 
@@ -241,6 +241,26 @@
   <ng-template pTemplate="footer">
     <button pButton pRipple class="p-button-danger" icon="pi pi-check" (click)="reactivate(selectedUser.id)" label="Reactivate" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
     <button pButton pRipple type="button" (click)="reactivateModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
+  </ng-template>
+</p-dialog>
+
+
+<!--------- Reset Password -------->
+<p-dialog header="Reset Password" [(visible)]="resetPasswordModal" [style]="{width: '30vw'}" [baseZIndex]="10000">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-as-center">
+      <p-avatar
+        icon="pi pi-user"
+        styleClass=""
+        size="xlarge"
+        shape="circle"
+      ></p-avatar>
+    </div>
+  </div>
+  <p class="p-as-center" style="color: #605D71">Your are about to reset <strong>{{selectedUser.fullName}}</strong>’s password. By resetting this password a new password is generated and sent to <strong>{{selectedUser.fullName}}</strong>’s email. Do you want to continue?</p>
+  <ng-template pTemplate="footer" class="p-my-3">
+    <button pButton pRipple icon="pi pi-check" class="default__button" (click)="resetPassword()" label="Reset Password" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading"></button>
+    <button pButton pRipple type="button" (click)="resetPasswordModal = false" label="Cancel" class="p-button-text p-button-plain"></button>
   </ng-template>
 </p-dialog>
 

@@ -10,6 +10,8 @@ import { RoleService } from "../portal-services/role.service";
 import { host } from "@angular-devkit/build-angular/src/test-utils";
 import { CountryCode } from "../../models/country-code";
 import { Designations } from "../../models/designations";
+import { AuthenticationService } from "../../services/authentication.service";
+import { Auth } from "../../models/auth";
 
 @Component({
   selector: "app-user-management",
@@ -41,6 +43,7 @@ export class UserManagementComponent implements OnInit {
   designations = Designations;
   deactivateModal: boolean;
   reactivateModal: boolean;
+  resetPasswordModal: boolean;
   minDateValue = new Date();
   selectedUserIndex: number;
   currentUser;
@@ -49,7 +52,8 @@ export class UserManagementComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private userSvc: UserService,
     private messageSvc: MessageService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private authSvc: AuthenticationService
   ) {
     this.fetchRoles();
   }
@@ -130,7 +134,7 @@ export class UserManagementComponent implements OnInit {
     this.displayModal = false;
     this.createUserModel = this.selectedUser;
     this.createUserModel.role = this.selectedUser.role.id;
-    this.createUserModel.defaultRole = this.selectedUser.defaultRole.id;
+    this.createUserModel.defaultRole = this.selectedUser.defaultRole?.id;
   }
 
   create(form: NgForm) {
@@ -320,7 +324,9 @@ export class UserManagementComponent implements OnInit {
         {
           label: "Reset Password",
           icon: "pi pi-refresh",
-          routerLink: "/fileupload",
+          command: () => {
+            this.resetPasswordModal = true;
+          },
         },
         {
           label: "Deactivate",
@@ -331,6 +337,36 @@ export class UserManagementComponent implements OnInit {
         },
       ];
     }
+  }
+
+  resetPassword() {
+    this.isLoading = true;
+    let user = new Auth();
+    user.email = this.selectedUser.email;
+    this.authSvc
+      .forgotPassword(user)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageSvc.add({
+              severity: "error",
+              summary: "User Update Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.messageSvc.add({
+          severity: "success",
+          summary: "User Password Reset",
+          detail: res.message,
+        });
+        this.resetPasswordModal = false;
+      });
   }
 
   switch(event) {
