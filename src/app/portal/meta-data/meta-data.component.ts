@@ -38,12 +38,12 @@ export class MetaDataComponent implements OnInit {
       {
         label: "Inventory Maintenance Types",
         value: "INVENTORY_MAINTENANCE_TYPE",
-        icon: "",
+        icon: "assets/img/inventory_maintenance.svg",
       },
       {
         label: "Inventory Maintenance Metrics",
         value: "INVENTORY_MAINTENANCE_METRIC",
-        icon: "",
+        icon: "assets/img/equipment_group.svg",
       },
       {
         label: "Tecon Locations",

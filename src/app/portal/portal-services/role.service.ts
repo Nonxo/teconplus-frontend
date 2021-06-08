@@ -38,7 +38,7 @@ export class RoleService {
       .pipe(catchError(handleError));
   }
 
-  delete(id: string): Observable<any> {
+  delete(id: number): Observable<any> {
     return this.http
       .delete(environment.apiBaseUrl + `/roles/${id}`)
       .pipe(catchError(handleError));

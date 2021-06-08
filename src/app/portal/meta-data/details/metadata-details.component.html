@@ -29,6 +29,7 @@
         <tr>
           <th>#</th>
           <th>Value</th>
+          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Unit Measurements</th>
           <th>Date Created</th>
         </tr>
       </ng-template>
@@ -48,11 +49,19 @@
   <div class="p-d-flex p-flex-column p-mt-5">
     <form #groupForm="ngForm">
       <div class="p-fluid">
-        <div class="p-field p-mb-5">
+        <div class="p-field">
           <span class="p-float-label">
             <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="groupModel.name" required>
             <label for="role_name">Value name</label>
           </span>
+        </div>
+        <div class="p-field p-grid" *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">
+          <div class="p-field p-md-6">
+            <p-dropdown id="measurement" class="p-inputtext-sm" placeholder="Select a unit of measurement" [options]="units" [autoDisplayFirst]="false" name="measurements" optionLabel="label" optionValue="value" [showClear]="true" required></p-dropdown>
+          </div>
+          <div class="p-field p-md-6">
+            <p-dropdown id="designation" class="p-inputtext-sm" placeholder="Select value input type" [options]="inputTypes" [autoDisplayFirst]="false" name="measurements" optionLabel="label" optionValue="value" [showClear]="true" required></p-dropdown>
+          </div>
         </div>
       </div>
     </form>
@@ -62,7 +71,7 @@
       <p-checkbox id="binary" name="checkbox" [(ngModel)]="createAnother" binary="true" inputId="binary"></p-checkbox>
       <label for="binary">Add Another</label>
     </div>
-    <button pButton type="button" class="p-button-lg" label="{{editMode ? 'Save Changes' : 'Add This Value'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || groupForm.invalid" (click)="editMode ? update() : create(groupForm)"></button>
+    <button pButton type="button" class="p-button-lg default__button" label="{{editMode ? 'Save Changes' : 'Add This Value'}}" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || groupForm.invalid" (click)="editMode ? update() : create(groupForm)"></button>
   </ng-template>
 
 </p-dialog>

@@ -172,7 +172,7 @@ export class RoleManagementComponent implements OnInit {
       });
   }
 
-  deleteRole(id: string) {
+  deleteRole(id: number) {
     this.isLoading = true;
     this.roleSvc
       .delete(id)

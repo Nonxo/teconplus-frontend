@@ -35,6 +35,9 @@ import { InputTextareaModule } from "primeng/inputtextarea";
 import { MultiSelectModule } from "primeng/multiselect";
 import { MetaDataComponent } from "./meta-data/meta-data.component";
 import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.component";
+import { ApprovalChainComponent } from "./approval-chain/approval-chain.component";
+import { TimelineModule } from "primeng/timeline";
+import { TextTransformPipe } from './pipes/text-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,8 @@ import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.c
     RoleManagementComponent,
     MetaDataComponent,
     MetadataDetailsComponent,
+    ApprovalChainComponent,
+    TextTransformPipe,
   ],
   imports: [
     CommonModule,
@@ -76,6 +81,7 @@ import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.c
     CalendarModule,
     InputTextareaModule,
     MultiSelectModule,
+    TimelineModule,
   ],
   providers: [],
 })

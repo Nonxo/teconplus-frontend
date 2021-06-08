@@ -29,8 +29,8 @@
       <ng-container>
         <div class="p-col-12 p-md-2 cursor" *ngFor="let metadata of metaDataList" (click)="navigate(metadata.value)">
           <div class="grid-item card p-ml-2 p-mr-1">
-            <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
-              <div class="p-my-auto">
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center p-my-2">
+              <div>
                 <p-avatar image="{{metadata.icon}}" size="xlarge" shape="circle"></p-avatar>
               </div>
               <p class="p-text-center">{{metadata.label}}</p>

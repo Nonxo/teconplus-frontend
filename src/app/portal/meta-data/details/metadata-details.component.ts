@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { MenuItem, MessageService } from "primeng/api";
+import { MenuItem, MessageService, SelectItem } from "primeng/api";
 import { MetadataService } from "../../portal-services/metadata.service";
 import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
 import { Metadata } from "../model/metadata";
 import { NgForm } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { handleError } from "../../../services/apiErrorHandler";
 
 @Component({
   selector: "app-equipment-groups",
@@ -26,6 +25,8 @@ export class MetadataDetailsComponent implements OnInit {
   displayTag: string;
   tag: string;
   displayDeleteModal: boolean;
+  units: SelectItem[] = [];
+  inputTypes: SelectItem[] = [];
 
   constructor(
     private metadataSvc: MetadataService,
@@ -42,6 +43,16 @@ export class MetadataDetailsComponent implements OnInit {
       .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
       .join(" ");
     this.groupModel = new Metadata();
+    this.units = [
+      { label: "Meter", value: "meter" },
+      { label: "Second", value: "second" },
+      { label: "Mole", value: "mole" },
+      { label: "Ampere", value: "ampere" },
+    ];
+    this.inputTypes = [
+      { label: "Input", value: "input" },
+      { label: "Dropdown", value: "dropdown" },
+    ];
     this.items = [
       {
         label: "Edit value",

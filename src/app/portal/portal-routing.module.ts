@@ -5,6 +5,7 @@ import { UserManagementComponent } from "./user-management/user-management.compo
 import { RoleManagementComponent } from "./role-management/role-management.component";
 import { MetaDataComponent } from "./meta-data/meta-data.component";
 import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.component";
+import { ApprovalChainComponent } from "./approval-chain/approval-chain.component";
 
 const portalRoute: Routes = [
   { path: "", component: PortalComponent },
@@ -12,6 +13,7 @@ const portalRoute: Routes = [
   { path: "roles", component: RoleManagementComponent },
   { path: "metadata", component: MetaDataComponent },
   { path: "metadata/:tag", component: MetadataDetailsComponent },
+  { path: "approval-chain", component: ApprovalChainComponent },
 ];
 
 @NgModule({

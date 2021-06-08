@@ -22,8 +22,8 @@
 }
 
 :host ::ng-deep .p-dropdown {
-  background: #FBF8EF;
   border: 1px solid #CCA43C;
+  font-size: 0.8rem;
 }
 
 :host ::ng-deep .p-menu .p-submenu-header {
@@ -177,36 +177,24 @@ label {
   }
 }
 
-@media screen and (max-width: 40rem) {
-  :host ::ng-deep {
-    .p-datatable {
-      &.p-datatable-responsive-demo {
-        .p-datatable-thead > tr > th,
-        .p-datatable-tfoot > tr > td {
-          display: none !important;
-        }
+:host ::ng-deep .p-dialog-content {
+  overflow-y: visible;
+}
 
-        .p-datatable-tbody > tr > td {
-          text-align: left;
-          display: block;
-          width: 100%;
-          float: left;
-          clear: left;
-          border: 0 none;
 
-          .p-column-title {
-            padding: .4rem;
-            min-width: 30%;
-            display: inline-block;
-            margin: -.4em 1em -.4em -.4rem;
-            font-weight: bold;
-          }
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  padding-top: 20px;
+  padding-bottom: 20px;
 
-          &:last-child {
-            border-bottom: 1px solid var(--surface-d);
-          }
-        }
-      }
+  .default__button {
+    background: #CCA43C;
+    border: 1px solid #CCA43C;
+    color: white;
+
+    &:focus,&:hover {
+      background: #CCA43C;
+      border: 1px solid #CCA43C;
+      color: white;
     }
   }
 }

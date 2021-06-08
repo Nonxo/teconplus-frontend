@@ -4,6 +4,7 @@ import { environment } from "../../../environments/environment";
 import { catchError } from "rxjs/operators";
 import { handleError } from "../../services/apiErrorHandler";
 import { User } from "../../models/user";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,6 +19,10 @@ export class UserService {
           `/users/page?pageNumber=${pageNumber}&pageSize=${pageSize}`
       )
       .pipe(catchError(handleError));
+  }
+
+  getSpecificUser(id: number): Observable<any> {
+    return this.http.get<any>(environment.apiBaseUrl + `/users/${id}`);
   }
 
   update(user: User) {

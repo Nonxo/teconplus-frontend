@@ -1,0 +1,212 @@
+<p-toast></p-toast>
+<ng-container>
+  <app-portal-nav></app-portal-nav>
+  <app-portal-menu></app-portal-menu>
+</ng-container>
+
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <h5>Equipment Approval Chain <span class="p-ml-2">|  {{data.length}} Total item(s)</span></h5>
+    </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-right p-mr-2">
+        <i class="pi pi-search"></i>
+        <input type="text" class="p-inputtext-sm" pInputText placeholder="Search using approval chain name "/>
+      </span>
+      <p style="font-size: 0.7rem">Showing 1-20 of 48  <i class="pi pi-chevron-left p-mx-3" style="font-size: 0.7rem"></i> <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i></p>
+    </div>
+  </p-toolbar>
+
+  <div class="body p-d-flex p-flex-column p-p-2">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-flex-md-wrap p-pt-2">
+      <ng-container>
+        <div class="p-col-12 p-md-2 cursor" (click)="showCreateModal()">
+          <div class="grid-item card p-ml-2 p-mr-1 create__card">
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center p-my-3">
+              <div>
+                <p-avatar image="assets/img/Group4419.svg" size="xlarge" shape="circle"></p-avatar>
+              </div>
+              <p class="p-text-center">Create approval chain</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="data">
+        <div class="p-col-12 p-md-2 cursor" *ngFor="let obj of data; let i = index">
+          <div class="grid-item card p-ml-2 p-mr-2">
+            <i class="pi pi-ellipsis-h" style="float: right; color: #707070" (click)="menu.toggle($event); getSelectedApprovalChain(obj, i)"></i>
+            <p-menu #menu [model]="menuItems" [popup]="true"></p-menu>
+            <div class="p-d-flex p-flex-column p-ai-center p-jc-center">
+              <div class="p-pt-3">
+                <p-avatar image="assets/img/equipment_group.svg" size="large" shape="circle"></p-avatar>
+              </div>
+              <p class="p-text-center" style="text-transform: capitalize">{{obj.approvalChain.approvalActivity | textTransform}}</p>
+              <div class="tag p-text-center p-mt-1">
+                <span>Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!------------ Create --------->
+<p-dialog header="Create approval" [(visible)]="displayModal" [style]="{width: '41vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-mt-2 p-p-3">
+      <div class="p-fluid">
+        <form #approvalChainForm="ngForm">
+          <div class="p-field p-grid">
+            <div class="p-field p-md-8">
+              <label>Select the event(s) that needs an approval chain</label>
+              <p-multiSelect [options]="approvalList" [(ngModel)]="approvalModel.approvalActivities" name="events" defaultLabel="Select Event(s)" optionLabel="label" optionValue="value" display="chip" [group]="true" required>
+                <ng-template let-group pTemplate="group">
+                  <div class="p-d-flex p-ai-center">
+                    <span>{{group.label}}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12">
+              <label class="p-mb-0">APPROVAL LEVELS</label>
+              <p-divider></p-divider>
+              <div class="p-d-flex p-flex-column approval_action p-mb-3 p-p-3" *ngFor="let dropdownItem of approvalModel.approvalLevels; let i = index">
+                <i *ngIf="i !== 0" class="material-icons p-as-end cursor" (click)="deleteApprovalLevel(i, dropdownItem)">clear</i>
+                <label for="select_role" class="p-mb-2">Approval level #{{i + 1}} {{i === 0 ? '(This is the first approval)': ''}}</label>
+                <p-dropdown #dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" (onChange)="onSelect(i+1, $event, i)" optionLabel="name" optionValue="id" placeholder="Select Role" [showClear]="true" required></p-dropdown>
+
+              </div>
+              <p *ngIf="isRoleSelected" class="p-text-center" style="font-size: 11px; color: darkred">*Selected role has been mapped to the previous approval level*</p>
+              <p *ngIf="selectedRoleIds.length === roles.length" class="p-text-center" style="font-size: 11px">*All roles have been mapped to the created approval levels*</p>
+              <p *ngIf="selectedRoleIds.length !== roles.length && !isRoleSelected" class="p-text-center cursor" (click)="addApprovalLevel()"><i class="material-icons" style="font-size: 1rem; vertical-align: middle; color: #CCA43C">add_circle</i> Add another level</p>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12 p-field-checkbox">
+              <p-checkbox id="check" name="checkbox" binary="true" inputId="binary" [(ngModel)]="approvalModel.unanimousApproval"></p-checkbox>
+              <label for="check">All admins at each level must unanimously approve before moving to the next level.</label>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12">
+              <p-divider></p-divider>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button (click)="createApprovalChain()" styleClass="p-button-lg default__button" label="Create Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || (approvalChainForm.invalid && selectedRoleIds.length === 0)"></p-button>
+  </ng-template>
+</p-dialog>
+
+<!----- View Details -------->
+<p-dialog header="Approval Chain" [(visible)]="displayViewModal" [modal]="true" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '45vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
+  <div class="p-d-flex p-flex-column">
+    <label class="info-label">WORKFLOW DETAILS</label>
+    <div class="content p-mt-2">
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <div class="p-field p-md-6">
+            <label>Events</label>
+            <p>{{specificApprovalChain?.approvalChain.approvalActivity | textTransform}}</p>
+          </div>
+          <div class="p-field p-md-6">
+            <label>Active Status</label>
+            <div class="tag p-text-center">
+              <span>Active</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-6">
+            <label>Created By</label>
+            <p>{{(specificUser | async)?.data.fullName}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid" *ngIf="specificApprovalChain?.approvalChain.unanimousApproval">
+          <div class="p-field p-md-12">
+            <p class="caption p-py-3 p-text-center"><i class="material-icons">check_circle</i> All admins at each level must unanimously approve before moving to the next level.</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-12">
+            <label class="p-mb-3">Approved Levels</label>
+            <p-timeline [value]="specificApprovalChain?.approvalDetails">
+              <ng-template pTemplate="content" let-event let-rowIndex="index">
+                <div>Approval level #{{event.approvalLevel}} {{event.approvalLevel == 1 ? '(This is the first approval)': ''}}</div>
+                <div class="approval_label p-text-center p-mt-2">
+                  <span>{{event.approvalRole.name}}</span>
+                </div>
+              </ng-template>
+            </p-timeline>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button label="Edit Approval Chain" styleClass="p-button-lg custom__button"></p-button>
+    <p-button styleClass="p-button-lg default__button" (click)="displayViewModal = false" label="Done"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+
+<p-dialog header="Edit approval" [(visible)]="displayEditModal" [style]="{width: '41vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="true">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-mt-2 p-p-3">
+      <div class="p-fluid">
+        <form #approvalChainForm="ngForm">
+          <div class="p-field p-grid">
+            <div class="p-field p-md-8">
+              <label>Select the event(s) that needs an approval chain</label>
+              <p-multiSelect [options]="approvalList" [(ngModel)]="approvalModel.approvalActivities" name="events" defaultLabel="Select Event(s)" optionLabel="label" optionValue="value" display="chip" [group]="true" required>
+                <ng-template let-group pTemplate="group">
+                  <div class="p-d-flex p-ai-center">
+                    <span>{{group.label}}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12">
+              <label class="p-mb-0">APPROVAL LEVELS</label>
+              <p-divider></p-divider>
+              <div class="p-d-flex p-flex-column approval_action p-mb-3 p-p-3" *ngFor="let dropdownItem of specificApprovalChain?.approvalDetails; let i = index">
+                <i *ngIf="i !== 0" class="material-icons p-as-end cursor" (click)="deleteApprovalLevel(i, dropdownItem)">clear</i>
+                <label for="select_role" class="p-mb-2">Approval level #{{i + 1}} {{i === 0 ? '(This is the first approval)': ''}}</label>
+                <p-dropdown #dropdown id="select_role2" [options]="roles" [ngModel]="dropdownItem.approvalRole.id" name="select_role" [autoDisplayFirst]="false" (onChange)="onSelect(i+1, $event, i)" optionLabel="name" optionValue="id" placeholder="Select Role" [showClear]="true" required></p-dropdown>
+
+              </div>
+              <p *ngIf="isRoleSelected" class="p-text-center" style="font-size: 11px; color: darkred">*Selected role has been mapped to the previous approval level*</p>
+              <p *ngIf="selectedRoleIds.length === roles.length" class="p-text-center" style="font-size: 11px">*All roles have been mapped to the created approval levels*</p>
+              <p *ngIf="selectedRoleIds.length !== roles.length && !isRoleSelected" class="p-text-center cursor" (click)="addApprovalLevel()"><i class="material-icons" style="font-size: 1rem; vertical-align: middle; color: #CCA43C">add_circle</i> Add another level</p>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12 p-field-checkbox">
+              <p-checkbox id="check2" name="checkbox" binary="true" inputId="binary" [(ngModel)]="approvalModel.unanimousApproval"></p-checkbox>
+              <label for="check">All admins at each level must unanimously approve before moving to the next level.</label>
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <div class="p-field p-md-12">
+              <p-divider></p-divider>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button (click)="createApprovalChain()" styleClass="p-button-lg default__button" label="Create Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || (approvalChainForm.invalid && selectedRoleIds.length === 0)"></p-button>
+  </ng-template>
+</p-dialog>
