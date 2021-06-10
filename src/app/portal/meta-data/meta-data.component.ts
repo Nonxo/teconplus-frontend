@@ -41,7 +41,7 @@ export class MetaDataComponent implements OnInit {
         icon: "assets/img/inventory_maintenance.svg",
       },
       {
-        label: "Inventory Maintenance Metrics",
+        label: "Inventory Action List",
         value: "INVENTORY_MAINTENANCE_METRIC",
         icon: "assets/img/equipment_group.svg",
       },
