@@ -38,7 +38,7 @@
           <td>{{role.id ? role.id : "-"}}</td>
           <td>{{role.name ? role.name : "-"}}</td>
           <td>{{role.description ? role.description : "-"}}</td>
-          <td>{{role.createdBy ? role.createdBy : "-"}}</td>
+          <td>{{role.createdByEmail ? role.createdByEmail : "-"}}</td>
           <td>{{role.createdOn ? (role.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
         </tr>
       </ng-template>
@@ -90,31 +90,31 @@
     <div class="content p-mt-2">
       <div class="p-fluid">
         <div class="p-field p-grid">
-          <div class="p-field p-md-4">
+          <div class="p-field p-md-6">
             <label>Role Name</label>
             <p>{{roleModel.name}}</p>
           </div>
-          <div class="p-field p-md-8">
+          <div class="p-field p-md-6">
             <label>Role Description</label>
             <p>{{roleModel.description}}</p>
           </div>
         </div>
         <div class="p-field p-grid">
-          <div class="p-field p-md-4">
+          <div class="p-field p-md-6">
             <label>Designation</label>
             <p>{{roleModel.designation}}</p>
           </div>
-          <div class="p-field p-md-8">
+          <div class="p-field p-md-6">
             <label>Role Privilege(s)</label>
             <p *ngFor="let privilege of roleModel.privileges">{{privilege.description ? privilege.description : "-"}}</p>
           </div>
         </div>
         <div class="p-field p-grid">
-          <div class="p-field p-md-4">
+          <div class="p-field p-md-6">
             <label>Created By</label>
-            <p>{{roleModel.createdBy}}</p>
+            <p>{{roleModel.createdByEmail}}</p>
           </div>
-          <div class="p-field p-md-8">
+          <div class="p-field p-md-6">
             <label>Created On</label>
             <p>{{roleModel.createdOn | date: 'h:mm a, MMM d, y'}}</p>
           </div>

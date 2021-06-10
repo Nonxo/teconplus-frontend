@@ -30,6 +30,7 @@ export class ApprovalChainComponent implements OnInit {
   approvalModel: ApprovalChain;
   isLoading: boolean;
   roles: Role[] = [];
+  increment = 1;
   isRoleSelected: boolean;
   disableSelected: boolean;
   displayViewModal: boolean;
@@ -41,6 +42,7 @@ export class ApprovalChainComponent implements OnInit {
   specificApprovalChain: any;
   editMode: true;
   specificUser: Observable<any>;
+  rowIndex: number;
 
   constructor(
     private primengConfig: PrimeNGConfig,
@@ -130,8 +132,8 @@ export class ApprovalChainComponent implements OnInit {
         label: "Edit approval chain",
         // icon: "pi pi-pencil",
         command: () => {
-          this.approvalModel.approvalActivities = this.specificApprovalChain.approvalActivities;
-          this.displayEditModal = true;
+          this.switchToEdit();
+          this.rowIndex = index;
         },
       },
     ];
@@ -141,19 +143,33 @@ export class ApprovalChainComponent implements OnInit {
     const { value } = event;
     if (this.selectedRoleIds.includes(value)) {
       this.isRoleSelected = true;
+      return;
     } else {
       if (this.selectedRoleIds.indexOf(value) === -1) {
         this.isRoleSelected = false;
         this.selectedRoleIds.push(value);
+        this.approvalModel.approvalLevels[index].approvalLevel = approvalLevel;
+        this.approvalModel.approvalLevels[index].approvalRole = value;
       }
+    }
+  }
+
+  onEdit(approvalLevel, event, index) {
+    if (this.selectedRoleIds.includes(event.target.value)) {
+      this.isRoleSelected = true;
+      return;
+    }
+    if (this.selectedRoleIds.indexOf(event.target.value) === -1) {
+      this.isRoleSelected = false;
+      this.selectedRoleIds.push(event.target.value);
       this.approvalModel.approvalLevels[index].approvalLevel = approvalLevel;
-      this.approvalModel.approvalLevels[index].approvalRole = value;
+      this.approvalModel.approvalLevels[index].approvalRole =
+        event.target.value;
     }
   }
 
   createApprovalChain() {
     this.isLoading = true;
-    console.log(this.approvalModel.approvalLevels);
     this.approvalChainSvc
       .create(this.approvalModel)
       .pipe(
@@ -171,6 +187,7 @@ export class ApprovalChainComponent implements OnInit {
       )
       .subscribe((res) => {
         this.isLoading = false;
+        this.selectedRoleIds = [];
         this.messageSvc.add({
           severity: "success",
           summary: "Approval Chain Created",
@@ -180,6 +197,37 @@ export class ApprovalChainComponent implements OnInit {
         for (let obj of res.data) {
           this.data.push(obj);
         }
+      });
+  }
+
+  updateApprovalChain() {
+    this.isLoading = true;
+    console.log(this.approvalModel);
+    this.approvalChainSvc
+      .update(this.approvalModel)
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.isLoading = false;
+            this.messageSvc.add({
+              severity: "error",
+              summary: "Update Approval Chain Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.selectedRoleIds = [];
+        this.messageSvc.add({
+          severity: "success",
+          summary: "Approval Chain `Updated`",
+          detail: res.message,
+        });
+        this.displayEditModal = false;
+        this.data[this.rowIndex] = res.data;
       });
   }
 
@@ -210,15 +258,37 @@ export class ApprovalChainComponent implements OnInit {
     this.selectedRoleIds = this.selectedRoleIds.filter(
       (id, i) => i !== rowIndex && id !== obj.id
     );
+    this.isRoleSelected = false;
   }
 
   addApprovalLevel() {
-    this.approvalModel.approvalLevels.push({ ...this.item });
+    this.approvalModel.approvalLevels.push({
+      approvalLevel: this.increment++,
+      approvalRole: 0,
+    });
   }
 
   showCreateModal() {
     this.displayModal = true;
     this.approvalModel = new ApprovalChain();
-    this.approvalModel.approvalLevels.push({ ...this.item });
+    this.approvalModel.approvalLevels.push({
+      approvalLevel: 0,
+      approvalRole: 0,
+    });
+  }
+
+  switchToEdit() {
+    this.displayViewModal = false;
+    this.approvalModel = new ApprovalChain();
+    for (let obj of this.specificApprovalChain.approvalDetails) {
+      this.approvalModel.approvalLevels.push({
+        approvalLevel: obj.approvalLevel,
+        approvalRole: obj.approvalRole.id,
+      });
+      this.selectedRoleIds.push(obj.id);
+      console.log(this.approvalModel.approvalLevels);
+    }
+    this.approvalModel.id = this.specificApprovalChain.approvalChain.id;
+    this.displayEditModal = true;
   }
 }

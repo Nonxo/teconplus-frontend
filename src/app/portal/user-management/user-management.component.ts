@@ -206,7 +206,7 @@ export class UserManagementComponent implements OnInit {
       });
   }
 
-  deactivate(id: string) {
+  deactivate(id) {
     this.isLoading = true;
     this.userSvc
       .deactivate(id)
@@ -236,7 +236,7 @@ export class UserManagementComponent implements OnInit {
       });
   }
 
-  reactivate(id: string) {
+  reactivate(id) {
     this.isLoading = true;
     this.userSvc
       .reactivate(id)

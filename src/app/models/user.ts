@@ -1,5 +1,5 @@
 export class User {
-  id: string;
+  id: number;
   locked: boolean;
   countryCode: string;
   email: string;
@@ -33,6 +33,7 @@ export class Role {
   defaultRole: string;
   createdOn: Date;
   createdBy: string;
+  createdByEmail: string;
   privileges: string[];
 }
 

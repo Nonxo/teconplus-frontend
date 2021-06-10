@@ -1,11 +1,11 @@
 export class ApprovalChain {
+  id: string;
   approvalActivities: string[];
   approvalLevels: ApprovalLevel[];
   unanimousApproval: boolean;
 
   constructor() {
     this.approvalLevels = [];
-    this.approvalActivities = [];
   }
 }
 
