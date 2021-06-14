@@ -6,7 +6,7 @@
 <div class="container">
   <p-toolbar>
     <div class="p-toolbar-group-left">
-      <i class="pi pi-caret-left p-mr-2 p-p-2 cursor" style="color: #171102; background: #97A3A7;" routerLink="/portal/metadata"></i>
+      <i class="pi pi-caret-left p-mr-2 p-p-2 cursor navigate" style="" routerLink="/portal/metadata"></i>
       <h5>{{displayTag}} <span class="p-ml-2">| {{data.length}} Total item(s)</span></h5>
     </div>
     <div class="p-toolbar-group-right">
@@ -32,13 +32,17 @@
           <th>Action Item</th>
           <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Unit Measurements</th>
           <th>Date Created</th>
+          <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-        <tr [pContextMenuRow]="item" (contextmenu)="getSelectedData(item, rowIndex)">
+        <tr>
           <td>{{item.id ? item.id : "-"}}</td>
           <td>{{item.value ? item.value : "-"}}</td>
           <td>{{item.createdOn ? (item.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
+          <td [pContextMenuRow]="item" (contextmenu)="getSelectedData(item, rowIndex)">
+            <i class="pi pi-ellipsis-h"></i>
+          </td>
         </tr>
       </ng-template>
     </p-table>

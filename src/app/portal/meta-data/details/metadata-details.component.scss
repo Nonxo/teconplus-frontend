@@ -87,6 +87,15 @@
   }
 }
 
+.navigate {
+  color: #171102;
+  background: #97A3A7;
+  &:hover {
+    color: white;
+    background: #171102;
+  }
+}
+
 
 
 @media screen and (max-width: 40rem) {

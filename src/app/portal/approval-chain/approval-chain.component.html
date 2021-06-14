@@ -81,7 +81,7 @@
                 <p-dropdown #dropdown id="select_role" [options]="roles" name="select_role" [autoDisplayFirst]="false" (onChange)="onSelect(i+1, $event, i)" optionLabel="name" optionValue="id" placeholder="Select Role" [showClear]="true" required></p-dropdown>
 
               </div>
-              <p *ngIf="isRoleSelected" class="p-text-center" style="font-size: 11px; color: darkred">*Selected role has been mapped to the previous approval level*</p>
+              <p *ngIf="isRoleSelected" class="p-text-center" style="font-size: 11px; color: darkred">*Selected role has been mapped already to an existing approval level*</p>
               <p *ngIf="selectedRoleIds.length === roles.length && !isRoleSelected" class="p-text-center" style="font-size: 11px">*All roles have been mapped to the created approval levels*</p>
               <p *ngIf="selectedRoleIds.length !== roles.length && !isRoleSelected" class="p-text-center cursor" (click)="addApprovalLevel()"><i class="material-icons" style="font-size: 1rem; vertical-align: middle; color: #CCA43C">add_circle</i> Add another level</p>
             </div>

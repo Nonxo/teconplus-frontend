@@ -285,7 +285,7 @@ export class ApprovalChainComponent implements OnInit {
         approvalLevel: obj.approvalLevel,
         approvalRole: obj.approvalRole.id,
       });
-      this.selectedRoleIds.push(obj.id);
+      this.selectedRoleIds.push(obj.approvalRole.id);
       console.log(this.approvalModel.approvalLevels);
     }
     this.approvalModel.id = this.specificApprovalChain.approvalChain.id;
