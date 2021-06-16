@@ -102,7 +102,7 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <p-button (click)="createApprovalChain()" styleClass="p-button-lg default__button" label="Create Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || (approvalChainForm.invalid && selectedRoleIds.length === 0) || isRoleSelected"></p-button>
+    <p-button type="button" (click)="createApprovalChain()" styleClass="p-button-lg default__button" label="Create Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="(isLoading || selectedRoleIds.length === 0 || isRoleSelected)"></p-button>
   </ng-template>
 </p-dialog>
 
@@ -198,6 +198,6 @@
     </div>
   </div>
   <ng-template pTemplate="footer">
-    <p-button (click)="updateApprovalChain()" styleClass="p-button-lg default__button" label="Edit Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="isLoading || (approvalChainForm.invalid && selectedRoleIds.length === 0) || isRoleSelected"></p-button>
+    <p-button type="button" (click)="updateApprovalChain()" styleClass="p-button-lg default__button" label="Edit Approval Chain" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right" [disabled]="(isLoading || isRoleSelected || selectedRoleIds.length === 0)"></p-button>
   </ng-template>
 </p-dialog>

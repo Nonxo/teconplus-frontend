@@ -42,7 +42,7 @@ export class MetaDataComponent implements OnInit {
       },
       {
         label: "Inventory Action List",
-        value: "INVENTORY_MAINTENANCE_METRIC",
+        value: "INVENTORY_ACTION_LIST",
         icon: "assets/img/equipment_group.svg",
       },
       {

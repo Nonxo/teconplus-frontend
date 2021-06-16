@@ -4,4 +4,5 @@ export class Metadata {
   name: string;
   unitOfMeasurement: string;
   value: string;
+  description: string
 }

@@ -155,7 +155,7 @@ export class ApprovalChainComponent implements OnInit {
   }
 
   onEdit(approvalLevel, event, index) {
-    if (this.selectedRoleIds.includes(event.target.value)) {
+    if (this.selectedRoleIds.includes(parseInt(event.target.value))) {
       this.isRoleSelected = true;
       return;
     }
@@ -163,8 +163,9 @@ export class ApprovalChainComponent implements OnInit {
       this.isRoleSelected = false;
       this.selectedRoleIds.push(event.target.value);
       this.approvalModel.approvalLevels[index].approvalLevel = approvalLevel;
-      this.approvalModel.approvalLevels[index].approvalRole =
-        event.target.value;
+      this.approvalModel.approvalLevels[index].approvalRole = parseInt(
+        event.target.value
+      );
     }
   }
 
@@ -223,7 +224,7 @@ export class ApprovalChainComponent implements OnInit {
         this.selectedRoleIds = [];
         this.messageSvc.add({
           severity: "success",
-          summary: "Approval Chain `Updated`",
+          summary: "Approval Chain Updated",
           detail: res.message,
         });
         this.displayEditModal = false;
@@ -279,6 +280,7 @@ export class ApprovalChainComponent implements OnInit {
 
   switchToEdit() {
     this.displayViewModal = false;
+    this.selectedRoleIds = [];
     this.approvalModel = new ApprovalChain();
     for (let obj of this.specificApprovalChain.approvalDetails) {
       this.approvalModel.approvalLevels.push({
@@ -286,7 +288,6 @@ export class ApprovalChainComponent implements OnInit {
         approvalRole: obj.approvalRole.id,
       });
       this.selectedRoleIds.push(obj.approvalRole.id);
-      console.log(this.approvalModel.approvalLevels);
     }
     this.approvalModel.id = this.specificApprovalChain.approvalChain.id;
     this.displayEditModal = true;

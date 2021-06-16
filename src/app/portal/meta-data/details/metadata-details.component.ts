@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MenuItem, MessageService, SelectItem } from "primeng/api";
+import {MenuItem, MessageService, SelectItem, SelectItemGroup} from "primeng/api";
 import { MetadataService } from "../../portal-services/metadata.service";
 import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
@@ -19,11 +19,13 @@ export class MetadataDetailsComponent implements OnInit {
   editMode: boolean;
   displayModal: boolean;
   groupModel: Metadata;
+  metrics: SelectItemGroup[] = [];
   createAnother: boolean;
   isLoading: boolean;
   index: number;
   displayTag: string;
   tag: string;
+  selected = [];
   displayDeleteModal: boolean;
   units: SelectItem[] = [];
   inputTypes: SelectItem[] = [];
@@ -37,7 +39,7 @@ export class MetadataDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.tag = this.route.snapshot.paramMap.get("tag");
     this.displayTag = this.tag
-      .replace("_", " ")
+      .replace(/_/g, " ")
       .toLowerCase()
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.substring(1))

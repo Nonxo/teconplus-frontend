@@ -28,10 +28,10 @@
       <ng-template pTemplate="header">
         <tr>
           <th>#</th>
-          <th>Value</th>
-          <th>Action Item</th>
-          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Unit Measurements</th>
-          <th>Date Created</th>
+          <th *ngIf="tag !== 'INVENTORY_MAINTENANCE_METRIC'">Value</th>
+          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Action Item</th>
+          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Description</th>
+          <th>Created At</th>
           <th></th>
         </tr>
       </ng-template>
@@ -39,6 +39,8 @@
         <tr>
           <td>{{item.id ? item.id : "-"}}</td>
           <td>{{item.value ? item.value : "-"}}</td>
+          <td *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">-</td>
+          <td *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">-</td>
           <td>{{item.createdOn ? (item.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
           <td [pContextMenuRow]="item" (contextmenu)="getSelectedData(item, rowIndex)">
             <i class="pi pi-ellipsis-h"></i>
@@ -60,13 +62,21 @@
             <label for="role_name">Value name</label>
           </span>
         </div>
-        <div class="p-field p-grid" *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">
-          <div class="p-field p-md-6">
-            <p-dropdown id="measurement" class="p-inputtext-sm" placeholder="Select a unit of measurement" [options]="units" [autoDisplayFirst]="false" name="measurements" optionLabel="label" optionValue="value" [showClear]="true" required></p-dropdown>
-          </div>
-          <div class="p-field p-md-6">
-            <p-dropdown id="designation" class="p-inputtext-sm" placeholder="Select value input type" [options]="inputTypes" [autoDisplayFirst]="false" name="measurements" optionLabel="label" optionValue="value" [showClear]="true" required></p-dropdown>
-          </div>
+        <div class="p-field" *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">
+          <span class="p-float-label">
+            <textarea name="description" [(ngModel)]="groupModel.description" rows="5" cols="30" pInputTextarea></textarea>
+             <label for="role_name">Description</label>
+          </span>
+        </div>
+        <div class="p-field" *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">
+          <label>Select metric(s)</label>
+          <p-multiSelect [options]="metrics" name="events" [(ngModel)]="selected" defaultLabel="Select Metric(s)" optionLabel="label" optionValue="value" display="chip" [group]="true" required>
+            <ng-template let-group pTemplate="group">
+              <div class="p-d-flex p-ai-center">
+                <span>{{group.label}}</span>
+              </div>
+            </ng-template>
+          </p-multiSelect>
         </div>
       </div>
     </form>

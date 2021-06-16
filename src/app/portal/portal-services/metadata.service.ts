@@ -33,4 +33,10 @@ export class MetadataService {
       .delete(environment.apiBaseUrl + `/metadata/${tag}/${tagId}`)
       .pipe(catchError(handleError));
   }
+
+  getAllMetrics() {
+    return this.http
+      .get(environment.apiBaseUrl + `/metadata/metrics`)
+      .pipe(catchError(handleError));
+  }
 }
