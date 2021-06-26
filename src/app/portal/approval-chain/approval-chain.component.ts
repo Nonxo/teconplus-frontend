@@ -256,6 +256,7 @@ export class ApprovalChainComponent implements OnInit {
     this.approvalModel.approvalLevels = this.approvalModel.approvalLevels.filter(
       (item, index) => index !== rowIndex
     );
+    this.approvalModel.approvalLevels[rowIndex].approvalLevel = rowIndex + 1;
     this.selectedRoleIds = this.selectedRoleIds.filter(
       (id, i) => i !== rowIndex && id !== obj.id
     );

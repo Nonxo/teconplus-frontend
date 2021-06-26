@@ -38,7 +38,7 @@
       <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
         <tr>
           <td>{{item.id ? item.id : "-"}}</td>
-          <td>{{item.value ? item.value : "-"}}</td>
+          <td>{{item.name ? item.name : "-"}}</td>
           <td *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">-</td>
           <td *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">-</td>
           <td>{{item.createdOn ? (item.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>

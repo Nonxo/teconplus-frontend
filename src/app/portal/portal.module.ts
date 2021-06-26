@@ -38,6 +38,7 @@ import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.c
 import { ApprovalChainComponent } from "./approval-chain/approval-chain.component";
 import { TimelineModule } from "primeng/timeline";
 import { TextTransformPipe } from './pipes/text-transform.pipe';
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { TextTransformPipe } from './pipes/text-transform.pipe';
     MetadataDetailsComponent,
     ApprovalChainComponent,
     TextTransformPipe,
+    InventoryComponent,
   ],
   imports: [
     CommonModule,
