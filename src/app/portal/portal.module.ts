@@ -37,8 +37,10 @@ import { MetaDataComponent } from "./meta-data/meta-data.component";
 import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.component";
 import { ApprovalChainComponent } from "./approval-chain/approval-chain.component";
 import { TimelineModule } from "primeng/timeline";
-import { TextTransformPipe } from './pipes/text-transform.pipe';
-import { InventoryComponent } from './inventory/inventory.component';
+import { TextTransformPipe } from "./pipes/text-transform.pipe";
+import { InventoryComponent } from "./inventory/inventory.component";
+import { TabViewModule } from "primeng/tabview";
+import { ManageEquipmentComponent } from './inventory/manage-equipment/manage-equipment.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { InventoryComponent } from './inventory/inventory.component';
     ApprovalChainComponent,
     TextTransformPipe,
     InventoryComponent,
+    ManageEquipmentComponent,
   ],
   imports: [
     CommonModule,
@@ -84,6 +87,7 @@ import { InventoryComponent } from './inventory/inventory.component';
     InputTextareaModule,
     MultiSelectModule,
     TimelineModule,
+    TabViewModule,
   ],
   providers: [],
 })

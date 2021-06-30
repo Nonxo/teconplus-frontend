@@ -7,6 +7,7 @@ import { MetaDataComponent } from "./meta-data/meta-data.component";
 import { MetadataDetailsComponent } from "./meta-data/details/metadata-details.component";
 import { ApprovalChainComponent } from "./approval-chain/approval-chain.component";
 import { InventoryComponent } from "./inventory/inventory.component";
+import { ManageEquipmentComponent } from "./inventory/manage-equipment/manage-equipment.component";
 
 const portalRoute: Routes = [
   { path: "", component: PortalComponent },
@@ -16,6 +17,7 @@ const portalRoute: Routes = [
   { path: "metadata/:tag", component: MetadataDetailsComponent },
   { path: "approval-chain", component: ApprovalChainComponent },
   { path: "inventory", component: InventoryComponent },
+  { path: "manage-equipment", component: ManageEquipmentComponent },
 ];
 
 @NgModule({

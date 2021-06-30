@@ -138,9 +138,6 @@ export class RoleManagementComponent implements OnInit {
   getSelectedRole(role, index) {
     this.roleModel = { ...role };
     this.index = index;
-    // this.roleModel.privileges = role.privileges.map(
-    //   (privilege) => privilege.id
-    // );
   }
 
   updateRole() {

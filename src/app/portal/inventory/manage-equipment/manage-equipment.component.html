@@ -1,0 +1,202 @@
+<p-toast></p-toast>
+<ng-container>
+  <app-portal-nav></app-portal-nav>
+  <app-portal-menu></app-portal-menu>
+</ng-container>
+<div class="container">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <i class="pi pi-caret-left p-mr-2 p-p-2 cursor navigate" style="" routerLink="/portal/inventory"></i>
+      <h5>Add Equipment</h5>
+    </div>
+  </p-toolbar>
+  <div class="body">
+    <div class="p-card p-px-6 p-pt-4">
+      <form (ngSubmit)="createEquipment()" #equipmentForm="ngForm">
+        <div class="p-col-12">
+          <h5 class="p-m-0">Equipment Information</h5>
+          <p-divider></p-divider>
+          <div class="p-col-8 p-mt-5">
+            <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
+              <img class="p-mb-1" src="assets/img/imagex.svg" alt="image">
+              <span class="p-mb-1">Drop an image of the equipment here or <i>browse</i></span>
+              <span class="secondary-text">Only jpeg or png files are allowed for upload</span>
+            </div>
+            <div class="p-fluid p-mt-4">
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+                  <span class="p-float-label">
+                    <input id="fullName" class="p-inputtext-lg" type="text" name="fullname" placeholder="Equipment Name" aria-describedby="firstname-help" pInputText [(ngModel)]="equipment.equipmentName" required/>
+                  </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-float-label">
+                <p-dropdown id="location" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="location" optionValue="value" [options]="locations" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.location" required></p-dropdown>
+                <label for="location">Equipment Location</label>
+            </span>
+                </div>
+              </div>
+              <p>Brief Description</p>
+              <div class="p-field p-mb-4">
+              <span class="p-float-label">
+            <textarea id="description" name="description" placeholder="Describe this Equipment" rows="5" cols="30" [(ngModel)]="equipment.description" pInputTextarea></textarea>
+            </span>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-0">
+              <span class="p-float-label">
+                <p-dropdown id="equip_group" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="equip_group" optionValue="value" [options]="equipmentGroups" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.equipmentGroup" required></p-dropdown>
+                <label for="equip_group">Equipment Group</label>
+            </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-0">
+              <span class="p-float-label">
+                <p-dropdown id="equip_type" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="equip_type" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.equipmentType" required></p-dropdown>
+                <label for="equip_type">Equipment type</label>
+            </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-0">
+              <span class="p-float-label">
+                <p-dropdown id="prev_group" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="prev_group" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.preventionGroup"></p-dropdown>
+                <label for="prev_group">Prevention Group required for equipment</label>
+            </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-0">
+                  <span class="p-float-label">
+                    <p-dropdown id="action_point" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="action_point" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.actionPointMen" required></p-dropdown>
+                    <label for="action_point">Action Point men</label>
+                  </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-float-label">
+                <input id="model" type="text" class="p-inputtext-lg" placeholder="Model/Serial number" name="serial_number" aria-describedby="firstname-help" [(ngModel)]="equipment.model" pInputText/>
+              </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-float-label">
+                <input id="teconId" type="text" class="p-inputtext-lg" placeholder="Tecon/Niger Blossom drilling ID no" name="fullname" aria-describedby="firstname-help" pInputText/>
+              </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+                  <span class="p-float-label">
+                    <input id="manufacture_year" class="p-inputtext-lg" type="text" name="manufacture_year" placeholder="Year of Manufacture" aria-describedby="manufacture_year" pInputText [(ngModel)]="equipment.yearOfManufacture"/>
+                  </span>
+                </div>
+
+                <div class="p-field p-md-6 p-mb-0">
+                  <span class="p-float-label">
+                    <p-dropdown id="status" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="equipment_status" optionValue="value" [options]="equipmentStatus" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.equipmentState" required></p-dropdown>
+                    <label for="status">Equipment Status</label>
+                  </span>
+                </div>
+
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6">
+                  <label for="date">Date of COC Expiration</label>
+                  <p-calendar id="date" class="p-inputtext-lg" placeholder="DD/MM/YYYY" name="expiryDate" [readonlyInput]="true" [showIcon]="true" inputId="date" [(ngModel)]="equipment.cocexpirationDate" required></p-calendar>
+                </div>
+                <div class="p-field p-md-6">
+                  <label for="date">Date of last certification/MPI/UT/Calibration/Hydro test/COS</label>
+                  <p-calendar id="date2" class="p-inputtext-lg" placeholder="DD/MM/YYYY" name="expiryDate" [readonlyInput]="true" [showIcon]="true" inputId="date" [(ngModel)]="equipment.dateOfLastCertification" required></p-calendar>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-input-icon-right">
+                <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Kilogram</i>
+                <input id="weight" type="text" class="p-inputtext-lg" placeholder="Weight" name="weight" aria-describedby="dimension-weight" [(ngModel)]="equipment.weightInGrams" pInputText/>
+              </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-input-icon-right">
+                <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Length</i>
+                <input id="length" type="text" class="p-inputtext-lg" placeholder="Dimension(Length)" name="length" aria-describedby="dimension-length" [(ngModel)]="equipment.lengthInCm" pInputText/>
+              </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-input-icon-right">
+                <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Width</i>
+                <input id="width" type="text" class="p-inputtext-lg" placeholder="Dimension(Width)" name="width" aria-describedby="dimension-width" [(ngModel)]="equipment.widthInCm" pInputText/>
+              </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-input-icon-right">
+                <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Height</i>
+                <input id="height" type="text" class="p-inputtext-lg" placeholder="Dimension(Height)" name="height" aria-describedby="dimension-height" [(ngModel)]="equipment.heightInCm" pInputText/>
+              </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-float-label">
+                <input id="staff_res" class="p-inputtext-lg" type="text" placeholder="Staff responsible for equipment" name="fullname" aria-describedby="firstname-help" pInputText required/>
+              </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+                  <p-multiSelect id="metrics" class="p-inputtext-lg" name="metrics" optionValue="value" defaultLabel="Select metric(s)" [options]="metrics" optionLabel="label" [(ngModel)]="equipment.actionItemList" display="chip"></p-multiSelect>
+                </div>
+              </div>
+              <label for="date">Date of purchase</label>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6">
+                  <p-calendar id="date3" class="p-inputtext-lg" placeholder="DD/MM/YYYY" name="expiryDate" [readonlyInput]="true" [showIcon]="true" inputId="date" [(ngModel)]="equipment.purchaseDate" required></p-calendar>
+                </div>
+                <div class="p-field p-md-6 p-mb-3">
+              <span class="p-float-label">
+                <input id="quantity" class="p-inputtext-lg" type="text" placeholder="Quantity acquired" name="Quantity_acquired" aria-describedby="firstname-help" [(ngModel)]="equipment.quantityAcquired" pInputText required/>
+              </span>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-field p-md-6 p-mb-0">
+              <span class="p-float-label">
+                <p-dropdown id="primary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="primary_check" optionValue="value" [(ngModel)]="equipment.primaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true"></p-dropdown>
+                <label for="equip_group">Primary Check Interval</label>
+            </span>
+                </div>
+                <div class="p-field p-md-6 p-mb-0">
+              <span class="p-float-label">
+                <p-dropdown id="secondary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="secondary_check" optionValue="value" [(ngModel)]="equipment.secondaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true"></p-dropdown>
+                <label for="equip_type">Secondary Check Interval</label>
+            </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h5 class="p-m-0">OEM reference manual</h5>
+          <p-divider></p-divider>
+          <div class="p-col-8 p-mb-4">
+            <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
+              <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
+              <span class="p-mb-1">Drop your file(s) here, or <i>browse</i></span>
+              <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+            </div>
+          </div>
+          <h5 class="p-m-0">Supporting Document(s)</h5>
+          <p-divider></p-divider>
+          <div class="p-col-8">
+            <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
+              <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
+              <span class="p-mb-1">Drop your file(s) here, or <i>browse</i></span>
+              <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+            </div>
+          </div>
+          <div class="p-grid p-jc-end p-mt-4 p-mb-2">
+            <p-button label="Add Equipment" [disabled]="equipmentForm.invalid" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right"></p-button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+
+</div>
+

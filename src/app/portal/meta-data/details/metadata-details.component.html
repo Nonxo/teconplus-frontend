@@ -70,10 +70,10 @@
         </div>
         <div class="p-field" *ngIf="tag === 'INVENTORY_ACTION_LIST'">
           <label>Select metric(s)</label>
-          <p-multiSelect [options]="metrics" name="events" [(ngModel)]="selected" defaultLabel="Select Metric(s)" optionLabel="label" optionValue="value" display="chip" [group]="true" required>
+          <p-multiSelect [options]="metrics" name="events" [(ngModel)]="selected" defaultLabel="Select Metric(s)" optionLabel="metricsType" optionValue="metricsType" display="chip" [group]="true" required>
             <ng-template let-group pTemplate="group">
               <div class="p-d-flex p-ai-center">
-                <span>{{group.label}}</span>
+                <span>{{group.metricsType}}</span>
               </div>
             </ng-template>
           </p-multiSelect>

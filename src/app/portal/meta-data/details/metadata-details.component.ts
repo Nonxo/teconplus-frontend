@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import {MenuItem, MessageService, SelectItem, SelectItemGroup} from "primeng/api";
+import {
+  MenuItem,
+  MessageService,
+  SelectItem,
+  SelectItemGroup,
+} from "primeng/api";
 import { MetadataService } from "../../portal-services/metadata.service";
 import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
@@ -19,7 +24,7 @@ export class MetadataDetailsComponent implements OnInit {
   editMode: boolean;
   displayModal: boolean;
   groupModel: Metadata;
-  metrics: SelectItemGroup[] = [];
+  metrics: any[] = [];
   createAnother: boolean;
   isLoading: boolean;
   index: number;
@@ -71,6 +76,7 @@ export class MetadataDetailsComponent implements OnInit {
       },
     ];
     this.fetchEquipmentGroup(this.tag);
+    this.fetchMetrics();
   }
 
   fetchEquipmentGroup(tag: string) {
@@ -131,7 +137,7 @@ export class MetadataDetailsComponent implements OnInit {
   update() {
     this.isLoading = true;
     this.metadataSvc
-      .update("EQUIPMENT_GROUP", this.groupModel)
+      .update(this.tag, this.groupModel)
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
@@ -197,6 +203,26 @@ export class MetadataDetailsComponent implements OnInit {
           detail: res.message,
         });
         this.data = this.data.filter((item) => item.id !== this.groupModel.id);
+      });
+  }
+
+  fetchMetrics() {
+    this.metadataSvc
+      .getAllMetrics()
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.messageSvc.add({
+              severity: "error",
+              summary: "Fetch Metrics Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        this.metrics = res.data;
       });
   }
 }
