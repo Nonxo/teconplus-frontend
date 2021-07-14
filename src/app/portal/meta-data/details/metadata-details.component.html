@@ -14,23 +14,22 @@
       <i class="pi pi-search"></i>
       <input type="text" class="p-inputtext-sm" pInputText placeholder="Search user management" />
     </span>
-      <p-dropdown class="p-inputtext-sm p-mr-2" placeholder="Filter by user type" optionLabel="name" [showClear]="true"></p-dropdown>
       <p-splitButton class="p-mr-3" label="Download user list"></p-splitButton>
       <p style="font-size: 0.7rem">Showing 1-20 of 48  <i class="pi pi-chevron-left p-mx-3" style="font-size: 0.7rem"></i> <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i></p>
     </div>
   </p-toolbar>
   <div class="body p-d-flex p-flex-column">
     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-end p-my-3 p-mx-3">
-      <button pButton pRipple label="Add new value" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="showModal()"></button>
+      <button pButton pRipple label="{{tag == 'INVENTORY_ACTION_LIST' ? 'Add new action item' : 'Add new value'}}" class="p-mr-2" icon="pi pi-plus-circle" iconPos="left" (click)="showModal()"></button>
     </div>
     <p-contextMenu #contextMenu [model]="items"></p-contextMenu>
     <p-table [value]="data" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedItem" [contextMenu]="contextMenu" dataKey="code" *ngIf="data.length > 0">
       <ng-template pTemplate="header">
         <tr>
           <th>#</th>
-          <th *ngIf="tag !== 'INVENTORY_MAINTENANCE_METRIC'">Value</th>
-          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Action Item</th>
-          <th *ngIf="tag === 'INVENTORY_MAINTENANCE_METRIC'">Description</th>
+          <th *ngIf="tag !== 'INVENTORY_ACTION_LIST'">Value</th>
+          <th *ngIf="tag === 'INVENTORY_ACTION_LIST'">Action Item</th>
+          <th>Description</th>
           <th>Created At</th>
           <th></th>
         </tr>
@@ -39,8 +38,7 @@
         <tr>
           <td>{{item.id ? item.id : "-"}}</td>
           <td>{{item.name ? item.name : "-"}}</td>
-          <td *ngIf="tag === 'INVENTORY_ACTION_LIST'">-</td>
-          <td *ngIf="tag === 'INVENTORY_ACTION_LIST'">-</td>
+          <td>{{item.description ? item.description : "-"}}</td>
           <td>{{item.createdOn ? (item.createdOn | date: 'h:mm a, MMM d, y') : "-" }}</td>
           <td [pContextMenuRow]="item" (contextmenu)="getSelectedData(item, rowIndex)">
             <i class="pi pi-ellipsis-h"></i>
@@ -59,7 +57,7 @@
         <div class="p-field">
           <span class="p-float-label">
             <input type="text" name="roleName" id="role_name" pInputText [(ngModel)]="groupModel.name" required>
-            <label for="role_name">Value name</label>
+            <label for="role_name">{{tag === 'INVENTORY_ACTION_LIST' ? 'Action item name' : 'Value name'}}</label>
           </span>
         </div>
         <div class="p-field" *ngIf="tag === 'INVENTORY_ACTION_LIST'">
@@ -70,12 +68,7 @@
         </div>
         <div class="p-field" *ngIf="tag === 'INVENTORY_ACTION_LIST'">
           <label>Select metric(s)</label>
-          <p-multiSelect [options]="metrics" name="events" [(ngModel)]="selected" defaultLabel="Select Metric(s)" optionLabel="metricsType" optionValue="metricsType" display="chip" [group]="true" required>
-            <ng-template let-group pTemplate="group">
-              <div class="p-d-flex p-ai-center">
-                <span>{{group.metricsType}}</span>
-              </div>
-            </ng-template>
+          <p-multiSelect [options]="metrics" name="events" [(ngModel)]="groupModel.metrics" defaultLabel="Select Metric(s)" optionLabel="label" optionValue="value" display="chip" required>
           </p-multiSelect>
         </div>
       </div>

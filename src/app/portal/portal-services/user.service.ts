@@ -12,7 +12,7 @@ import { Observable } from "rxjs";
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getAllUsers(pageNumber: number, pageSize: number) {
+  getAllUsers(pageNumber?: number, pageSize?: number) {
     return this.http
       .get(
         environment.apiBaseUrl +

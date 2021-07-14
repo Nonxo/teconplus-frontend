@@ -17,4 +17,16 @@ export class InventoryService {
       .post(environment.apiBaseUrl + `/inventory`, equipment)
       .pipe(catchError(handleError));
   }
+
+  getAll(): Observable<any> {
+    return this.http
+      .get(environment.apiBaseUrl + `/inventory`)
+      .pipe(catchError(handleError));
+  }
+
+  getAllApprovalRequest(): Observable<any> {
+    return this.http
+      .get(environment.apiBaseUrl + `/inventory/approval-request`)
+      .pipe(catchError(handleError));
+  }
 }

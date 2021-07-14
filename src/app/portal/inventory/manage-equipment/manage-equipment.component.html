@@ -26,14 +26,15 @@
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-3">
                   <span class="p-float-label">
-                    <input id="fullName" class="p-inputtext-lg" type="text" name="fullname" placeholder="Equipment Name" aria-describedby="firstname-help" pInputText [(ngModel)]="equipment.equipmentName" required/>
+                    <input id="fullName" class="p-inputtext-lg" type="text" name="fullname" aria-describedby="firstname-help" pInputText [(ngModel)]="equipment.equipmentName" required/>
+                    <label for="fullName">Equipment Name</label>
                   </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
-              <span class="p-float-label">
-                <p-dropdown id="location" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="location" optionValue="value" [options]="locations" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.location" required></p-dropdown>
-                <label for="location">Equipment Location</label>
-            </span>
+                  <span class="p-float-label">
+                    <p-dropdown id="location" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="location" optionValue="value" [options]="locations" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.location" required></p-dropdown>
+                    <label for="location">Equipment Location</label>
+                  </span>
                 </div>
               </div>
               <p>Brief Description</p>
@@ -51,7 +52,7 @@
                 </div>
                 <div class="p-field p-md-6 p-mb-0">
               <span class="p-float-label">
-                <p-dropdown id="equip_type" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="equip_type" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.equipmentType" required></p-dropdown>
+                <p-dropdown id="equip_type" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="equip_type" optionValue="value" [options]="equipmentTypes" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.equipmentType" required></p-dropdown>
                 <label for="equip_type">Equipment type</label>
             </span>
                 </div>
@@ -59,13 +60,13 @@
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-0">
               <span class="p-float-label">
-                <p-dropdown id="prev_group" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="prev_group" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.preventionGroup"></p-dropdown>
+                <p-dropdown id="prev_group" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="prev_group" optionValue="value" [options]="preventionGroup" optionLabel="label" [showClear]="true" [(ngModel)]="equipment.preventionGroup" required></p-dropdown>
                 <label for="prev_group">Prevention Group required for equipment</label>
             </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-0">
                   <span class="p-float-label">
-                    <p-dropdown id="action_point" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="action_point" optionValue="value" [options]="locations" optionLabel="country" [showClear]="true" [(ngModel)]="equipment.actionPointMen" required></p-dropdown>
+                    <p-dropdown id="action_point" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="action_point" optionValue="id" [options]="users" optionLabel="fullName" [showClear]="true" [(ngModel)]="equipment.actionPointMen" required></p-dropdown>
                     <label for="action_point">Action Point men</label>
                   </span>
                 </div>
@@ -73,19 +74,22 @@
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-float-label">
-                <input id="model" type="text" class="p-inputtext-lg" placeholder="Model/Serial number" name="serial_number" aria-describedby="firstname-help" [(ngModel)]="equipment.model" pInputText/>
+                <input id="model" type="text" class="p-inputtext-lg" name="serial_number" aria-describedby="firstname-help" [(ngModel)]="equipment.model" pInputText required/>
+                <label for="model">Model/Serial number</label>
               </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-float-label">
-                <input id="teconId" type="text" class="p-inputtext-lg" placeholder="Tecon/Niger Blossom drilling ID no" name="fullname" aria-describedby="firstname-help" pInputText/>
+                <input id="teconId" type="text" class="p-inputtext-lg" name="teconId" aria-describedby="firstname-help" pInputText required/>
+                <label for="teconId">Tecon/Niger Blossom drilling ID no</label>
               </span>
                 </div>
               </div>
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-3">
                   <span class="p-float-label">
-                    <input id="manufacture_year" class="p-inputtext-lg" type="text" name="manufacture_year" placeholder="Year of Manufacture" aria-describedby="manufacture_year" pInputText [(ngModel)]="equipment.yearOfManufacture"/>
+                    <input id="manufacture_year" class="p-inputtext-lg" type="number" name="manufacture_year" aria-describedby="manufacture_year" pInputText [(ngModel)]="equipment.yearOfManufacture" required/>
+                    <label for="manufacture_year">Year of Manufacture</label>
                   </span>
                 </div>
 
@@ -111,13 +115,13 @@
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-input-icon-right">
                 <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Kilogram</i>
-                <input id="weight" type="text" class="p-inputtext-lg" placeholder="Weight" name="weight" aria-describedby="dimension-weight" [(ngModel)]="equipment.weightInGrams" pInputText/>
+                <input id="weight" type="number" class="p-inputtext-lg" placeholder="Weight" name="weight" aria-describedby="dimension-weight" [(ngModel)]="equipment.weightInGrams" pInputText required/>
               </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-input-icon-right">
                 <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Length</i>
-                <input id="length" type="text" class="p-inputtext-lg" placeholder="Dimension(Length)" name="length" aria-describedby="dimension-length" [(ngModel)]="equipment.lengthInCm" pInputText/>
+                <input id="length" type="number" class="p-inputtext-lg" placeholder="Dimension(Length)" name="length" aria-describedby="dimension-length" [(ngModel)]="equipment.lengthInCm" pInputText required/>
               </span>
                 </div>
               </div>
@@ -125,24 +129,27 @@
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-input-icon-right">
                 <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Width</i>
-                <input id="width" type="text" class="p-inputtext-lg" placeholder="Dimension(Width)" name="width" aria-describedby="dimension-width" [(ngModel)]="equipment.widthInCm" pInputText/>
+                <input id="width" type="number" class="p-inputtext-lg" placeholder="Dimension(Width)" name="width" aria-describedby="dimension-width" [(ngModel)]="equipment.widthInCm" pInputText required/>
               </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-input-icon-right">
                 <i class="badge p-d-inline-flex p-as-center p-py-1 p-px-2">Height</i>
-                <input id="height" type="text" class="p-inputtext-lg" placeholder="Dimension(Height)" name="height" aria-describedby="dimension-height" [(ngModel)]="equipment.heightInCm" pInputText/>
+                <input id="height" type="number" class="p-inputtext-lg" placeholder="Dimension(Height)" name="height" aria-describedby="dimension-height" [(ngModel)]="equipment.heightInCm" pInputText required/>
               </span>
                 </div>
               </div>
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-float-label">
-                <input id="staff_res" class="p-inputtext-lg" type="text" placeholder="Staff responsible for equipment" name="fullname" aria-describedby="firstname-help" pInputText required/>
+                <input id="staff_res" class="p-inputtext-lg" type="text" placeholder="Staff responsible for equipment" name="fullname" aria-describedby="firstname-help" pInputText/>
               </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
-                  <p-multiSelect id="metrics" class="p-inputtext-lg" name="metrics" optionValue="value" defaultLabel="Select metric(s)" [options]="metrics" optionLabel="label" [(ngModel)]="equipment.actionItemList" display="chip"></p-multiSelect>
+                  <span class="p-float-label">
+                    <p-dropdown id="metrics" class="p-inputtext-lg" name="metrics" optionValue="value" [options]="actionList" optionLabel="label" [(ngModel)]="equipment.actionItemList" required></p-dropdown>
+                    <label for="metrics">Select metric(s)</label>
+                  </span>
                 </div>
               </div>
               <label for="date">Date of purchase</label>
@@ -152,20 +159,21 @@
                 </div>
                 <div class="p-field p-md-6 p-mb-3">
               <span class="p-float-label">
-                <input id="quantity" class="p-inputtext-lg" type="text" placeholder="Quantity acquired" name="Quantity_acquired" aria-describedby="firstname-help" [(ngModel)]="equipment.quantityAcquired" pInputText required/>
+                <input id="quantity" class="p-inputtext-lg" type="number" name="Quantity_acquired" aria-describedby="firstname-help" [(ngModel)]="equipment.quantityAcquired" pInputText required/>
+                <label for="quantity">Quantity acquired</label>
               </span>
                 </div>
               </div>
               <div class="p-field p-grid">
                 <div class="p-field p-md-6 p-mb-0">
               <span class="p-float-label">
-                <p-dropdown id="primary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="primary_check" optionValue="value" [(ngModel)]="equipment.primaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true"></p-dropdown>
+                <p-dropdown id="primary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="primary_check" optionValue="value" [(ngModel)]="equipment.primaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true" required></p-dropdown>
                 <label for="equip_group">Primary Check Interval</label>
-            </span>
+              </span>
                 </div>
                 <div class="p-field p-md-6 p-mb-0">
               <span class="p-float-label">
-                <p-dropdown id="secondary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="secondary_check" optionValue="value" [(ngModel)]="equipment.secondaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true"></p-dropdown>
+                <p-dropdown id="secondary_check" styleClass="p-inputtext-lg" [autoDisplayFirst]="false" name="secondary_check" optionValue="value" [(ngModel)]="equipment.secondaryCheckInterval" [options]="checkIntervals" optionLabel="label" [showClear]="true" required></p-dropdown>
                 <label for="equip_type">Secondary Check Interval</label>
             </span>
                 </div>
@@ -191,7 +199,7 @@
             </div>
           </div>
           <div class="p-grid p-jc-end p-mt-4 p-mb-2">
-            <p-button label="Add Equipment" [disabled]="equipmentForm.invalid" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right"></p-button>
+            <p-button type="submit" label="Add Equipment" [disabled]="equipmentForm.invalid" [icon]="isLoading ? 'pi pi-spin pi-spinner': ''" iconPos="right"></p-button>
           </div>
         </div>
       </form>

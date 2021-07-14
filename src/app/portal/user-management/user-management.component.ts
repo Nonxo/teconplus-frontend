@@ -109,7 +109,6 @@ export class UserManagementComponent implements OnInit {
       .subscribe((res) => {
         const { data, message } = res;
         this.users = data.content;
-        console.log(this.users);
       });
   }
 

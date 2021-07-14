@@ -222,7 +222,12 @@ export class MetadataDetailsComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        this.metrics = res.data;
+        res.data.forEach((obj) => {
+          this.metrics.push({
+            label: obj.unitType,
+            value: obj.id,
+          });
+        });
       });
   }
 }

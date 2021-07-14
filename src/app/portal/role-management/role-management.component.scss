@@ -184,4 +184,28 @@ label {
   font-size: 0.9rem;
 }
 
+:host ::ng-deep .p-contextmenu {
+  background: #000000;
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link .p-menuitem-text {
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link .p-menuitem-icon {
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link:not(.p-disabled):hover {
+  background-color: rgba(60,64,67,.04);
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background: transparent;
+}
+
 

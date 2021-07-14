@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { MessageService, SelectItem, SelectItemGroup } from "primeng/api";
+import { MessageService, SelectItem } from "primeng/api";
 import { Equipment } from "../model/equipment";
 import { InventoryService } from "../../portal-services/inventory.service";
 import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
 import { MetadataService } from "../../portal-services/metadata.service";
+import { User } from "../../../models/user";
+import { UserService } from "../../portal-services/user.service";
 
 @Component({
   selector: "app-manage-equipment",
@@ -15,37 +17,25 @@ export class ManageEquipmentComponent implements OnInit {
   locations: SelectItem[] = [];
   equipment: Equipment;
   isLoading: boolean;
-  metrics: any[] = [];
+  actionList: SelectItem[] = [];
+
+  users: User[] = [];
 
   equipmentStatus: SelectItem[] = [];
   equipmentGroups: SelectItem[] = [];
+  equipmentTypes: SelectItem[] = [];
   checkIntervals: SelectItem[] = [];
+
+  preventionGroup: SelectItem[] = [];
 
   constructor(
     private inventorySvc: InventoryService,
     private messageService: MessageService,
-    private metadataSvc: MetadataService
+    private metadataSvc: MetadataService,
+    private userSvc: UserService
   ) {}
 
   ngOnInit(): void {
-    this.locations = [
-      {
-        label: "Lagos",
-        value: "lagos",
-      },
-      {
-        label: "Rivers",
-        value: "rivers",
-      },
-      {
-        label: "Uyo",
-        value: "uyo",
-      },
-      {
-        label: "Abuja",
-        value: "abuja",
-      },
-    ];
     this.equipmentStatus = [
       {
         label: "Functional",
@@ -62,6 +52,16 @@ export class ManageEquipmentComponent implements OnInit {
       {
         label: "Bad",
         value: "BAD",
+      },
+    ];
+    this.preventionGroup = [
+      {
+        label: "Routine Check",
+        value: "ROUTINE_CHECK",
+      },
+      {
+        label: "Corrosion Prevention",
+        value: "CORROSION_PREVENTION",
       },
     ];
     this.checkIntervals = [
@@ -103,19 +103,22 @@ export class ManageEquipmentComponent implements OnInit {
       },
     ];
     this.equipment = new Equipment();
-    this.fetchMetrics();
+    this.fetchActionList();
     this.fetchEquipmentGroup();
+    this.fetchLocations();
+    this.fetchUsers();
+    this.fetchEquipmentTypes();
   }
 
-  fetchMetrics() {
+  fetchEquipmentGroup() {
     this.metadataSvc
-      .getAllMetrics()
+      .getMetaData("INVENTORY_ACTION_LIST")
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
               severity: "error",
-              summary: "Fetch Metrics Failed",
+              summary: "Fetch Group Failed",
               detail: err,
             });
             return throwError(err);
@@ -123,17 +126,16 @@ export class ManageEquipmentComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        console.log(res.data);
         res.data.forEach((obj) => {
-          this.metrics.push({
-            label: obj.unitType,
+          this.actionList.push({
+            label: obj.name,
             value: obj.id,
           });
         });
       });
   }
 
-  fetchEquipmentGroup() {
+  fetchActionList() {
     this.metadataSvc
       .getMetaData("EQUIPMENT_GROUP")
       .pipe(
@@ -158,6 +160,77 @@ export class ManageEquipmentComponent implements OnInit {
       });
   }
 
+  fetchEquipmentTypes() {
+    this.metadataSvc
+      .getMetaData("EQUIPMENT_TYPE")
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Fetch Group Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        res.data.forEach((obj) => {
+          this.equipmentTypes.push({
+            label: obj.name,
+            value: obj.id,
+          });
+        });
+      });
+  }
+
+  fetchLocations() {
+    this.metadataSvc
+      .getMetaData("TECON_LOCATION")
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Fetch Group Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        res.data.forEach((obj) => {
+          this.locations.push({
+            label: obj.name,
+            value: obj.id,
+          });
+        });
+      });
+  }
+
+  fetchUsers() {
+    this.userSvc
+      .getAllUsers()
+      .pipe(
+        catchError(
+          (err: any): ObservableInput<any> => {
+            this.messageService.add({
+              severity: "error",
+              summary: "Fetch Users Failed",
+              detail: err,
+            });
+            return throwError(err);
+          }
+        )
+      )
+      .subscribe((res) => {
+        const { data, message } = res;
+        this.users = data.content.filter((item) => item.role.id === 7);
+      });
+  }
+
   createEquipment() {
     this.isLoading = true;
     this.inventorySvc
@@ -179,7 +252,7 @@ export class ManageEquipmentComponent implements OnInit {
         this.isLoading = false;
         this.messageService.add({
           severity: "success",
-          summary: "Role Created",
+          summary: "Equipment Created",
           detail: res.message,
         });
       });

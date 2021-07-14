@@ -1,5 +1,7 @@
+import {Role} from "../../../models/user";
+
 export class Equipment {
-  actionItemList: number[] = [];
+  actionItemList: number;
   actionPointMen: number;
   assetNumber: string;
   cocexpirationDate: Date;
@@ -27,4 +29,19 @@ export class Equipment {
   weightInGrams: string;
   widthInCm: string;
   yearOfManufacture: number;
+}
+
+export class Request {
+  id: string;
+  approvalActivity: string;
+  approvalDate: Date;
+  approvalLevels: number;
+  approvalStatus: string;
+  approvalRole: Role;
+  approver: string;
+  comment: string;
+  createdById: number;
+  createdOn: Date
+  currentApprovalLevel: number
+  tpEquipment: Equipment
 }

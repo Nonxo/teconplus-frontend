@@ -7,16 +7,22 @@
 <div class="container">
   <p-toolbar>
     <div class="p-toolbar-group-left">
-      <h5>Inventory <span class="p-ml-2">| 0 Equipment(s)</span></h5>
+      <h5>Inventory <span class="p-ml-2">| {{data.length}} Equipment(s)</span></h5>
     </div>
     <div class="p-toolbar-group-right">
       <span class="p-input-icon-right p-mr-2">
       <i class="pi pi-search"></i>
       <input type="text" class="p-inputtext-sm" pInputText placeholder="Search using equipment name" [(ngModel)]="value3" />
     </span>
-      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by user type" optionLabel="name" [showClear]="true"></p-dropdown>
       <p-splitButton class="p-mr-3" label="Download user list" [model]="filterOptions"></p-splitButton>
       <p style="font-size: 0.7rem">Showing 1-20 of 48  <i class="pi pi-chevron-left p-mx-3" style="font-size: 0.7rem"></i> <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i></p>
+    </div>
+  </p-toolbar>
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by branch" optionLabel="name" [showClear]="true"></p-dropdown>
+      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by equipment group" optionLabel="name" [showClear]="true"></p-dropdown>
+      <p-dropdown [options]="filterOptions" class="p-inputtext-sm p-mr-2" [(ngModel)]="selectedFilter" placeholder="Filter by equipment type" optionLabel="name" [showClear]="true"></p-dropdown>
     </div>
   </p-toolbar>
   <div class="body p-d-flex p-flex-column">
@@ -27,7 +33,7 @@
       <p-tabView>
         <p-tabPanel header="Inventory">
           <p-contextMenu #cm [model]="items"></p-contextMenu>
-          <p-table [resizableColumns]="true" styleClass="p-datatable-lg" dataKey="code">
+          <p-table [value]="data" [resizableColumns]="true" styleClass="p-datatable-lg" [(contextMenuSelection)]="selectedEquipment" [contextMenu]="cm" dataKey="code">
             <ng-template pTemplate="header">
               <tr>
                 <th pResizableColumn>#</th>
@@ -42,14 +48,15 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-              <tr>
+              <tr [pContextMenuRow]="item" (contextmenu)="getSelectedRow(item, rowIndex)">
+                <td>{{rowIndex + 1}}</td>
                 <td>{{item.id}}</td>
-                <td>{{item.equipmentName}}</td>
                 <td>
-                  <p-tag value="{{item.equipmentType}}"></p-tag>
+                  <p-tag value="{{item.equipmentName}}"></p-tag>
                 </td>
-                <td>{{item.equipmentGroup}}</td>
-                <td>{{item.location}}</td>
+                <td>{{item.equipmentType.name}}</td>
+                <td>{{item.equipmentGroup.name}}</td>
+                <td>{{item.location.name}}</td>
                 <td>{{item.quantityAcquired}}</td>
                 <td>{{item.purchaseDate | date: 'MMM d, yyyy'}}</td>
                 <td>{{item.createdOn | date: 'h:mm a, MMM d, y'}}</td>
@@ -64,35 +71,169 @@
             <ng-template pTemplate="header">
               <tr>
                 <th pResizableColumn>#</th>
-                <th pResizableColumn>Item Id</th>
                 <th pResizableColumn>Equipment Name</th>
                 <th pResizableColumn>Equipment Type</th>
-                <th pResizableColumn>Equipment Group</th>
                 <th pResizableColumn>Location</th>
-                <th pResizableColumn>Quantity Left</th>
-                <th pResizableColumn>Purchase Date</th>
-                <th pResizableColumn>Date Created</th>
+                <th pResizableColumn>Approval Type</th>
+                <th pResizableColumn>Approval Stage</th>
+                <th pResizableColumn>Approval Status</th>
+                <th pResizableColumn>Initiated By</th>
+                <th pResizableColumn>Date Initiated</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-              <tr>
-                <td>{{item.id}}</td>
-                <td>{{item.equipmentName}}</td>
+              <tr [pContextMenuRow]="item" (contextmenu)="getSelectedRow(item, rowIndex)">
+                <td>{{rowIndex + 1}}</td>
+                <td>{{item.tpEquipment.equipmentName}}</td>
                 <td>
-                  <p-tag value="{{item.equipmentType}}"></p-tag>
+                  <p-tag value="{{item.equipmentType.name}}"></p-tag>
                 </td>
-                <td>{{item.equipmentGroup}}</td>
-                <td>{{item.location}}</td>
-                <td>{{item.quantityAcquired}}</td>
-                <td>{{item.purchaseDate | date: 'MMM d, yyyy'}}</td>
+                <td>{{item.tpEquipment.location.name}}</td>
+                <td>{{item.currentApprovalLevel}}/{{item.approvalLevels}}</td>
+                <td>
+                  <p-tag value="{{item.approvalStatus}}"></p-tag>
+                </td>
+                <td>{{item.approver}}</td>
                 <td>{{item.createdOn | date: 'h:mm a, MMM d, y'}}</td>
               </tr>
             </ng-template>
           </p-table>
-
         </p-tabPanel>
       </p-tabView>
     </div>
   </div>
 </div>
+
+<!-------- View Details -------------->
+<p-dialog header="Equipment Details" [(visible)]="viewDetailsModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <div class="p-d-flex p-flex-column">
+    <div class="p-d-flex p-jc-between">
+      <span class="secondary-text">EQUIPMENT INFORMATION <span class="p-pl-2"><strong>Date created: </strong> {{selectedEquipment?.createdOn | date: 'h:mm a, MMM d, y'}}</span></span>
+      <span class="cursor primary-text p-text-right" (click)="viewHistory()">View Edit History</span>
+    </div>
+    <div class="content p-mt-2">
+      <div class="p-fluid">
+        <div class="p-field p-grid">
+          <div class="p-field p-md-12">
+            <label>Euipment Image</label>
+            <img class="p-d-flex" src="assets/img/logo.svg" width="70" height="57">
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Equipment Name</label>
+            <p>{{selectedEquipment?.equipmentName}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Equipment Description</label>
+            <p>{{selectedEquipment?.description}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Location</label>
+            <p>{{selectedEquipment?.location.name}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Equipment Group</label>
+            <p>{{selectedEquipment?.equipmentGroup.name}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Equipment Type</label>
+            <div><p-tag>{{selectedEquipment?.equipmentType.name}}</p-tag></div>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Prevention Group</label>
+            <p>{{selectedEquipment?.preventionGroup}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Quantity</label>
+            <p>{{selectedEquipment?.quantityAcquired}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>OEM Reference Manual</label>
+            <p></p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Supporting Documentation</label>
+            <p></p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Action point Men</label>
+            <p>{{selectedEquipment?.actionPointMen.fullName}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Primary Check Interval</label>
+            <p>{{selectedEquipment?.primaryCheckInterval}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label>Secondary Check Interval</label>
+            <p>{{selectedEquipment?.secondaryCheckInterval}}</p>
+          </div>
+        </div>
+        <div class="p-field p-grid">
+          <div class="p-field p-md-4">
+            <label>Purchase Date</label>
+            <p>{{selectedEquipment?.purchaseDate | date: 'MMM d, yyyy'}}</p>
+          </div>
+          <div class="p-field p-md-8">
+            <label></label>
+            <p></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button styleClass="p-button-lg" label="Done" iconPos="right" (click)="viewDetailsModal = false"></p-button>
+  </ng-template>
+</p-dialog>
+
+
+<!-------- View History -------->
+<p-dialog header="Edit History" [(visible)]="viewHistoryModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <div class="p-d-flex p-flex-column">
+    <div class="secondary-text p-mb-3" style="font-size: 0.9rem">
+      <i class="pi pi-chevron-left"></i>
+      <span>Back</span>
+    </div>
+    <label>EDIT HISTORY</label>
+    <div class="content p-mt-2">
+      <div class="p-fluid">
+        <div class="p-grid secondary-text">
+          <div class="p-field p-md-6">
+            <span>EDIT (IN CHRONOLOGICAL ORDER)</span>
+          </div>
+          <div class="p-field p-md-4">
+            <span>APPROVAL STATUS</span>
+          </div>
+          <div class="p-field p-md-2"></div>
+        </div>
+        <div class="p-grid">
+          <div class="p-md-6">
+            <span>Edited by <strong>Olumide Ebifemi</strong> (October 13, 2020 @ 03:10:59)</span>
+          </div>
+          <div class="p-md-4">
+            <p-tag>Disapproved</p-tag>
+          </div>
+          <div class="p-md-2 tooltip">
+            <i class="pi pi-book p-p-1 icon-border"></i>
+            <span class="tooltiptext">View Approval Trail</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>
 

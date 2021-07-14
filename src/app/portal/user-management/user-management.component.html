@@ -47,7 +47,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
-        <tr>
+        <tr [pContextMenuRow]="user" (contextmenu)="getSelectedUser(user, rowIndex)">
           <td>{{user.id}}</td>
           <td>
             <p-avatar
@@ -64,7 +64,7 @@
             <p-tag [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}" value="{{user.role.name ? user.role.name : 'Others'}}"></p-tag>
           </td>
           <td>
-            <p-tag value="{{user.tempRole ? selectedUser.defaultRole.name : '-'}}"></p-tag>
+            <p-tag value="{{user.tempRole ? selectedUser.defaultRole?.name : '-'}}"></p-tag>
           </td>
           <td>
             {{user.duration ? user.duration : '-'}}
@@ -72,7 +72,7 @@
           <td [ngStyle]="user.locked ? {'color': '#EFEFEF'}:{}">
             {{user.createdOn | date: 'h:mm a, MMM d, y'}}
           </td>
-          <td [pContextMenuRow]="user" (contextmenu)="getSelectedUser(user, rowIndex)">
+          <td>
             <i class="pi pi-ellipsis-h"></i>
           </td>
 

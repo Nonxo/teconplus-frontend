@@ -88,6 +88,10 @@
 
 }
 
+span {
+  font-size: 12px;
+}
+
 
 :host ::ng-deep .p-button:hover {
   background: #CCA43C;
@@ -147,10 +151,12 @@
 
 p {
   font-size: 12px;
+  color: #171102;
 }
 
 label {
   font-size: 12px;
+  color: #94A1A5;
 }
 
 :host ::ng-deep .p-dropdown-item {
@@ -159,6 +165,52 @@ label {
 
 :host ::ng-deep .p-inputtext-sm .p-inputtext {
   font-size: 0.8rem;
+}
+
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #CCA43C;
+  color: #CCA43C;
+}
+
+:host ::ng-deep .p-tag {
+  background-color: #E8E7FC;
+  color: #554DFF;
+  font-weight: normal;
+}
+
+
+:host ::ng-deep .p-menu .p-submenu-header {
+  background: #000000
+}
+
+:host ::ng-deep .p-contextmenu {
+  background: #000000;
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+.icon-border {
+  border: 0.5px solid #C9CED9;
+  border-radius: 3px;
+  color: #A3ABB7;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link .p-menuitem-text {
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link .p-menuitem-icon {
+  color: #747479;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem-link:not(.p-disabled):hover {
+  background-color: rgba(60,64,67,.04);
+}
+
+:host ::ng-deep .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background: transparent;
 }
 
 

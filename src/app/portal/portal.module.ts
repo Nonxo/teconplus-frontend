@@ -40,7 +40,8 @@ import { TimelineModule } from "primeng/timeline";
 import { TextTransformPipe } from "./pipes/text-transform.pipe";
 import { InventoryComponent } from "./inventory/inventory.component";
 import { TabViewModule } from "primeng/tabview";
-import { ManageEquipmentComponent } from './inventory/manage-equipment/manage-equipment.component';
+import { ManageEquipmentComponent } from "./inventory/manage-equipment/manage-equipment.component";
+import { TooltipModule } from "primeng/tooltip";
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { ManageEquipmentComponent } from './inventory/manage-equipment/manage-eq
     MultiSelectModule,
     TimelineModule,
     TabViewModule,
+    TooltipModule,
   ],
   providers: [],
 })
