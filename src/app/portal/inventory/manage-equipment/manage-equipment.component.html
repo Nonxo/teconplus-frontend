@@ -18,9 +18,13 @@
           <p-divider></p-divider>
           <div class="p-col-8 p-mt-5">
             <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
+              <input type="file" name="attachment" id="image_upload" #fileInput2 (change)="fileUpload($event, 'IMAGE')" style="display: none" accept="image/png, image/gif, image/jpeg">
               <img class="p-mb-1" src="assets/img/imagex.svg" alt="image">
-              <span class="p-mb-1">Drop an image of the equipment here or <i>browse</i></span>
-              <span class="secondary-text">Only jpeg or png files are allowed for upload</span>
+              <span *ngIf="imageFileList; else newImage">{{image}}</span>
+              <ng-template #newImage>
+                <span class="p-mb-1">Drop an image of the equipment here or <i>browse</i></span>
+                <span class="secondary-text">Only jpeg or png files are allowed for upload</span>
+              </ng-template>
             </div>
             <div class="p-fluid p-mt-4">
               <div class="p-field p-grid">
@@ -183,19 +187,33 @@
           <h5 class="p-m-0">OEM reference manual</h5>
           <p-divider></p-divider>
           <div class="p-col-8 p-mb-4">
+            <input type="file" name="attachment" id="ref_manual" #fileInput2 (change)="fileUpload($event, 'REF_MANUAL')" style="display: none" accept=".pdf,.doc">
             <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
-              <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
-              <span class="p-mb-1">Drop your file(s) here, or <i>browse</i></span>
-              <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+              <ng-container *ngIf="refManualFileList; else newManual">
+                <img src="assets/img/adobe_pdf_file_icon.png" width="60" height="60" alt="pdf_image">
+                <span>{{refManual}}</span>
+              </ng-container>
+              <ng-template #newManual>
+                <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
+                <span class="p-mb-1">Drop your file(s) here, or <i class="cursor" (click)="fileInput2.click()">browse</i></span>
+                <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+              </ng-template>
             </div>
           </div>
           <h5 class="p-m-0">Supporting Document(s)</h5>
           <p-divider></p-divider>
           <div class="p-col-8">
+            <input type="file" name="attachment" id="support_doc" #fileInput (change)="fileUpload($event, 'SUPPORT_DOC')" style="display: none" accept=".pdf,.doc">
             <div class="p-d-flex p-flex-column p-jc-center p-ai-center p-py-3 border-style">
-              <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
-              <span class="p-mb-1">Drop your file(s) here, or <i>browse</i></span>
-              <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+              <ng-container *ngIf="supportDocFileList; else newFile">
+                <img src="assets/img/adobe_pdf_file_icon.png" width="60" height="60" alt="pdf_image">
+                <span>{{supportDoc}}</span>
+              </ng-container>
+              <ng-template #newFile>
+                <img class="p-mb-1" src="assets/img/Group38355.svg" alt="file">
+                <span class="p-mb-1">Drop your file(s) here, or <i class="cursor" (click)="fileInput.click()">browse</i></span>
+                <span class="secondary-text">Only PDF, DOCX files are allowed for upload</span>
+              </ng-template>
             </div>
           </div>
           <div class="p-grid p-jc-end p-mt-4 p-mb-2">

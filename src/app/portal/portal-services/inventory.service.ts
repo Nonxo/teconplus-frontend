@@ -10,6 +10,7 @@ import { handleError } from "../../services/apiErrorHandler";
   providedIn: "root",
 })
 export class InventoryService {
+  equipment: Equipment;
   constructor(private http: HttpClient) {}
 
   create(equipment: Equipment): Observable<any> {
@@ -28,5 +29,14 @@ export class InventoryService {
     return this.http
       .get(environment.apiBaseUrl + `/inventory/approval-request`)
       .pipe(catchError(handleError));
+  }
+
+  // Temporarily save equipment
+  setEquipment(equipment: Equipment) {
+    this.equipment = equipment;
+  }
+
+  getEquipment(): Equipment {
+    return this.equipment;
   }
 }

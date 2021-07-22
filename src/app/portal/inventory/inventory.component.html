@@ -157,13 +157,19 @@
           </div>
           <div class="p-field p-md-8">
             <label>OEM Reference Manual</label>
-            <p></p>
+            <div *ngIf="selectedEquipment?.oemreferenceManualUrl">
+              <img src="assets/img/adobe_pdf_file_icon.png" alt="document_upload" width="30" height="30">
+              <span>{{selectedEquipment?.oemreferenceManualUrl.split(',')[0]}}</span>
+            </div>
           </div>
         </div>
         <div class="p-field p-grid">
           <div class="p-field p-md-4">
             <label>Supporting Documentation</label>
-            <p></p>
+            <div *ngIf="selectedEquipment?.supportingDocUrl">
+              <img src="assets/img/adobe_pdf_file_icon.png" alt="document_upload" width="30" height="30">
+              <span>{{selectedEquipment?.supportingDocUrl.split(',')[0]}}</span>
+            </div>
           </div>
           <div class="p-field p-md-8">
             <label>Action point Men</label>

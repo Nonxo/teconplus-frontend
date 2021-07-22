@@ -4,6 +4,7 @@ import { InventoryService } from "../portal-services/inventory.service";
 import { catchError } from "rxjs/operators";
 import { ObservableInput, throwError } from "rxjs";
 import { Equipment } from "./model/equipment";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-inventory",
@@ -22,7 +23,7 @@ export class InventoryComponent implements OnInit {
   viewHistoryModal: boolean;
   isApproved: boolean = true;
 
-  constructor(private InventorySvc: InventoryService) {}
+  constructor(private inventorySvc: InventoryService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchInventories();
@@ -30,7 +31,8 @@ export class InventoryComponent implements OnInit {
   }
 
   fetchInventories() {
-    this.InventorySvc.getAll()
+    this.inventorySvc
+      .getAll()
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
@@ -44,7 +46,8 @@ export class InventoryComponent implements OnInit {
   }
 
   fetchInventoriesApprovalRequest() {
-    this.InventorySvc.getAllApprovalRequest()
+    this.inventorySvc
+      .getAllApprovalRequest()
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
@@ -68,7 +71,10 @@ export class InventoryComponent implements OnInit {
       },
       {
         label: "Edit Equipment Info",
-        command: () => {},
+        command: () => {
+          this.inventorySvc.setEquipment(this.selectedEquipment);
+          this.router.navigate(["/portal/manage-equipment"]);
+        },
       },
       {
         label: "Delete Equipment",
