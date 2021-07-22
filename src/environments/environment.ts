@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: "https://tecon-plus-service.herokuapp.com/api",
+  apiBaseUrl: "https://tp-services.herokuapp.com/api",
 };
 
 /*
