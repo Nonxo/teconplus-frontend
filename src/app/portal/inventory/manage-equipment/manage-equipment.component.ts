@@ -19,6 +19,15 @@ export class ManageEquipmentComponent implements OnInit {
   isLoading: boolean;
   actionList: SelectItem[] = [];
 
+  supportDocFileList: File;
+  supportDoc: string;
+
+  refManualFileList: File;
+  refManual: string;
+
+  imageFileList: File;
+  image: string;
+
   users: User[] = [];
 
   equipmentStatus: SelectItem[] = [];
@@ -102,12 +111,16 @@ export class ManageEquipmentComponent implements OnInit {
         value: "ANNUALLY",
       },
     ];
-    this.equipment = new Equipment();
-    this.fetchActionList();
-    this.fetchEquipmentGroup();
-    this.fetchLocations();
-    this.fetchUsers();
-    this.fetchEquipmentTypes();
+    if (this.inventorySvc.getEquipment()) {
+      this.equipment = this.inventorySvc.getEquipment();
+    } else {
+      this.equipment = new Equipment();
+      this.fetchActionList();
+      this.fetchEquipmentGroup();
+      this.fetchLocations();
+      this.fetchUsers();
+      this.fetchEquipmentTypes();
+    }
   }
 
   fetchEquipmentGroup() {
@@ -256,5 +269,39 @@ export class ManageEquipmentComponent implements OnInit {
           detail: res.message,
         });
       });
+  }
+
+  fileUpload(event: any, flag): void {
+    for (let i = 0; i <= event.target.files.length - 1; i++) {
+      if (flag === "SUPPORT_DOC") {
+        this.supportDocFileList = event.target.files[i];
+        this.equipment.supportingDocUrl = this.convertFileToBase64(
+          this.supportDocFileList
+        );
+        this.supportDoc = this.supportDocFileList.name;
+      }
+      if (flag === "REF_MANUAL") {
+        this.refManualFileList = event.target.files[i];
+        this.equipment.oemreferenceManualUrl = this.convertFileToBase64(
+          this.refManualFileList
+        );
+        this.refManual = this.refManualFileList.name;
+      }
+      if (flag === "IMAGE") {
+        this.imageFileList = event.target.files[i];
+        this.equipment.imageUrl = this.convertFileToBase64(this.imageFileList);
+        this.image = this.imageFileList.name;
+      }
+    }
+  }
+
+  convertFileToBase64(file): any {
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        return reader.result;
+      }
+    };
   }
 }
