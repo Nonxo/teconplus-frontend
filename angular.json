@@ -37,6 +37,24 @@
             "scripts": []
           },
           "configurations": {
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": false,
+              "statsJson": false,
+              "progress": true,
+              "vendorChunk": true,
+              "buildOptimizer": false
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -74,6 +92,9 @@
           "configurations": {
             "production": {
               "browserTarget": "teconplus-frontend:build:production"
+            },
+            "local": {
+              "browserTarget": "teconplus-frontend:build:local"
             }
           }
         },
@@ -130,6 +151,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "teconplus-frontend"
 }
