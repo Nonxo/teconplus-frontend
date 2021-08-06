@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { MessageService, SelectItem } from "primeng/api";
-import { Equipment } from "../model/equipment";
-import { InventoryService } from "../../portal-services/inventory.service";
-import { catchError } from "rxjs/operators";
-import { ObservableInput, throwError } from "rxjs";
-import { MetadataService } from "../../portal-services/metadata.service";
-import { User } from "../../../models/user";
-import { UserService } from "../../portal-services/user.service";
+import { Component, OnInit } from '@angular/core';
+import { MessageService, SelectItem } from 'primeng/api';
+import { Equipment } from '../model/equipment';
+import { InventoryService } from '../../portal-services/inventory.service';
+import { catchError } from 'rxjs/operators';
+import { ObservableInput, throwError } from 'rxjs';
+import { MetadataService } from '../../portal-services/metadata.service';
+import { User } from '../../../models/user';
+import { UserService } from '../../portal-services/user.service';
 
 @Component({
-  selector: "app-manage-equipment",
-  templateUrl: "./manage-equipment.component.html",
-  styleUrls: ["./manage-equipment.component.scss"],
+  selector: 'app-manage-equipment',
+  templateUrl: './manage-equipment.component.html',
+  styleUrls: ['./manage-equipment.component.scss'],
 })
 export class ManageEquipmentComponent implements OnInit {
   locations: SelectItem[] = [];
@@ -47,68 +47,68 @@ export class ManageEquipmentComponent implements OnInit {
   ngOnInit(): void {
     this.equipmentStatus = [
       {
-        label: "Functional",
-        value: "FUNCTIONAL",
+        label: 'Functional',
+        value: 'FUNCTIONAL',
       },
       {
-        label: "In Use",
-        value: "USED",
+        label: 'In Use',
+        value: 'USED',
       },
       {
-        label: "Faulty",
-        value: "FAULTY",
+        label: 'Faulty',
+        value: 'FAULTY',
       },
       {
-        label: "Bad",
-        value: "BAD",
+        label: 'Bad',
+        value: 'BAD',
       },
     ];
     this.preventionGroup = [
       {
-        label: "Routine Check",
-        value: "ROUTINE_CHECK",
+        label: 'Routine Check',
+        value: 'ROUTINE_CHECK',
       },
       {
-        label: "Corrosion Prevention",
-        value: "CORROSION_PREVENTION",
+        label: 'Corrosion Prevention',
+        value: 'CORROSION_PREVENTION',
       },
     ];
     this.checkIntervals = [
       {
-        label: "Hourly",
-        value: "HOURLY",
+        label: 'Hourly',
+        value: 'HOURLY',
       },
       {
-        label: "Daily",
-        value: "DAILY",
+        label: 'Daily',
+        value: 'DAILY',
       },
       {
-        label: "Weekly",
-        value: "WEEKLY",
+        label: 'Weekly',
+        value: 'WEEKLY',
       },
       {
-        label: "Monthly",
-        value: "MONTHLY",
+        label: 'Monthly',
+        value: 'MONTHLY',
       },
       {
-        label: "Bi-Monthly",
-        value: "BI_MONTHLY",
+        label: 'Bi-Monthly',
+        value: 'BI_MONTHLY',
       },
       {
-        label: "End of Well",
-        value: "END_OF_WELL",
+        label: 'End of Well',
+        value: 'END_OF_WELL',
       },
       {
-        label: "End of Project",
-        value: "END_OF_PROJECT",
+        label: 'End of Project',
+        value: 'END_OF_PROJECT',
       },
       {
-        label: "Quarterly",
-        value: "QUARTERLY",
+        label: 'Quarterly',
+        value: 'QUARTERLY',
       },
       {
-        label: "Annually",
-        value: "ANNUALLY",
+        label: 'Annually',
+        value: 'ANNUALLY',
       },
     ];
     if (this.inventorySvc.getEquipment()) {
@@ -125,13 +125,13 @@ export class ManageEquipmentComponent implements OnInit {
 
   fetchEquipmentGroup() {
     this.metadataSvc
-      .getMetaData("INVENTORY_ACTION_LIST")
+      .getMetaData('INVENTORY_ACTION_LIST')
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
-              severity: "error",
-              summary: "Fetch Group Failed",
+              severity: 'error',
+              summary: 'Fetch Group Failed',
               detail: err,
             });
             return throwError(err);
@@ -150,13 +150,13 @@ export class ManageEquipmentComponent implements OnInit {
 
   fetchActionList() {
     this.metadataSvc
-      .getMetaData("EQUIPMENT_GROUP")
+      .getMetaData('EQUIPMENT_GROUP')
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
-              severity: "error",
-              summary: "Fetch Group Failed",
+              severity: 'error',
+              summary: 'Fetch Group Failed',
               detail: err,
             });
             return throwError(err);
@@ -175,13 +175,13 @@ export class ManageEquipmentComponent implements OnInit {
 
   fetchEquipmentTypes() {
     this.metadataSvc
-      .getMetaData("EQUIPMENT_TYPE")
+      .getMetaData('EQUIPMENT_TYPE')
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
-              severity: "error",
-              summary: "Fetch Group Failed",
+              severity: 'error',
+              summary: 'Fetch Group Failed',
               detail: err,
             });
             return throwError(err);
@@ -200,13 +200,13 @@ export class ManageEquipmentComponent implements OnInit {
 
   fetchLocations() {
     this.metadataSvc
-      .getMetaData("TECON_LOCATION")
+      .getMetaData('TECON_LOCATION')
       .pipe(
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
-              severity: "error",
-              summary: "Fetch Group Failed",
+              severity: 'error',
+              summary: 'Fetch Group Failed',
               detail: err,
             });
             return throwError(err);
@@ -230,8 +230,8 @@ export class ManageEquipmentComponent implements OnInit {
         catchError(
           (err: any): ObservableInput<any> => {
             this.messageService.add({
-              severity: "error",
-              summary: "Fetch Users Failed",
+              severity: 'error',
+              summary: 'Fetch Users Failed',
               detail: err,
             });
             return throwError(err);
@@ -240,7 +240,9 @@ export class ManageEquipmentComponent implements OnInit {
       )
       .subscribe((res) => {
         const { data, message } = res;
-        this.users = data.content.filter((item) => item.role.id === 7);
+        this.users = data.content.filter(
+          (item) => item.role.name === 'Action Point men'
+        );
       });
   }
 
@@ -253,8 +255,8 @@ export class ManageEquipmentComponent implements OnInit {
           (err: any): ObservableInput<any> => {
             this.isLoading = false;
             this.messageService.add({
-              severity: "error",
-              summary: "Equipment Create Failed",
+              severity: 'error',
+              summary: 'Equipment Create Failed',
               detail: err,
             });
             return throwError(err);
@@ -264,8 +266,8 @@ export class ManageEquipmentComponent implements OnInit {
       .subscribe((res) => {
         this.isLoading = false;
         this.messageService.add({
-          severity: "success",
-          summary: "Equipment Created",
+          severity: 'success',
+          summary: 'Equipment Created',
           detail: res.message,
         });
       });
@@ -273,21 +275,21 @@ export class ManageEquipmentComponent implements OnInit {
 
   fileUpload(event: any, flag): void {
     for (let i = 0; i <= event.target.files.length - 1; i++) {
-      if (flag === "SUPPORT_DOC") {
+      if (flag === 'SUPPORT_DOC') {
         this.supportDocFileList = event.target.files[i];
         this.equipment.supportingDocUrl = this.convertFileToBase64(
           this.supportDocFileList
         );
         this.supportDoc = this.supportDocFileList.name;
       }
-      if (flag === "REF_MANUAL") {
+      if (flag === 'REF_MANUAL') {
         this.refManualFileList = event.target.files[i];
         this.equipment.oemreferenceManualUrl = this.convertFileToBase64(
           this.refManualFileList
         );
         this.refManual = this.refManualFileList.name;
       }
-      if (flag === "IMAGE") {
+      if (flag === 'IMAGE') {
         this.imageFileList = event.target.files[i];
         this.equipment.imageUrl = this.convertFileToBase64(this.imageFileList);
         this.image = this.imageFileList.name;
@@ -299,7 +301,7 @@ export class ManageEquipmentComponent implements OnInit {
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      if (typeof reader.result === "string") {
+      if (typeof reader.result === 'string') {
         return reader.result;
       }
     };
